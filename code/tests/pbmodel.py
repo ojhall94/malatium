@@ -135,7 +135,9 @@ class star():
         plt.scatter(locs[:,2],l2s, marker='^',s=10,label='l=2')
         plt.scatter(locs[:,3],l3s, marker='o',s=10,label='l=3')
         plt.legend(fontsize=20)
+        plt.savefig('16CygAmodel.png')
         plt.show()
+
         return locs
 
 if __name__ == '__main__':
