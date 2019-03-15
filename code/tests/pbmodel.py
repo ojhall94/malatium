@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #O. J. Hall 2019
 
 import numpy as np
@@ -12,6 +13,14 @@ from scipy.misc import factorial as fct
 from omnitool import literature_values as lv
 plt.style.use(lightkurve.MPLSTYLE)
 
+import argparse
+parser = argparse.ArgumentParser(description='Generate a model of 16 Cyg A')
+parser.add_argument('-n', '--noise', action='store_const',
+                const=True, default=False, help='Turn on Chi-Sqr 2 d.o.f. noise')
+parser.add_argument('-b', '--background', action='store_const', const=True,
+                    default=False, help='Turn on Harvey Profile background')
+args = parser.parse_args()
+
 class star():
     def __init__(self, freqs, nyquist, numax, dnu, d02, nus, i):
         '''A class model that stores the basic stellar properties'''
@@ -24,23 +33,23 @@ class star():
         self.nmax = self.numax/self.dnu - self.epsilon #from Vrard et al. 2015
         self.lmax = 3     #Don't care about higher order
         self.Gamma = 1.   #Depends on the mode lifetimes (which I don't know)
-        self.nus = .4     #Depends on rotation & coriolis force (which I don't understand yet)
-        self.i = np.pi/4 #Determines the mode height
+        self.nus = nus     #Depends on rotation & coriolis force (which I don't understand yet)
+        self.i = i        #Determines the mode height
+        self.snr  = 20.
 
-    def get_height(self, nunlm, hmax=50.):
-        #I modulate the mode height based on a fudged estimate of the FWHM
-        #No physics has gone into this
-        fwhm = 0.66*self.numax**0.88 * 0.5 #This FWHM relation is for RGB only
-        H = hmax * np.exp(-0.5 * (nunlm - self.numax)**2 / fwhm**2)
-        return H
+    def get_Hn(self, n):
+        #The height of the l=0 mode for a given n.
+        #These I will draw from a Gaussian with a given FWHM
+        nun0 = self.asymodelocs(n, 0, 0)
 
-    def lorentzian(self, nunlm, l, m):
-        #We set all mode heights to 1 to start with
-        H = self.get_height(nunlm) * self.get_Epsilon(self.i, l, m)
-        model = H / (1 + (4/self.Gamma**2)*(self.freqs - nunlm)**2)
-        return model
+        hmax=self.snr*1.4
 
-    def get_Epsilon(self, i, l, m):
+         #I modulate the mode height based on a fudged estimate of the FWHM
+        fwhm = 0.25*self.numax  #From LEGACY
+        Hn = hmax * np.exp(-0.5 * (nun0 - self.numax)**2 / fwhm**2)
+        return Hn
+
+    def get_Epsilonlm(self, i, l, m):
         #I use the prescriptions from Gizon & Solank 2003 and Handberg & Campante 2012
         if l == 0:
             return 1
@@ -66,67 +75,70 @@ class star():
             if np.abs(m) == 3:
                 return (5/16)*np.sin(i)**6
 
+    def get_Vl(self, l):
+        #Vn depends on the mission, and is usually marginalised over.
+        #It is the geometrical visibility of the total power in a multiplet (n, l) as a function of l.
+        if l == 0.:
+            return 1.0
+        if l == 1.:
+            return 1.22
+        if l == 2.:
+            return 0.71
+        if l == 3.:
+            return 0.14
+
+    def lorentzian(self, nunlm, n, l, m):
+        #We set all mode heights to 1 to start with
+        height = self.get_Hn(n) * self.get_Epsilonlm(self.i, l, m) * self.get_Vl(l)**2
+        model = height / (1 + (4/self.Gamma**2)*(self.freqs - nunlm)**2)
+        return model
+
     def asymodelocs(self, n, l, m):
         #d00, d01, d02, d03
         dnu0 = [0., 0., self.d02, self.d02]
         return self.dnu * (n + l/2 + self.epsilon) - dnu0[l] + m * self.nus
 
     def get_apodization(self):
-        return np.sinc(self.freqs / 2.0 / self.nyquist)**2
-
-    def harvey_guesses(self):
-        ak, ae = 3.3, -0.48
-        bk, be = -0.43, 0.86
-        ck, ce = 3.59, -0.59
-        dk, de = 0.02, 0.96
-        wk, we = -0.82, 1.03
-        hk, he = 6.95, -2.18
-        a = 10**(ak + np.log10(self.numax)*ae)
-        b = 10**(bk + np.log10(self.numax)*be)
-        c = 10**(ck + np.log10(self.numax)*ce)
-        d = 10**(dk + np.log10(self.numax)*de)
-        h = a * 0.5
-        j = b / 40.0
-        width = 10**(wk + np.log10(self.numax)*we)
-        height = 10**(hk + np.log10(self.numax)*he)
-        scale = 1.0
-        return a, b, c, d, h, j
-
-    def harvey(self, a, b, c=4.0):
-        #I need to find and include a harvey profile myself still
-        return 0.9*a**2/b/(1 + (self.freqs/b)**c)
-
-    def get_background(self, scale=0.2):
-        a, b, c, d, h, j = self.harvey_guesses()
-        return scale*(self.harvey(a, b) + self.harvey(c, d) + self.harvey(h, j, 2.0))
+        return np.sinc((np.pi/2) * self.freqs / self.nyquist)**2
 
     def get_noise(self):
         return np.random.chisquare(2, size=len(self.freqs))
 
     def get_model(self):
-        nn = np.arange(np.floor(self.nmax-10.), np.floor(self.nmax+10.), 1)
+        nn = np.arange(np.floor(self.nmax-15.), np.floor(self.nmax+15.), 1)
         model = np.ones(len(self.freqs))
         locs = np.ones([len(nn), self.lmax+1])
+
         for idx, n in enumerate(nn):
             for l in np.arange(self.lmax+1):
                 locs[idx, l] = self.asymodelocs(n, l, 0.)
                 if l == 0:
                     loc = self.asymodelocs(n, l, 0.)
-                    model += self.lorentzian(locs[idx, l], l, 0.)
+                    model += self.lorentzian(locs[idx, l], n, l, 0.)
                 else:
                     for m in np.arange(-l, l+1):
                         loc = self.asymodelocs(n, l, m)
-                        model += self.lorentzian(loc, l, m) #change height of multiplet
+                        model += self.lorentzian(loc, n, l, m) #change height of multiplet
+
+        #Add the additional components
         apod = self.get_apodization()
-        background = 0. #self.get_background()
-        return (model + background + self.get_noise()) * apod, locs
+        if args.background:
+            background = self.get_background()
+        else:
+            background = 0.
+        if args.noise:
+            noise = self.get_noise()
+        else:
+            noise = 0.
+
+        return (model + background) * apod + noise, locs
 
     def plot_model(self):
         model, locs = self.get_model()
-        l0s = np.ones(locs.shape[0])*.81 * np.max(model)
+        l0s = np.ones(locs.shape[0])*.82 * np.max(model)
         l1s = np.ones(locs.shape[0])*.82 * np.max(model)
-        l2s = np.ones(locs.shape[0])*.83 * np.max(model)
-        l3s = np.ones(locs.shape[0])*.84 * np.max(model)
+        l2s = np.ones(locs.shape[0])*.81 * np.max(model)
+        l3s = np.ones(locs.shape[0])*.81 * np.max(model)
 
         fig = plt.figure()
         plt.plot(self.freqs, model)
@@ -150,9 +162,15 @@ if __name__ == '__main__':
     nus = 0.411
     i = np.deg2rad(56.)
     d02 = 6.8
-    Dnu = 102.
+    dnu = 102.
     numax = 2200.
 
     freqs = np.arange(fs.value, numax*2, fs.value)
 
-    locs = star(freqs, nyquist, numax, Dnu, d02, nus, i).plot_model()
+    locs = star(freqs, nyquist, numax, dnu, d02, nus, i).plot_model()
+
+    s = star(freqs, nyquist, numax, dnu, d02, nus, i)
+    # w = s.get_noise()
+    # import seaborn as sns
+    # sns.distplot(w)
+    # plt.show()
