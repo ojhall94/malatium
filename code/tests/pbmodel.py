@@ -16,9 +16,10 @@ plt.style.use(lightkurve.MPLSTYLE)
 import argparse
 parser = argparse.ArgumentParser(description='Generate a model of 16 Cyg A')
 parser.add_argument('-n', '--noise', action='store_const',
-                const=True, default=False, help='Turn on Chi-Sqr 2 d.o.f. noise')
-parser.add_argument('-b', '--background', action='store_const', const=True,
-                    default=False, help='Turn on Harvey Profile background')
+                const=False, default=True, help='Turn on Chi-Sqr 2 d.o.f. noise')
+parser.add_argument('-b', '--background', action='store_const', const=False,
+                    default=True, help='Turn on Harvey Profile background')
+parser.add_argument('years', default = 4., type=float, help='How many years worth of data')
 args = parser.parse_args()
 
 class star():
@@ -35,18 +36,19 @@ class star():
         self.Gamma = 1.   #Depends on the mode lifetimes (which I don't know)
         self.nus = nus     #Depends on rotation & coriolis force (which I don't understand yet)
         self.i = i        #Determines the mode height
-        self.snr  = 20.
+        self.snr  = 10.
 
     def get_Hn(self, n):
         #The height of the l=0 mode for a given n.
-        #These I will draw from a Gaussian with a given FWHM
+        #These I will draw from a Gaussian with a given FWHM, as they depend on SNR
         nun0 = self.asymodelocs(n, 0, 0)
 
         hmax=self.snr*1.4
 
          #I modulate the mode height based on a fudged estimate of the FWHM
         fwhm = 0.25*self.numax  #From LEGACY
-        Hn = hmax * np.exp(-0.5 * (nun0 - self.numax)**2 / fwhm**2)
+        std = fwhm / (2*np.sqrt(2*np.log(2)))
+        Hn = hmax * np.exp(-0.5 * (nun0 - self.numax)**2 / std**2)
         return Hn
 
     def get_Epsilonlm(self, i, l, m):
@@ -78,6 +80,7 @@ class star():
     def get_Vl(self, l):
         #Vn depends on the mission, and is usually marginalised over.
         #It is the geometrical visibility of the total power in a multiplet (n, l) as a function of l.
+        #Im taking these values from Handberg & Campante 2011 (agree with Chaplin+13)
         if l == 0.:
             return 1.0
         if l == 1.:
@@ -93,19 +96,44 @@ class star():
         model = height / (1 + (4/self.Gamma**2)*(self.freqs - nunlm)**2)
         return model
 
+
+    def harvey(self, a, b, c):
+        #The harvey profile seems to take different forms depending on who I ask?
+        #I'm going to be using the one used in Guy's BackFit code. Why is it different?
+        harvey = 0.9*a**2/b/(1.0 + (self.freqs/b)**c);
+
+        return harvey
+
+    def get_background(self):
+        #I did a fit to 16CygA using Guy's backfit program. I'm lifting the
+        #Harvey components from there
+        a = 36.3
+        b = 723.52
+        c = 31.85
+        d = 2002.6
+        j = 1.79
+        k = 198.31
+        white = 0.09
+
+        background = np.zeros(len(self.freqs))
+        background += self.harvey(a, b, 4.) +\
+                        self.harvey(c, d, 4.) +\
+                        self.harvey(j, k, 2.) + white
+        return background
+
+    def get_apodization(self):
+        return np.sinc((np.pi/2) * self.freqs / self.nyquist)
+
+    def get_noise(self):
+        return np.random.chisquare(2, size=len(self.freqs))
+
     def asymodelocs(self, n, l, m):
         #d00, d01, d02, d03
         dnu0 = [0., 0., self.d02, self.d02]
         return self.dnu * (n + l/2 + self.epsilon) - dnu0[l] + m * self.nus
 
-    def get_apodization(self):
-        return np.sinc((np.pi/2) * self.freqs / self.nyquist)**2
-
-    def get_noise(self):
-        return np.random.chisquare(2, size=len(self.freqs))
-
     def get_model(self):
-        nn = np.arange(np.floor(self.nmax-15.), np.floor(self.nmax+15.), 1)
+        nn = np.arange(np.floor(self.nmax-6.), np.floor(self.nmax+6.), 1)
         model = np.ones(len(self.freqs))
         locs = np.ones([len(nn), self.lmax+1])
 
@@ -129,9 +157,9 @@ class star():
         if args.noise:
             noise = self.get_noise()
         else:
-            noise = 0.
+            noise = 1.
 
-        return (model + background) * apod + noise, locs
+        return (model + background) * apod**2 * noise, locs
 
     def plot_model(self):
         model, locs = self.get_model()
@@ -155,7 +183,7 @@ class star():
 if __name__ == '__main__':
     nyquist = 0.5 * (1./58.6) * u.hertz
     nyquist = nyquist.to(u.microhertz)
-    fs = 1./(4*365) * (1/u.day)
+    fs = 1./(args.years*365) * (1/u.day)
     fs = fs.to(u.microhertz)
 
     #Parameters for 16 Cyg A
@@ -167,9 +195,15 @@ if __name__ == '__main__':
 
     freqs = np.arange(fs.value, numax*2, fs.value)
 
-    locs = star(freqs, nyquist, numax, dnu, d02, nus, i).plot_model()
+    locs = star(freqs, nyquist, numax, dnu, d02, nus, 0).plot_model()
 
+    import lightkurve as lk
     s = star(freqs, nyquist, numax, dnu, d02, nus, i)
+    pg = lk.periodogram.LombScarglePeriodogram(freqs*u.microhertz, s.get_model()[0]*u.hertz)
+    pg.plot()
+    snr = pg.flatten()
+    snr.plot()
+
     # w = s.get_noise()
     # import seaborn as sns
     # sns.distplot(w)
