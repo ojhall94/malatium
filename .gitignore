@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# File
+data/kepler_dr2_1arcsec.fits
+
 # Distribution / packaging
 .Python
 build/
