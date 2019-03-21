@@ -16,10 +16,14 @@ plt.style.use(lightkurve.MPLSTYLE)
 import argparse
 parser = argparse.ArgumentParser(description='Generate a model of 16 Cyg A')
 parser.add_argument('-n', '--noise', action='store_const',
-                const=False, default=True, help='Turn on Chi-Sqr 2 d.o.f. noise')
+                const=False, default=True, help='Turn off Chi-Sqr 2 d.o.f. noise')
 parser.add_argument('-b', '--background', action='store_const', const=False,
-                    default=True, help='Turn on Harvey Profile background')
+                    default=True, help='Turn off Harvey Profile background')
+parser.add_argument('-a', '--apodization', action='store_const', const=False,
+                    default=True, help='Turn off apodization')
 parser.add_argument('years', default = 4., type=float, help='How many years worth of data')
+parser.add_argument('-s','--save',action='store_const',const=True,
+                    default=False, help='Save output.')
 args = parser.parse_args()
 
 class star():
@@ -34,7 +38,7 @@ class star():
         self.nmax = self.numax/self.dnu - self.epsilon #from Vrard et al. 2015
         self.lmax = 3     #Don't care about higher order
         self.Gamma = 1.   #Depends on the mode lifetimes (which I don't know)
-        self.nus = nus     #Depends on rotation & coriolis force (which I don't understand yet)
+        self.nus = nus    #Depends on rotation & coriolis force (which I don't understand yet)
         self.i = i        #Determines the mode height
         self.snr  = 10.
 
@@ -96,7 +100,6 @@ class star():
         model = height / (1 + (4/self.Gamma**2)*(self.freqs - nunlm)**2)
         return model
 
-
     def harvey(self, a, b, c):
         #The harvey profile seems to take different forms depending on who I ask?
         #I'm going to be using the one used in Guy's BackFit code. Why is it different?
@@ -149,7 +152,6 @@ class star():
                         model += self.lorentzian(loc, n, l, m) #change height of multiplet
 
         #Add the additional components
-        apod = self.get_apodization()
         if args.background:
             background = self.get_background()
         else:
@@ -158,6 +160,10 @@ class star():
             noise = self.get_noise()
         else:
             noise = 1.
+        if args.apodization:
+            apod = self.get_apodization()
+        else:
+            apod = 1.
 
         return (model + background) * apod**2 * noise, locs
 
@@ -178,8 +184,6 @@ class star():
         plt.savefig('16CygAmodel.png')
         plt.show()
 
-        return locs
-
 if __name__ == '__main__':
     nyquist = 0.5 * (1./58.6) * u.hertz
     nyquist = nyquist.to(u.microhertz)
@@ -195,14 +199,18 @@ if __name__ == '__main__':
 
     freqs = np.arange(fs.value, numax*2, fs.value)
 
-    locs = star(freqs, nyquist, numax, dnu, d02, nus, 0).plot_model()
+    star(freqs, nyquist, numax, dnu, d02, nus, i).plot_model()
+    if args.save:
+        model, locs = star(freqs, nyquist, numax, dnu, d02, nus, i).get_model()
+        np.savetxt('locs.txt',locs)
+        np.savetxt('model.txt',model)
+        np.savetxt('freqs.txt',freqs)
+    # import lightkurve as lk
+    # s = star(freqs, nyquist, numax, dnu, d02, nus, i)
+    # pg = lk.periodogram.LombScarglePeriodogram(freqs*u.microhertz, s.get_model()[0]*u.hertz)
+    #
+    # pg.plot()
 
-    import lightkurve as lk
-    s = star(freqs, nyquist, numax, dnu, d02, nus, i)
-    pg = lk.periodogram.LombScarglePeriodogram(freqs*u.microhertz, s.get_model()[0]*u.hertz)
-    pg.plot()
-    snr = pg.flatten()
-    snr.plot()
 
     # w = s.get_noise()
     # import seaborn as sns
