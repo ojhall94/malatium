@@ -63,7 +63,7 @@ class star():
             if m == 0:
                 return np.cos(i)**2
             if np.abs(m) == 1:
-                return 0.4 * np.sin(i)**2
+                return 0.5 * np.sin(i)**2
         if l == 2:
             if m == 0:
                 return 0.25 * (3 * np.cos(i)**2 - 1)**2
