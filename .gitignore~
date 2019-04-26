@@ -19,7 +19,6 @@ eggs/
 .eggs/
 lib/
 lib64/
-*.pkl
 parts/
 sdist/
 var/
