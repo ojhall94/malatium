@@ -22,6 +22,7 @@ parser.add_argument('-b', '--background', action='store_const', const=False,
 parser.add_argument('-a', '--apodization', action='store_const', const=False,
                     default=True, help='Turn off apodization')
 parser.add_argument('years', default = 4., type=float, help='How many years worth of data')
+parser.add_argument('split', default = 0.411, type=float, help='The splitting in microhertz')
 parser.add_argument('-s','--save',action='store_const',const=True,
                     default=False, help='Save output.')
 args = parser.parse_args()
@@ -191,7 +192,7 @@ if __name__ == '__main__':
     fs = fs.to(u.microhertz)
 
     #Parameters for 16 Cyg A
-    nus = 0.411
+    nus = args.split
     i = np.deg2rad(56.)
     d02 = 6.8
     dnu = 102.
