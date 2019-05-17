@@ -22,7 +22,6 @@ parser.add_argument('-b', '--background', action='store_const', const=False,
 parser.add_argument('-a', '--apodization', action='store_const', const=False,
                     default=True, help='Turn off apodization')
 parser.add_argument('years', default = 4., type=float, help='How many years worth of data')
-parser.add_argument('split', default = 0.411, type=float, help='The splitting in microhertz')
 parser.add_argument('-s','--save',action='store_const',const=True,
                     default=False, help='Save output.')
 args = parser.parse_args()
@@ -38,7 +37,6 @@ class star():
         self.epsilon = 0.601 + 0.632*np.log(self.dnu)  #from Vrard et al. 2015 (for RGB)
         self.nmax = self.numax/self.dnu - self.epsilon #from Vrard et al. 2015
         self.lmax = 3     #Don't care about higher order
-        self.Gamma = 1.   #Depends on the mode lifetimes (which I don't know)
         self.nus = nus    #Depends on rotation & coriolis force (which I don't understand yet)
         self.i = i        #Determines the mode height
         self.snr  = 10.
@@ -95,10 +93,23 @@ class star():
         if l == 3.:
             return 0.14
 
+    def get_Gamma(self, nunlm):
+        Gamma_alpha = 5.47
+        alpha=3.33
+        DeltaDip = 0.18
+        Wdip = 3187.
+        nudip = 2181.
+
+        lnG = (alpha * np.log(nunlm/self.numax) + np.log(Gamma_alpha)) +\
+                (np.log(DeltaDip)) / \
+                (1 + ((2*np.log(nunlm/nudip))/(np.log(Wdip/self.numax)))**2)
+
+        return np.exp(lnG)
+
     def lorentzian(self, nunlm, n, l, m):
         #We set all mode heights to 1 to start with
         height = self.get_Hn(n) * self.get_Epsilonlm(self.i, l, m) * self.get_Vl(l)**2
-        model = height / (1 + (4/self.Gamma**2)*(self.freqs - nunlm)**2)
+        model = height / (1 + (4/self.get_Gamma(nunlm)**2)*(self.freqs - nunlm)**2)
         return model
 
     def harvey(self, a, b, c):
@@ -191,8 +202,10 @@ if __name__ == '__main__':
     fs = 1./(args.years*365) * (1/u.day)
     fs = fs.to(u.microhertz)
 
+    kic = 12069424 #16 Cyg A
+
     #Parameters for 16 Cyg A
-    nus = args.split
+    nus = 0.411
     i = np.deg2rad(56.)
     d02 = 6.8
     dnu = 102.
