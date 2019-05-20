@@ -3,8 +3,12 @@
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import matplotlib
+import os
+if os.getlogin() = 'ojh251':
+    matplotlib.use('Agg')
+from matplotlib import pyplot as plt
+
 from astropy import units as u
 import lightkurve
 from scipy.special import legendre as P
