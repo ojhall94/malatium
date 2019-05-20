@@ -1,5 +1,6 @@
-# !/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+#O. J. Hall 2019
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
