@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib
 import os
-if os.getlogin() = 'ojh251':
+if os.getlogin() == 'ojh251':
     matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 
