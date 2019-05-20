@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 from astropy import units as u
 import lightkurve
 from scipy.special import legendre as P
-from scipy.misc import factorial as fct
+from scipy.special import factorial as fct
 
 from omnitool import literature_values as lv
 plt.style.use(lightkurve.MPLSTYLE)
