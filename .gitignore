@@ -8,6 +8,7 @@ __pycache__/
 
 # File
 data/kepler_dr2_1arcsec.fits
+code/tests/output_fmr/
 
 # Distribution / packaging
 .Python
