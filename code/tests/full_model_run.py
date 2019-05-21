@@ -22,7 +22,8 @@ parser.add_argument('-f','--full', action='store_const',
                     const=True, default=False, help='Run on all modes.')
 args = parser.parse_args()
 
-__outdir__ = 'output_fmr/'+timestr+'_'
+# __outdir__ = 'output_fmr/'+timestr+'_'
+__outdir__ = timestr+'_'
 __iter__ = 1000
 
 def create_model(overwrite=True):
