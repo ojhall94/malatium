@@ -303,7 +303,7 @@ class run_stan:
 
 if __name__ == '__main__':
     # Get the locs
-    locs = np.genfromtxt('locs.txt')
+    locs = np.genfromtxt('../locs.txt')
     mid = int(np.floor(len(locs)/2))
     l0s = locs[mid:mid+1,0]
     l2s = locs[mid-1:mid,2]
@@ -319,8 +319,8 @@ if __name__ == '__main__':
         modeids = [0]*len(l0s)  + [1]*len(l1s) + [2]*len(l2s)
 
     # Get the data range
-    ff = np.genfromtxt('freqs.txt')
-    pp = np.genfromtxt('model.txt')
+    ff = np.genfromtxt('../freqs.txt')
+    pp = np.genfromtxt('../model.txt')
     sel = [(ff >= np.min(modelocs)-25) & (ff <= np.max(modelocs+25))]
     f = ff[tuple(sel)]
     p = pp[tuple(sel)]
