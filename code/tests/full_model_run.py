@@ -1,5 +1,6 @@
-# !/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+#O. J. Hall 2019
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
@@ -14,7 +15,7 @@ timestr = time.strftime("%m%d-%H%M")
 
 import argparse
 parser = argparse.ArgumentParser(description='Run our PyStan model')
-paser.add_argument('-f','--full', action='store_const',
+parser.add_argument('-f','--full', action='store_const',
                     const=True, default=False, help='Run on all modes.')
 args = parser.parse_args()
 
