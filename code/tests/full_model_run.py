@@ -4,8 +4,7 @@
 import numpy as np
 import matplotlib
 import os
-if os.getlogin() == 'ojh251':
-    matplotlib.use('Agg')
+matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import pickle
 import lightkurve as lk
