@@ -15,7 +15,7 @@ timestr = time.strftime("%m%d-%H%M")
 
 import argparse
 parser = argparse.ArgumentParser(description='Run our PyStan model')
-paser.add_argument('-f','--full', action='store_const',
+parser.add_argument('-f','--full', action='store_const',
                     const=True, default=False, help='Run on all modes.')
 args = parser.parse_args()
 
