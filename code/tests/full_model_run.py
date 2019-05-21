@@ -2,11 +2,13 @@
 #O. J. Hall 2019
 
 import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib
+import os
+if os.getlogin() == 'ojh251':
+    matplotlib.use('Agg')
+from matplotlib import pyplot as plt
 import pickle
 import lightkurve as lk
-import os
 import pystan
 import astropy.units as u
 import sys
