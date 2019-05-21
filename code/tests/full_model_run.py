@@ -150,7 +150,7 @@ class run_stan:
         else:
             print('No stan model found')
             create_model(overwrite=True)
-            sys.exit()
+            sm = pickle.load(open(model_path, 'rb'))
         return sm
 
     def run_stan(self):
