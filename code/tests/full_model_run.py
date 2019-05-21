@@ -7,7 +7,9 @@ import matplotlib
 import pickle
 import lightkurve as lk
 import os
+import pystan
 import astropy.units as u
+import sys
 from astropy.units import cds
 import corner
 import time
@@ -147,7 +149,7 @@ class run_stan:
             sm = pickle.load(open(model_path, 'rb'))
         else:
             print('No stan model found')
-            create_asterostan(overwrite=True)
+            create_model(overwrite=True)
             sys.exit()
         return sm
 
