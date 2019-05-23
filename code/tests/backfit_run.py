@@ -23,7 +23,7 @@ args = parser.parse_args()
 
 # __outdir__ = 'output_fmr/'+timestr+'_'
 __outdir__ = timestr+'_backfit_'
-__iter__ = args['iters']
+__iter__ = args.iters
 
 def create_model(overwrite=True):
     overwrite = False

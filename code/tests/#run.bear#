@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#SBATCH --ntasks 4
+#SBATCH --nodes 1
+#SBATCH --qos bb
+#SBATCH --time 48:00:00
+
+set -e
+
+module purge; module load bluebear
+module load all/Python/3.6.3-iomkl-2018a
+
+python3 full_model_run.py -f
+
+mv *.txt /rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium
+mv *.png /rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium
+mv slurm* /rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium
