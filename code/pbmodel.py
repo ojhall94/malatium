@@ -141,7 +141,7 @@ class star():
         return background
 
     def get_apodization(self):
-        x = (np.pi * self.freqs) / (2 * self.nyquist)
+        x = (np.pi * self.freqs) / (2 * self.nyquist.value)
         return (np.sin(x)/x)**2
 
     def get_noise(self):
