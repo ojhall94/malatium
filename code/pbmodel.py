@@ -216,7 +216,7 @@ if __name__ == '__main__':
     dnu = 102.
     numax = 2200.
 
-    freqs = np.arange(fs.value, numax*2, fs.value)
+    freqs = np.arange(fs.value, nyquist, fs.value)
 
     star(freqs, nyquist, numax, dnu, d02, nus, i).plot_model()
     if args.save:
