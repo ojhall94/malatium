@@ -23,10 +23,13 @@ import argparse
 parser = argparse.ArgumentParser(description='Run our PyStan model')
 parser.add_argument('iters', type=int, help='Number of MCMC iterations in PyStan.')
 parser.add_argument('idx',type=int,help='Index on the kiclist')
+parser.add_argument('rds',type=str,help='Location for output in RDS')
 args = parser.parse_args()
 
 # __outdir__ = 'output_fmr/'+timestr+'_'
-__outdir__ = timestr+'_idx'+str(args.idx)+'_backfit_'
+# __rds__ = '/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/backfit/'
+
+__outdir__ = args.rds+timestr+'_idx'+str(args.idx)+'_backfit_'
 __iter__ = args.iters
 
 def create_model(overwrite=True):
