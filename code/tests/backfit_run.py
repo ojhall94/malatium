@@ -26,7 +26,6 @@ __outdir__ = timestr+'_backfit_'
 __iter__ = args.iters
 
 def create_model(overwrite=True):
-    overwrite = False
     backfit = '''
     functions {
         real harvey(real f, real a, real b, real c){
@@ -40,47 +39,45 @@ def create_model(overwrite=True):
     data {
         int N;
         vector[N] f;
-        real p[N];
+        vector[N] p;
         real white_est;
         real nyq_est;
         real numax_est;
         real scale_spread;
     }
     parameters {
-        real<lower = 0> a;
-        real<lower = 0> b;
-        real<lower = 0> c;
-        real<lower = 0> d;
-        real<lower = 0> j;
-        real<lower = 0> k;
-        real<lower = 0> numax;
-        real<lower = 0> white;
-        real<lower = 0> nyq;
-        real scale;
-    }
-    transformed parameters {
         real loga;
         real logb;
         real logc;
         real logd;
         real logj;
         real logk;
-        real log_ac;
         real lognumax;
+        real<lower=0> white;
+        real<lower=0> nyq;
+        real scale;
+    }
+    transformed parameters {
+        real numax;
 
-        loga = log10(a);
-        logb = log10(b);
-        logc = log10(c);
-        logd = log10(d);
-        logj = log10(j);
-        logk = log10(k);
-        log_ac = loga - logc;
-
-        lognumax = log10(numax);
-
+        numax = 10^lognumax;
     }
     model {
+        real a;
+        real b;
+        real c;
+        real d;
+        real j;
+        real k;
         real beta[N];
+
+        a = 10^loga;
+        b = 10^logb;
+        c = 10^logc;
+        d = 10^logd;
+        j = 10^logj;
+        k = 10^logk;
+
         for (i in 1:N){
             beta[i] = 1. / (apod(f[i], nyq) * scale
                     * (harvey(f[i], a, b, 4.0)
@@ -92,15 +89,15 @@ def create_model(overwrite=True):
 
         numax ~ normal(numax_est, numax_est*0.1);
         white ~ normal(white_est, white_est*0.3);
+        nyq ~ normal(nyq_est, nyq_est*0.01);
+        scale ~ normal(1, scale_spread);
 
-        loga ~ normal(3.4 + lognumax * -0.48, 0.3);
+        loga ~ normal(3.4 + lognumax *.48, 0.3);
         logb ~ normal(-0.43 + lognumax * 0.86, 0.3);
         logc ~ normal(3.59 + lognumax * -0.59, 0.3);
         logd ~ normal(0.02 + lognumax * 0.96, 0.3);
         logj ~ normal(loga-1, 1.2);
         logk ~ normal(logb-1, 0.2);
-        nyq ~ normal(nyq_est, nyq_est*0.01);
-        scale ~ normal(1, scale_spread);
     }
     '''
     model_path = 'backfit.pkl'
@@ -135,7 +132,10 @@ def first_guess(numax):
     k = b / 40.0
     scale = 1.0
 
-    return [a, b, c, d, j, k, numax]
+    return [np.log10(a), np.log10(b),
+            np.log10(c), np.log10(d),
+            np.log10(j), np.log10(k),
+            np.log10(numax)]
 
 class run_stan:
     def __init__(self, data, init):
@@ -164,17 +164,22 @@ class run_stan:
         sm = self.read_stan()
 
         fit = sm.sampling(data = self.data,
-                    iter= __iter__, chains=4, seed=1895,
+                    iter= __iter__, chains=4,
                     init = [self.init, self.init, self.init, self.init])
 
         return fit
 
     def out_corner(self, fit):
-        labels=['a','b','c','d','j','k','white','scale','nyq']
-        truths = [init['a'], init['b'], init['c'], init['d'], init['j'],
-                init['k'], init['white'], init['scale'], init['nyq']]
-        verbose=[r'$a$',r'$b$',r'$c$',r'$d$',r'$j$',r'$k$','white','scale',
-        r'$\nu_{\rm nyq}$']
+        labels=['loga','logb','logc','logd','logj','logk',
+                'white','numax','scale','nyq']
+        truths = [init['loga'], init['logb'],
+                    init['logc'], init['logd'],
+                    init['logj'], init['logk'],
+                    init['white'], 10**init['lognumax'],init['scale'], init['nyq']]
+        verbose=[r'$\log_{10}a$',r'$\log_{10}b$',
+                r'$\log_{10}c$',r'$\log_{10}d$',
+                r'$\log_{10}j$',r'$\log_{10}k$',
+                'white',r'$\nu_{\rm max}$','scale',r'$\nu_{\rm nyq}$']
 
         chain = np.array([fit[label] for label in labels])
 
@@ -197,26 +202,27 @@ class run_stan:
         x = (np.pi * freqs) / (2 * nyquist)
         return (np.sin(x)/x)**2
 
-    def get_background(self, f, a, b, c, d, j, k, white, scale, nyq):
+    def get_background(self, f, a, b, c, d, j, k, white, numax, scale, nyq):
         background = np.zeros(len(f))
-        background += get_apodization(f, nyq)**2 * scale\
-                        * (harvey(f, a, b, 4.) + harvey(f, c, d, 4.) + harvey(f, j, k, 2.))\
+        background += self.get_apodization(f, nyq)**2 * scale\
+                        * (self.harvey(f, a, b, 4.) + self.harvey(f, c, d, 4.) + self.harvey(f, j, k, 2.))\
                         + white
         return background
 
     def out_modelplot(self, fit):
-        labels=['a','b','c','d','j','k','white','scale','nyq']
-        res = [np.median(fit[label]) for label in labels]
-        model = get_background(f, *res)
+        labels=['loga','logb','logc','logd','logj','logk','white','numax','scale','nyq']
+        res = np.array([np.median(fit[label]) for label in labels])
+        res[0:6] = 10**res[0:6]
+        model = self.get_background(f, *res)
 
         pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
         ax = pg.plot(alpha=.25, label='Data', scale='log')
         ax.plot(f, model, label='Model')
-        ax.plot(f, harvey(f, *res[0:2], 4.), label='Harvey 1', ls=':')
-        ax.plot(f, harvey(f, *res[2:4], 4.), label='Harvey 2', ls=':')
-        ax.plot(f, harvey(f, *res[4:6], 2.), label='Harvey 3', ls=':')
-        ax.plot(f, get_apodization(f, f[-1]), label='Apod', ls='--')
-        ax.plot(f, res[-3]*np.ones_like(f), label='white',ls='-.')
+        ax.plot(f, self.harvey(f, 10**res[0],10**res[1], 4.), label='Harvey 1', ls=':')
+        ax.plot(f, self.harvey(f, 10**res[2],10**res[3], 4.), label='Harvey 2', ls=':')
+        ax.plot(f, self.harvey(f, 10**res[4],10**res[5], 2.), label='Harvey 3', ls=':')
+        ax.plot(f, self.get_apodization(f, f[-1]), label='Apod', ls='--')
+        ax.plot(f, res[-4]*np.ones_like(f), label='white',ls='-.')
         plt.legend(fontsize=10)
 
         plt.savefig(__outdir__+'modelplot.png')
@@ -252,20 +258,17 @@ if __name__ == '__main__':
     p0 = first_guess(numax)
 
     data = {'N': len(f),
-            'f': f,
-            'p': p,
-            'numax_est': numax,
-            'white_est': white,
+            'f': f, 'p': p,
+            'numax_est': numax, 'white_est': white,
             'nyq_est': np.max(f),
             'scale_spread': 0.01}
 
-    init = {'a': p0[0], 'b': p0[1],
-            'c': p0[2], 'd': p0[3],
-            'j': p0[4], 'k': p0[5],
-            'numax': p0[6],
-            'white': white,
-            'nyq': np.max(f),
-            'scale': 0.7}
+    init = {'loga': p0[0], 'logb': p0[1],
+            'logc': p0[2], 'logd': p0[3],
+            'logj': p0[4], 'logk': p0[5],
+            'lognumax': p0[6],
+            'white': white, 'nyq': np.max(f),
+            'scale': 1.}
 
     # Run stan
     run = run_stan(data, init)
