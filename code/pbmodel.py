@@ -224,6 +224,10 @@ if __name__ == '__main__':
         np.savetxt('locs.txt',locs)
         np.savetxt('model.txt',model)
         np.savetxt('freqs.txt',freqs)
+
+        lws = star(freqs, nyquist, numax, dnu, d02, nus, i).get_Gamma(locs)
+        np.savetxt('lws.txt',lws)
+
     # import lightkurve as lk
     # s = star(freqs, nyquist, numax, dnu, d02, nus, i)
     # pg = lk.periodogram.LombScarglePeriodogram(freqs*u.microhertz, s.get_model()[0]*u.hertz)
