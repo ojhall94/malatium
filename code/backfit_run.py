@@ -258,7 +258,7 @@ if __name__ == '__main__':
 
     # Get the star data
     mal = pd.read_csv('../data/malatium.csv', index_col=0)
-    star = mal.loc[0]
+    star = mal.loc[idx]
     kic = star.KIC
     numax = star.numax
 
