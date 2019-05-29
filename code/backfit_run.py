@@ -16,6 +16,7 @@ from astropy.units import cds
 import corner
 import glob
 import time
+import lightkurve as lk
 from astropy.io import ascii
 timestr = time.strftime("%m%d-%H%M")
 
@@ -144,6 +145,14 @@ def first_guess(numax):
             np.log10(j), np.log10(k),
             np.log10(numax)]
 
+def rebin(f, p, binsize=10):
+    m = int(len(p)/binsize)
+
+    bin_f = f[:m*binsize].reshape((m, binsize)).mean(1)
+    bin_p = p[:m*binsize].reshape((m, binsize)).mean(1)
+
+    return bin_f, bin_p
+
 class run_stan:
     def __init__(self, data, init):
         '''Core PyStan class.
@@ -225,9 +234,9 @@ class run_stan:
         pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
         ax = pg.plot(alpha=.25, label='Data', scale='log')
         ax.plot(f, model, label='Model')
-        ax.plot(f, self.harvey(f, 10**res[0],10**res[1], 4.), label='Harvey 1', ls=':')
-        ax.plot(f, self.harvey(f, 10**res[2],10**res[3], 4.), label='Harvey 2', ls=':')
-        ax.plot(f, self.harvey(f, 10**res[4],10**res[5], 2.), label='Harvey 3', ls=':')
+        ax.plot(f, self.harvey(f, res[0],res[1], 4.), label='Harvey 1', ls=':')
+        ax.plot(f, self.harvey(f, res[2],res[3], 4.), label='Harvey 2', ls=':')
+        ax.plot(f, self.harvey(f, res[4],res[5], 2.), label='Harvey 3', ls=':')
         ax.plot(f, self.get_apodization(f, f[-1]), label='Apod', ls='--')
         ax.plot(f, res[-4]*np.ones_like(f), label='white',ls='-.')
         plt.legend(fontsize=10)
@@ -238,7 +247,7 @@ class run_stan:
     def out_pickle(self, fit):
         path = __outdir__+'fit.pkl'
         with open(path, 'wb') as f:
-            pickle.dump(fit, f)
+            pickle.dump(fit.extract(), f)
 
     def __call__(self):
         fit = self.run_stan()
@@ -261,6 +270,7 @@ if __name__ == '__main__':
     star = mal.loc[idx]
     kic = star.KIC
     numax = star.numax
+    dnu = star.dnu
 
     # Get the power spectrum
     # Col1 = frequency in microHz, Col2 = psd
@@ -270,14 +280,17 @@ if __name__ == '__main__':
     # Read in the mode locs
     cop = pd.read_csv('../data/copper.csv',index_col=0)
     locs = cop[cop.KIC == str(kic)].Freq.values
-    lo = locs.min() - 50.
-    hi = locs.max() + 50.
+    lo = locs.min() - .1*dnu
+    hi = locs.max() + .1*dnu
 
     # Make the frequency range selection
     ff, pp = data['col1'],data['col2']
     sel = (ff > lo) & (ff < hi)
-    f = ff[~sel].values
-    p = pp[~sel].values
+    tf = ff[~sel].values
+    tp = pp[~sel].values
+
+    #Rebin the frequencies
+    f, p = rebin(f, p, binsize=10)
 
     # Initiate the first guesses
     white = 1.
