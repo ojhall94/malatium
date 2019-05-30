@@ -186,10 +186,6 @@ class run_stan:
     def out_corner(self, fit):
         labels=['loga','logb','logc','logd','logj','logk',
                 'white','numax','scale','nyq']
-        truths = [init['loga'], init['logb'],
-                    init['logc'], init['logd'],
-                    init['logj'], init['logk'],
-                    init['white'], 10**init['lognumax'],init['scale'], init['nyq']]
         verbose=[r'$\log_{10}a$',r'$\log_{10}b$',
                 r'$\log_{10}c$',r'$\log_{10}d$',
                 r'$\log_{10}j$',r'$\log_{10}k$',
@@ -198,7 +194,7 @@ class run_stan:
         chain = np.array([fit[label] for label in labels])
 
         corner.corner(chain.T, labels=verbose, quantiles=[0.16, 0.5, 0.84],
-                    truths=truths,show_titles=True)
+                        show_titles=True)
 
         plt.savefig(__outdir__+'corner.png')
         plt.close('all')
@@ -288,7 +284,7 @@ if __name__ == '__main__':
     tp = pp[~sel].values
 
     #Rebin the frequencies
-    f, p = rebin(f, p, binsize=10)
+    f, p = rebin(tf, tp, binsize=10)
 
     # Initiate the first guesses
     white = 1.
