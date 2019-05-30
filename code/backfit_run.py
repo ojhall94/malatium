@@ -67,24 +67,19 @@ def create_model(overwrite=True):
     }
     transformed parameters {
         real numax;
+        real logac = loga - logc;
+        real logdb = logd - logb;
 
         numax = 10^lognumax;
     }
     model {
-        real a;
-        real b;
-        real c;
-        real d;
-        real j;
-        real k;
+        real a = 10^loga;
+        real b = 10^logb;
+        real c = 10^logc;
+        real d = 10^logd;
+        real j = 10^logj;
+        real k = 10^logk;
         real beta[N];
-
-        a = 10^loga;
-        b = 10^logb;
-        c = 10^logc;
-        d = 10^logd;
-        j = 10^logj;
-        k = 10^logk;
 
         for (i in 1:N){
             beta[i] = 1. / (apod(f[i], nyq) * scale
@@ -106,6 +101,9 @@ def create_model(overwrite=True):
         logd ~ normal(0.02 + lognumax * 0.96, 0.3);
         logj ~ normal(loga-1, 1.2);
         logk ~ normal(logb-1, 0.2);
+
+        logac ~ lognormal(1., 1.);
+        logdb ~ lognormal(1., 1.);
     }
     '''
     model_path = 'backfit.pkl'
@@ -220,7 +218,7 @@ class run_stan:
 
     def get_background(self, f, a, b, c, d, j, k, white, numax, scale, nyq):
         background = np.zeros(len(f))
-        background += self.get_apodization(f, nyq)**2 * scale\
+        background += self.get_apodization(f, nyq) * scale\
                         * (self.harvey(f, a, b, 4.) + self.harvey(f, c, d, 4.) + self.harvey(f, j, k, 2.))\
                         + white
         return background
