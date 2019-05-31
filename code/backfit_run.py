@@ -27,10 +27,6 @@ parser.add_argument('idx',type=int,help='Index on the kiclist')
 parser.add_argument('rds',type=str,help='Location for output in RDS')
 args = parser.parse_args()
 
-# __outdir__ = 'output_fmr/'+timestr+'_'
-# __rds__ = '/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/backfit/'
-
-__outdir__ = args.rds+timestr+'_idx'+str(args.idx)+'_backfit_'
 __iter__ = args.iters
 
 def create_model(overwrite=True):
@@ -152,7 +148,7 @@ def rebin(f, p, binsize=10):
     return bin_f, bin_p
 
 class run_stan:
-    def __init__(self, data, init):
+    def __init__(self, data, init, dir):
         '''Core PyStan class.
         Input __init__:
         dat (dict): Dictionary of the data in pystan format.
@@ -161,6 +157,7 @@ class run_stan:
         '''
         self.data = data
         self.init = init
+        self.dir = dir
 
     def read_stan(self):
         '''Reads the existing stanmodel'''
@@ -196,12 +193,12 @@ class run_stan:
         corner.corner(chain.T, labels=verbose, quantiles=[0.16, 0.5, 0.84],
                         show_titles=True)
 
-        plt.savefig(__outdir__+'corner.png')
+        plt.savefig(self.dir+'corner.png')
         plt.close('all')
 
     def out_stanplot(self, fit):
         fit.plot()
-        plt.savefig(__outdir__+'stanplot.png')
+        plt.savefig(self.dir+'stanplot.png')
         plt.close('all')
 
     def harvey(self, f, a, b, c):
@@ -235,11 +232,11 @@ class run_stan:
         ax.plot(f, res[-4]*np.ones_like(f), label='white',ls='-.')
         plt.legend(fontsize=10)
 
-        plt.savefig(__outdir__+'modelplot.png')
+        plt.savefig(self.dir+'modelplot.png')
         plt.close('all')
 
     def out_pickle(self, fit):
-        path = __outdir__+'fit.pkl'
+        path = self.dir+'fit.pkl'
         with open(path, 'wb') as f:
             pickle.dump(fit.extract(), f)
 
@@ -250,11 +247,17 @@ class run_stan:
         self.out_modelplot(fit)
         self.out_pickle(fit)
 
-        with open(__outdir__+'_summary.txt', "w") as text_file:
+        with open(self.dir+'summary.txt', "w") as text_file:
             print(fit.stansummary(),file=text_file)
 
         print('Run complete!')
         return fit
+
+def get_folder(kic):
+    fol = args.rds + '/'+str(kic)
+    if not os.path.exists(fol):
+        os.makedirs(fol)
+    return fol + '/' + timestr +'_idx'+str(idx)+'_'+str(kic)+'_backfit_'
 
 if __name__ == '__main__':
     idx = args.idx
@@ -265,6 +268,9 @@ if __name__ == '__main__':
     kic = star.KIC
     numax = star.numax
     dnu = star.dnu
+
+    #Get the output director
+    dir = get_folder(kic)
 
     # Get the power spectrum
     # Col1 = frequency in microHz, Col2 = psd
@@ -303,6 +309,11 @@ if __name__ == '__main__':
             'white': white, 'nyq': np.max(f),
             'scale': 1.}
 
+    #Instead lets quickly plot the data for a test
+    pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
+    ax = pg.plot(scale='log')
+    plt.savefig(dir+'test.png')
+
     # Run stan
-    run = run_stan(data, init)
-    fit = run()
+    # run = run_stan(data, init, dir)
+    # fit = run()
