@@ -24,7 +24,6 @@ import argparse
 parser = argparse.ArgumentParser(description='Run our PyStan model')
 parser.add_argument('iters', type=int, help='Number of MCMC iterations in PyStan.')
 parser.add_argument('idx',type=int,help='Index on the kiclist')
-parser.add_argument('rds',type=str,help='Location for output in RDS')
 args = parser.parse_args()
 
 __iter__ = args.iters
@@ -254,13 +253,13 @@ class run_stan:
         return fit
 
 def get_folder(kic):
-    fol = args.rds + '/'+str(kic)
+    fol = '/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/backfit' + '/'+str(kic)
     if not os.path.exists(fol):
         os.makedirs(fol)
     return fol + '/' + timestr +'_idx'+str(idx)+'_'+str(kic)+'_backfit_'
 
 if __name__ == '__main__':
-    idx = args.idx
+    idx = int(args.idx)
 
     # Get the star data
     mal = pd.read_csv('../data/malatium.csv', index_col=0)
@@ -289,6 +288,12 @@ if __name__ == '__main__':
     tf = ff[~sel].values
     tp = pp[~sel].values
 
+    #Make extra accomodations for KIC 347720
+    if kic == 3427720:
+        sel = (tf > 90.) & (tf < 400.)
+        tf = tf[~sel]
+        tp = tp[~sel]
+
     #Rebin the frequencies
     f, p = rebin(tf, tp, binsize=10)
 
@@ -310,10 +315,10 @@ if __name__ == '__main__':
             'scale': 1.}
 
     #Instead lets quickly plot the data for a test
-    pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
-    ax = pg.plot(scale='log')
-    plt.savefig(dir+'test.png')
+    # pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
+    # ax = pg.plot(scale='log')
+    # plt.savefig(dir+'test.png')
 
     # Run stan
-    # run = run_stan(data, init, dir)
-    # fit = run()
+    run = run_stan(data, init, dir)
+    fit = run()
