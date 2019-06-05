@@ -241,10 +241,10 @@ class run_stan:
 
     def __call__(self):
         fit = self.run_stan()
+        self.out_pickle(fit)
         self.out_corner(fit)
         self.out_stanplot(fit)
         self.out_modelplot(fit)
-        self.out_pickle(fit)
 
         with open(self.dir+'summary.txt', "w") as text_file:
             print(fit.stansummary(),file=text_file)
