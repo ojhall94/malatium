@@ -7,7 +7,7 @@
 # done
 
 
-for idx in {7,8,10,11,12,13,14,15,17,18,71,72,93}; do
+for idx in {57,93}; do
   # echo $idx
   sbatch --export=idx=$idx backfit.bear
 done
