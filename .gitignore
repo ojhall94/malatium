@@ -2,6 +2,10 @@
 *.bear
 slurm*
 
+# Data so LFS doesn't shout at me
+*.pow
+*.fits
+
 # Binary files
 *~
 
