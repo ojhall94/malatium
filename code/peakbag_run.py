@@ -4,7 +4,8 @@
 import numpy as np
 import matplotlib
 import os
-matplotlib.use('Agg')
+if os.getlogin() != 'oliver':
+    matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import pickle
 import lightkurve as lk
@@ -168,7 +169,7 @@ def create_model(overwrite=True):
         pkl_file.close()
 
 class run_stan:
-    def __init__(self, data, init):
+    def __init__(self, data, init, dir):
         '''Core PyStan class.
         Input __init__:
         dat (dict): Dictionary of the data in pystan format.
@@ -181,7 +182,7 @@ class run_stan:
 
     def read_stan(self):
         '''Reads the existing stanmodel'''
-        model_path = 'gpgamma.pkl'
+        model_path = 'malatium.pkl'
         if os.path.isfile(model_path):
             sm = pickle.load(open(model_path, 'rb'))
         else:
@@ -207,7 +208,7 @@ class run_stan:
 
         chain = np.array([fit[label] for label in labels])
         corner.corner(chain.T, labels=verbose, quantiles=[0.16, 0.5, 0.84],
-                    truths=truths,show_titles=True)
+                      show_titles=True)
 
         plt.savefig(self.dir+'corner.png')
         plt.close('all')
@@ -302,8 +303,6 @@ class run_stan:
         alpha = np.median(fit['alpha'])
         rho = data['rho']
 
-        truths = np.genfromtxt('../scripts/lws.txt')
-
         npts = 500
 
         a = np.zeros(len(flocs))
@@ -312,13 +311,12 @@ class run_stan:
         flocs2 = np.linspace(np.min(flocs), np.max(flocs), npts)
 
         theta = [alpha, rho]
-        ws_pred, sigmas = predict(flocs2, flocs, kernel, theta, a, c, ws, ws_std**2)
+        ws_pred, sigmas = self._predict(flocs2, flocs, theta, a, c, ws, ws_std**2)
 
         fig, ax = plt.subplots(figsize=(12,8))
 
-        ax = plot_GP(ax, flocs, flocs2, ws, ws_std, ws_pred, sigmas)
-        ax.plot(locs.flatten(), np.log10(truths.flatten()), c='r', alpha=.5,lw=5, label='Truth')
-        ax.set_xlim(flocs.min()-5*d02, flocs.max()+5*d02)
+        ax = self._plot_GP(ax, flocs, flocs2, ws, ws_std, ws_pred, sigmas)
+        ax.set_xlim(flocs.min()-5*.3, flocs.max()+5*.3)
         plt.savefig(self.dir+'gpplot.png')
         plt.close('all')
 
@@ -390,10 +388,12 @@ if __name__ == '__main__':
     kic = star.KIC
     numax = star.numax
     dnu = star.dnu
-    d02 = star.d02
 
     #Get the output director
-    dir = get_folder(kic)
+    if os.getlogin() == 'oliver':
+        dir = 'tests/output_fmr/'
+    else:
+        dir = get_folder(kic)
 
     # Get the power spectrum
     # Col1 = frequency in microHz, Col2 = psd
@@ -404,19 +404,40 @@ if __name__ == '__main__':
     cop = pd.read_csv('../data/copper.csv',index_col=0)
     locs = cop[cop.KIC == str(kic)].Freq.values
     elocs = cop[cop.KIC == str(kic)].e_Freq.values
-    modeids =
+    n = cop[cop.KIC == str(kic)].n.values
+    modeids = cop[cop.KIC == str(kic)].l.values
+
+    if os.getlogin() == 'oliver':
+        mid = mid = int(np.floor(len(locs)/2))
+        locs = locs[mid-2:mid]
+        elocs = elocs[mid-2:mid]
+        n = n[mid-2:mid]
+        modeids = modeids[mid-2:mid]
+
     lo = locs.min() - .1*dnu
     hi = locs.max() + .1*dnu
 
     # Make the frequency range selection
     ff, pp = data['col1'],data['col2']
     sel = (ff > lo) & (ff < hi)
-    f = ff[~sel].values
-    p = pp[~sel].values
+    f = ff[sel].values
+    p = pp[sel].values
+
+    if os.getlogin() == 'oliver':
+        pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
+        ax = pg.plot(alpha=.5)
+        pg.smooth(filter_width=2.).plot(ax=ax, linewidth=2)
+        plt.scatter(locs, [15]*len(locs),c=modeids, s=20, edgecolor='k')
+        plt.savefig(dir+'dataplot.png')
+        plt.close()
 
     #Read in backfit information
-    backdir = glob.glob('/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/backfit/'
-                        +str(kic)+'/*idx'+str(idx)+'*.pkl')[0]
+    if os.getlogin() == 'oliver':
+        backdir = glob.glob('/home/oliver/PhD/mnt/RDS/malatium/backfit/'
+                            +str(kic) + '/*_fit.pkl')[0]
+    else:
+        backdir = glob.glob('/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/backfit/'
+                            +str(kic)+'/*_fit.pkl')[0]
     with open(backdir, 'rb') as file:
         backfit = pickle.load(file)
 
@@ -432,20 +453,22 @@ if __name__ == '__main__':
             'pr_locs':locs,
             'e_locs':elocs,
             'ids':modeids,
-            'rho':d02 * 5,
+            'rho': 30.,
             'pr_phi':pr_phi,
             'sigphi':sigphi}
 
-    init = {'logAmp' :   np.ones(len(modelocs))*1.5,
-            'logGamma': np.zeros(len(modelocs)),
+    nus = .5
+    i = np.deg2rad(45.)
+    init = {'logAmp' :   np.ones(len(locs))*1.5,
+            'logGamma': np.zeros(len(locs)),
             'vsini' : nus*np.sin(i),
             'vcosi' : nus*np.cos(i),
-            'i' : 45.,
-            'nus': .5,
-            'locs' : modelocs,
+            'i' : i,
+            'nus': nus,
+            'locs' : locs,
             'alpha':.3,
             'phi':pr_phi}
 
     # Run stan
-    run = run_stan(data, init)
+    run = run_stan(data, init, dir)
     fit = run()
