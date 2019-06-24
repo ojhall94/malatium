@@ -4,6 +4,8 @@
 import numpy as np
 import matplotlib
 import os
+import pwd
+os.getlogin = lambda: pwd.getpwuid(os.getuid())[0]
 if os.getlogin() != 'oliver':
     matplotlib.use('Agg')
 from matplotlib import pyplot as plt
@@ -407,12 +409,12 @@ if __name__ == '__main__':
     n = cop[cop.KIC == str(kic)].n.values
     modeids = cop[cop.KIC == str(kic)].l.values
 
-    if os.getlogin() == 'oliver':
-        mid = mid = int(np.floor(len(locs)/2))
-        locs = locs[mid-2:mid]
-        elocs = elocs[mid-2:mid]
-        n = n[mid-2:mid]
-        modeids = modeids[mid-2:mid]
+    # if os.getlogin() == 'oliver':
+    #     mid = mid = int(np.floor(len(locs)/2))
+    #     locs = locs[mid-2:mid]
+    #     elocs = elocs[mid-2:mid]
+    #     n = n[mid-2:mid]
+    #     modeids = modeids[mid-2:mid]
 
     lo = locs.min() - .1*dnu
     hi = locs.max() + .1*dnu
@@ -423,13 +425,13 @@ if __name__ == '__main__':
     f = ff[sel].values
     p = pp[sel].values
 
-    if os.getlogin() == 'oliver':
-        pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
-        ax = pg.plot(alpha=.5)
-        pg.smooth(filter_width=2.).plot(ax=ax, linewidth=2)
-        plt.scatter(locs, [15]*len(locs),c=modeids, s=20, edgecolor='k')
-        plt.savefig(dir+'dataplot.png')
-        plt.close()
+    #Plot the data
+    pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
+    ax = pg.plot(alpha=.5)
+    pg.smooth(filter_width=2.).plot(ax=ax, linewidth=2)
+    plt.scatter(locs, [15]*len(locs),c=modeids, s=20, edgecolor='k')
+    plt.savefig(dir+'dataplot.png')
+    plt.close()
 
     #Read in backfit information
     if os.getlogin() == 'oliver':
