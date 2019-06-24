@@ -1,0 +1,352 @@
+#!/usr/bin/env python3
+#O. J. Hall 2019
+
+import numpy as np
+import matplotlib
+import os
+import pwd
+os.getlogin = lambda: pwd.getpwuid(os.getuid())[0]
+if os.getlogin() != 'oliver':
+    matplotlib.use('Agg')
+from matplotlib import pyplot as plt
+import pickle
+import lightkurve as lk
+import pandas as pd
+import pystan
+import astropy.units as u
+import sys
+from astropy.units import cds
+import corner
+import glob
+import time
+import lightkurve as lk
+from astropy.io import ascii
+timestr = time.strftime("%m%d-%H%M")
+
+import argparse
+parser = argparse.ArgumentParser(description='Run our PyStan model')
+parser.add_argument('iters', type=int, help='Number of MCMC iterations in PyStan.')
+parser.add_argument('idx',type=int,help='Index on the kiclist')
+args = parser.parse_args()
+
+__iter__ = args.iters
+
+def create_model(overwrite=True):
+    pb_simple = '''
+    functions{
+        vector lorentzian(real loc, int l, int m, vector f, real eps, real H, real w, real nus){
+            return (eps * H) ./ (1 + (4/w^2) * square(f - loc + m*nus));
+        }
+    }
+    data{
+        int N;                   // Number of data points
+        int M;                   // Number of modes
+        vector[N] f;             // Frequency
+        vector[N] p;             // Power
+        real pr_locs[M];         // Mode locations (this will have to change for multiple n modes)
+        real e_locs[M];          // Uncertainty on the mode locations
+        int ids[M];              // The ID's of the modes
+    }
+    parameters{
+        real logAmp[M];          // Mode amplitude in log space
+        real logGamma[M];        // Mode linewidth in log space
+        real locs[M];            // True mode locations
+        real<lower=0> vsini;     //  Sin of angle of inclination x rotational splitting
+        real<lower=0> vcosi;     //  Cos of angle of inclination x rotational splitting
+        real<lower=0> b;        // The background parameters
+    }
+    transformed parameters{
+        real H[M];                             // Mode height
+        real w[M];                             // Mode linewidth
+        real i;                                // Angle of inclination (rad)
+        real<lower=0> nus;                     // Rotational frequency splitting
+
+        nus = sqrt(vsini^2 + vcosi^2);         //Calculate the splitting
+        i = acos(vcosi / nus);                 // Calculate the inclination
+
+        for (m in 1:M){
+            w[m] = 10^logGamma[m];             // Transform log linewidth to linewidth
+            H[m] = 10^logAmp[m] / pi() / w[m]; // Transform mode amplitude to mode height
+        }
+    }
+    model{
+        vector[N] modes;             // Our Model
+        matrix[4,4] eps;             // Matrix of legendre polynomials
+        int l;                       // The radial degree
+        real nus_mu = 0.5;           // Circumventing a Stan problem
+
+        eps = rep_matrix(1., 4, 4);  // Calculate all the legendre polynomials for this i
+        eps[0+1,0+1] = 1.;
+        eps[1+1,0+1] = cos(i)^2;
+        eps[1+1,1+1] = 0.5 * sin(i)^2;
+        eps[2+1,0+1] = 0.25 * (3. * cos(i)^2 - 1.)^2;
+        eps[2+1,1+1] = (3./8.)*sin(2*i)^2;
+        eps[2+1,2+1] = (3./8.) * sin(i)^4;
+        eps[3+1,0+1] = (1./64.)*(5.*cos(3.*i) + 3.*cos(i))^2;
+        eps[3+1,1+1] = (3./64.)*(5.*cos(2.*i) + 3.)^2 * sin(i)^2;
+        eps[3+1,2+1] = (15./8.)*cos(i)^2 * sin(i)^4;
+        eps[3+1,3+1] = (5./16.)*sin(i)^6;
+
+
+        // Generating our model
+        modes = rep_vector(b, N);
+        for (mode in 1:M){        // Iterate over all modes passed in
+            l = ids[mode];        // Identify the Mode ID
+            for (m in -l:l){      // Iterate over all m in a given l
+                modes += lorentzian(locs[mode], l, m, f, eps[l+1,abs(m)+1], H[mode], w[mode], nus);
+            }
+        }
+
+        // Model drawn from a gamma distribution scaled to the model (Anderson+1990)
+        p ~ gamma(1., 1../modes);
+
+        //priors on the parameters
+        logAmp ~ normal(1.5, 1.);
+        logGamma ~ normal(0., .2);
+        locs ~ normal(pr_locs, e_locs);
+        nus_mu ~ normal(nus, 1.);
+        vsini ~ uniform(0,nus);
+
+        b ~ lognormal(1., 1.);
+    }
+    '''
+    model_path = 'pb_simple.pkl'
+    if overwrite:
+        print('Updating Stan model')
+        sm = pystan.StanModel(model_code = pb_simple, model_name='pb_simple')
+        pkl_file =  open(model_path, 'wb')
+        pickle.dump(sm, pkl_file)
+        pkl_file.close()
+    if os.path.isfile(model_path):
+        print('Reading in Stan model')
+        sm = pickle.load(open(model_path, 'rb'))
+    else:
+        print('Saving Stan Model')
+        sm = pystan.StanModel(model_code = pb_simple, model_name='pb_simple')
+        pkl_file =  open(model_path, 'wb')
+        pickle.dump(sm, pkl_file)
+        pkl_file.close()
+
+class run_stan:
+    def __init__(self, data, init, dir):
+        '''Core PyStan class.
+        Input __init__:
+        dat (dict): Dictionary of the data in pystan format.
+
+        init (dict): Dictionary of initial guesses in pystan format.
+        '''
+        self.data = data
+        self.init = init
+        self.dir = dir
+
+    def read_stan(self):
+        '''Reads the existing stanmodel'''
+        model_path = 'pb_simple.pkl'
+        if os.path.isfile(model_path):
+            sm = pickle.load(open(model_path, 'rb'))
+        else:
+            print('No stan model found')
+            create_model(overwrite=True)
+            sm = pickle.load(open(model_path, 'rb'))
+        return sm
+
+    def run_stan(self):
+        '''Runs PyStan'''
+        sm = self.read_stan()
+
+        fit = sm.sampling(data = self.data,
+                    iter= __iter__, chains=4, seed=11,
+                    init = [self.init, self.init, self.init, self.init])
+
+        return fit
+
+    def out_corner(self, fit):
+        labels=['vsini','vcosi','i','nus', 'b']
+        verbose = [r'$\nu_{\rm s}\sin(i)$',r'$\nu_{\rm s}\cos(i)$',r'$i$',
+                    r'$\nu_{\rm s}$', r'$b$']
+
+        chain = np.array([fit[label] for label in labels])
+        corner.corner(chain.T, labels=verbose, quantiles=[0.16, 0.5, 0.84],
+                      show_titles=True)
+
+        plt.savefig(self.dir+'corner.png')
+        plt.close('all')
+
+    def out_stanplot(self, fit):
+        fit.plot(pars=['vsini','vcosi','i','nus','H','logAmp','logGamma','b'])
+        plt.savefig(self.dir+'stanplot.png')
+        plt.close('all')
+
+    def _get_epsilon(self, i, l, m):
+    #I use the prescriptions from Gizon & Solank 2003 and Handberg & Campante 2012
+        if l == 0:
+            return 1
+        if l == 1:
+            if m == 0:
+                return np.cos(i)**2
+            if np.abs(m) == 1:
+                return 0.5 * np.sin(i)**2
+        if l == 2:
+            if m == 0:
+                return 0.25 * (3 * np.cos(i)**2 - 1)**2
+            if np.abs(m) ==1:
+                return (3/8)*np.sin(2*i)**2
+            if np.abs(m) == 2:
+                return (3/8) * np.sin(i)**4
+        if l == 3:
+            if m == 0:
+                return (1/64)*(5*np.cos(3*i) + 3*np.cos(i))**2
+            if np.abs(m) == 1:
+                return (3/64)*(5*np.cos(2*i) + 3)**2 * np.sin(i)**2
+            if np.abs(m) == 2:
+                return (15/8) * np.cos(i)**2 * np.sin(i)**4
+            if np.abs(m) == 3:
+                return (5/16)*np.sin(i)**6
+
+    def _lorentzian(self, f, l, m, loc, i, H, w, nus):
+        eps = self._get_epsilon(i,l,m)
+        model = eps * H / (1 + (4/w**2)*(f - loc + m * nus)**2)
+        return model
+
+    def out_modelplot(self, fit):
+        model = np.ones(len(self.data['f']))
+        nus = np.median(fit['nus'])
+        for mode in range(len(self.data['ids'])):
+            l = self.data['ids'][mode]
+            for m in range(-l, l+1):
+                loc = np.median(fit['locs'].T[mode])
+                H = np.median(fit['H'].T[mode])
+                w = np.median(fit['w'].T[mode])
+                model += self._lorentzian(f, l, m, loc, i, H, w, nus)
+        fitlocs = np.median(fit['locs'],axis=0)
+
+        pg = lk.Periodogram(data['f']*u.microhertz, data['p']*(cds.ppm**2/u.microhertz))
+        ax = pg.plot(alpha=.5, label='Data')
+        plt.scatter(fitlocs, [15]*len(fitlocs),c='k',s=25, label='fit locs')
+        plt.scatter(data['pr_locs'], [15]*len(data['pr_locs']),c='r',s=5, label='true locs')
+        plt.plot(data['f'], model, linewidth=1, label='Model')
+        plt.legend()
+
+        plt.savefig(self.dir+'modelplot.png')
+        plt.close('all')
+
+    def out_pickle(self, fit):
+        path = self.dir+'fit.pkl'
+        with open(path, 'wb') as f:
+            pickle.dump(fit.extract(), f)
+
+    def __call__(self):
+        fit = self.run_stan()
+        self.out_pickle(fit)
+        self.out_corner(fit)
+        self.out_stanplot(fit)
+        self.out_modelplot(fit)
+
+        with open(self.dir+'_summary.txt', "w") as text_file:
+            print(fit.stansummary(),file=text_file)
+
+        print('Run complete!')
+        return fit
+
+def harvey(f, a, b, c):
+    harvey = 0.9*a**2/b/(1.0 + (f/b)**c);
+    return harvey
+
+def get_apodization(freqs, nyquist):
+    x = (np.pi * freqs) / (2 * nyquist)
+    return (np.sin(x)/x)**2
+
+def get_background(f, a, b, c, d, j, k, white, numax, scale, nyq):
+    background = np.zeros(len(f))
+    background += get_apodization(f, nyq) * scale\
+                    * (harvey(f, a, b, 4.) + harvey(f, c, d, 4.) + harvey(f, j, k, 2.))\
+                    + white
+    return background
+
+def get_folder(kic):
+    fol = '/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/peakbag/'+str(kic)
+    if not os.path.exists(fol):
+        os.makedirs(fol)
+    return fol + '/' + timestr +'_idx'+str(idx)+'_'+str(kic)+'_peakbag_'
+
+if __name__ == '__main__':
+    idx = int(args.idx)
+
+    #Get the star data
+    mal = pd.read_csv('../data/malatium.csv', index_col=0)
+    star = mal.loc[idx]
+    kic = star.KIC
+    numax = star.numax
+    dnu = star.dnu
+
+    #Get the output director
+    if os.getlogin() == 'oliver':
+        dir = 'tests/output_fmr/'
+    else:
+        dir = get_folder(kic)
+
+    # Get the power spectrum
+    # Col1 = frequency in microHz, Col2 = psd
+    sfile = glob.glob('../data/*{}*.pow'.format(kic))
+    data = ascii.read(sfile[0]).to_pandas()
+
+    # Read in the mode locs
+    cop = pd.read_csv('../data/copper.csv',index_col=0)
+    locs = cop[cop.KIC == str(kic)].Freq.values[22:28]
+    elocs = cop[cop.KIC == str(kic)].e_Freq.values[22:28]
+    n = cop[cop.KIC == str(kic)].n.values[22:28]
+    modeids = cop[cop.KIC == str(kic)].l.values[22:28]
+
+    lo = locs.min() - .1*dnu
+    hi = locs.max() + .1*dnu
+
+    # Make the frequency range selection
+    ff, pp = data['col1'],data['col2']
+    sel = (ff > lo) & (ff < hi)
+    f = ff[sel].values
+    pf = pp[sel].values
+
+    #Divide out the background
+    backdir = glob.glob('/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/backfit/'
+                        +str(kic)+'/*_fit.pkl')[0]
+    with open(backdir, 'rb') as file:
+        backfit = pickle.load(file)
+    labels=['loga','logb','logc','logd','logj','logk','lognumax','white','nyq','scale']
+    pr_phi = np.array([np.median(backfit[label]) for label in labels])
+    bf = pd.DataFrame(backfit)[labels]
+    res = np.array([np.median(bf[label]) for label in labels])
+    res[0:6] = 10**res[0:6]
+    bgmodel = get_background(f, *res)
+
+    p = pf / bgmodel
+
+    #Plot the data
+    pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
+    ax = pg.plot(alpha=.5)
+    pg.smooth(filter_width=2.).plot(ax=ax, linewidth=2)
+    plt.scatter(locs, [15]*len(locs),c=modeids, s=20, edgecolor='k')
+    plt.savefig(dir+'dataplot.png')
+    plt.close()
+
+    data = {'N':len(f),
+            'M': len(locs),
+            'f':f,
+            'p':p,
+            'pr_locs':locs,
+            'e_locs':elocs,
+            'ids':modeids}
+
+    nus = .5
+    i = np.deg2rad(45.)
+    init = {'logAmp' :   np.ones(len(locs))*1.5,
+            'logGamma': np.zeros(len(locs)),
+            'vsini' : nus*np.sin(i),
+            'vcosi' : nus*np.cos(i),
+            'i' : i,
+            'nus': nus,
+            'locs' : locs,
+            'b': 1.}
+
+    # Run stan
+    run = run_stan(data, init, dir)
+    fit = run()
