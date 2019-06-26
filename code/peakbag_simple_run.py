@@ -3,23 +3,27 @@
 
 import numpy as np
 import matplotlib
+import pandas as pd
+
 import os
 import pwd
+import sys
+import pickle
+
 os.getlogin = lambda: pwd.getpwuid(os.getuid())[0]
 if os.getlogin() != 'oliver':
     matplotlib.use('Agg')
 from matplotlib import pyplot as plt
-import pickle
 import lightkurve as lk
-import pandas as pd
-import pystan
-import astropy.units as u
-import sys
-from astropy.units import cds
+
+import pymc3 as pm
 import corner
+
 import glob
 import time
 import lightkurve as lk
+import astropy.units as u
+from astropy.units import cds
 from astropy.io import ascii
 timestr = time.strftime("%m%d-%H%M")
 
@@ -29,155 +33,14 @@ parser.add_argument('iters', type=int, help='Number of MCMC iterations in PyStan
 parser.add_argument('idx',type=int,help='Index on the kiclist')
 args = parser.parse_args()
 
-__iter__ = args.iters
-
-def create_model(overwrite=True):
-    pb_simple = '''
-    functions{
-        vector lorentzian(real loc, int l, int m, vector f, real eps, real H, real w, real nus){
-            return (eps * H) ./ (1 + (4/w^2) * square(f - loc + m*nus));
-        }
-    }
-    data{
-        int N;                   // Number of data points
-        int M;                   // Number of modes
-        vector[N] f;             // Frequency
-        vector[N] p;             // Power
-        real pr_locs[M];         // Mode locations (this will have to change for multiple n modes)
-        real e_locs[M];          // Uncertainty on the mode locations
-        int ids[M];              // The ID's of the modes
-    }
-    parameters{
-        real logAmp[M];          // Mode amplitude in log space
-        real logGamma[M];        // Mode linewidth in log space
-        real locs[M];            // True mode locations
-        real<lower=0> vsini;     //  Sin of angle of inclination x rotational splitting
-        real<lower=0> vcosi;     //  Cos of angle of inclination x rotational splitting
-        real<lower=0> b;        // The background parameters
-    }
-    transformed parameters{
-        real H[M];                             // Mode height
-        real w[M];                             // Mode linewidth
-        real i;                                // Angle of inclination (rad)
-        real<lower=0> nus;                     // Rotational frequency splitting
-
-        nus = sqrt(vsini^2 + vcosi^2);         //Calculate the splitting
-        i = acos(vcosi / nus);                 // Calculate the inclination
-
-        for (m in 1:M){
-            w[m] = 10^logGamma[m];             // Transform log linewidth to linewidth
-            H[m] = 10^logAmp[m] / pi() / w[m]; // Transform mode amplitude to mode height
-        }
-    }
-    model{
-        vector[N] modes;             // Our Model
-        matrix[4,4] eps;             // Matrix of legendre polynomials
-        int l;                       // The radial degree
-        real nus_mu = 0.5;           // Circumventing a Stan problem
-
-        eps = rep_matrix(1., 4, 4);  // Calculate all the legendre polynomials for this i
-        eps[0+1,0+1] = 1.;
-        eps[1+1,0+1] = cos(i)^2;
-        eps[1+1,1+1] = 0.5 * sin(i)^2;
-        eps[2+1,0+1] = 0.25 * (3. * cos(i)^2 - 1.)^2;
-        eps[2+1,1+1] = (3./8.)*sin(2*i)^2;
-        eps[2+1,2+1] = (3./8.) * sin(i)^4;
-        eps[3+1,0+1] = (1./64.)*(5.*cos(3.*i) + 3.*cos(i))^2;
-        eps[3+1,1+1] = (3./64.)*(5.*cos(2.*i) + 3.)^2 * sin(i)^2;
-        eps[3+1,2+1] = (15./8.)*cos(i)^2 * sin(i)^4;
-        eps[3+1,3+1] = (5./16.)*sin(i)^6;
+class model():
+    def __init__(self, f, f0_, f1_, f2_):
+        self.f = f
+        self.npts = len(f)
+        self.M = [len(f0_), len(f1_), len(f2_)]
 
 
-        // Generating our model
-        modes = rep_vector(b, N);
-        for (mode in 1:M){        // Iterate over all modes passed in
-            l = ids[mode];        // Identify the Mode ID
-            for (m in -l:l){      // Iterate over all m in a given l
-                modes += lorentzian(locs[mode], l, m, f, eps[l+1,abs(m)+1], H[mode], w[mode], nus);
-            }
-        }
-
-        // Model drawn from a gamma distribution scaled to the model (Anderson+1990)
-        p ~ gamma(1., 1../modes);
-
-        //priors on the parameters
-        logAmp ~ normal(1.5, 1.);
-        logGamma ~ normal(0., .2);
-        locs ~ normal(pr_locs, e_locs);
-        nus_mu ~ normal(nus, 1.);
-        vsini ~ uniform(0,nus);
-
-        b ~ lognormal(1., 1.);
-    }
-    '''
-    model_path = 'pb_simple.pkl'
-    if overwrite:
-        print('Updating Stan model')
-        sm = pystan.StanModel(model_code = pb_simple, model_name='pb_simple')
-        pkl_file =  open(model_path, 'wb')
-        pickle.dump(sm, pkl_file)
-        pkl_file.close()
-    if os.path.isfile(model_path):
-        print('Reading in Stan model')
-        sm = pickle.load(open(model_path, 'rb'))
-    else:
-        print('Saving Stan Model')
-        sm = pystan.StanModel(model_code = pb_simple, model_name='pb_simple')
-        pkl_file =  open(model_path, 'wb')
-        pickle.dump(sm, pkl_file)
-        pkl_file.close()
-
-class run_stan:
-    def __init__(self, data, init, dir):
-        '''Core PyStan class.
-        Input __init__:
-        dat (dict): Dictionary of the data in pystan format.
-
-        init (dict): Dictionary of initial guesses in pystan format.
-        '''
-        self.data = data
-        self.init = init
-        self.dir = dir
-
-    def read_stan(self):
-        '''Reads the existing stanmodel'''
-        model_path = 'pb_simple.pkl'
-        if os.path.isfile(model_path):
-            sm = pickle.load(open(model_path, 'rb'))
-        else:
-            print('No stan model found')
-            create_model(overwrite=True)
-            sm = pickle.load(open(model_path, 'rb'))
-        return sm
-
-    def run_stan(self):
-        '''Runs PyStan'''
-        sm = self.read_stan()
-
-        fit = sm.sampling(data = self.data,
-                    iter= __iter__, chains=4, seed=11,
-                    init = [self.init, self.init, self.init, self.init])
-
-        return fit
-
-    def out_corner(self, fit):
-        labels=['vsini','vcosi','i','nus', 'b']
-        verbose = [r'$\nu_{\rm s}\sin(i)$',r'$\nu_{\rm s}\cos(i)$',r'$i$',
-                    r'$\nu_{\rm s}$', r'$b$']
-
-        chain = np.array([fit[label] for label in labels])
-        corner.corner(chain.T, labels=verbose, quantiles=[0.16, 0.5, 0.84],
-                      show_titles=True)
-
-        plt.savefig(self.dir+'corner.png')
-        plt.close('all')
-
-    def out_stanplot(self, fit):
-        fit.plot(pars=['vsini','vcosi','i','nus','H','logAmp','logGamma','b'])
-        plt.savefig(self.dir+'stanplot.png')
-        plt.close('all')
-
-    def _get_epsilon(self, i, l, m):
+    def epsilon(self, i, l, m):
     #I use the prescriptions from Gizon & Solank 2003 and Handberg & Campante 2012
         if l == 0:
             return 1
@@ -203,44 +66,124 @@ class run_stan:
             if np.abs(m) == 3:
                 return (5/16)*np.sin(i)**6
 
-    def _lorentzian(self, f, l, m, loc, i, H, w, nus):
-        eps = self._get_epsilon(i,l,m)
-        model = eps * H / (1 + (4/w**2)*(f - loc + m * nus)**2)
-        return model
+    def lor(self, freq, h, w):
+        return h / (1.0 + 4.0/w**2*(self.f - freq)**2)
 
-    def out_modelplot(self, fit):
-        model = np.ones(len(self.data['f']))
-        nus = np.median(fit['nus'])
-        for mode in range(len(self.data['ids'])):
-            l = self.data['ids'][mode]
-            for m in range(-l, l+1):
-                loc = np.median(fit['locs'].T[mode])
-                H = np.median(fit['H'].T[mode])
-                w = np.median(fit['w'].T[mode])
-                model += self._lorentzian(f, l, m, loc, i, H, w, nus)
-        fitlocs = np.median(fit['locs'],axis=0)
+    def mode(self, l, freqs, hs, ws, i, split=0):
+        for idx in range(self.M[l]):
+            for m in range(-l, l+1, 1):
+                self.mod += self.lor(freqs[idx] + (m*split),
+                                     hs[idx] * self.epsilon(i, l, m),
+                                     ws[idx])
 
-        pg = lk.Periodogram(data['f']*u.microhertz, data['p']*(cds.ppm**2/u.microhertz))
+    def model(self, p):
+        b, f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i = p
+        self.mod = np.ones(self.npts) * b
+        self.mode(0, f0, h0, g0, i)
+        self.mode(1, f1, h1, g1, i, split)
+        self.mode(2, f2, h2, g2, i, split)
+        return self.mod
+
+    def __call__(self, p):
+        return self.model(p)
+
+class run_pymc3:
+    def __init__(self, mod, p, init, fs, fes, dir):
+        '''Core PyStan class.
+        Input __init__:
+        mod : model class (with frequencies loaded in)
+
+        p : observed power
+
+        init : initial guesses
+
+        fs : mode frequencies
+
+        fes : error on mode frequencies
+
+        dir : output directory
+        '''
+        self.mod = mod
+        self.p = p
+        self.init = init
+        self.fs = fs
+        self.fes = fes
+        self.dir = dir
+
+    def build_model(self):
+        self.pm_model = pm.Model()
+
+        with self.pm_model:
+            b = pm.HalfNormal('b', sigma=2.0, testval=self.init[0])
+
+            f0 = pm.Normal('f0', mu=self.fs[0], sigma=self.fes[0], testval=self.fs[0], shape=len(self.fs[0]))
+            f1 = pm.Normal('f1', mu=self.fs[1], sigma=self.fes[1], testval=self.fs[1], shape=len(self.fs[1]))
+            f2 = pm.Normal('f2', mu=self.fs[2], sigma=self.fes[2], testval=self.fs[2], shape=len(self.fs[2]))
+
+            g0 = pm.HalfNormal('g0', sigma=2.0, testval=self.init[4], shape=len(self.init[4]))
+            g1 = pm.HalfNormal('g1', sigma=2.0, testval=self.init[5], shape=len(self.init[5]))
+            g2 = pm.HalfNormal('g2', sigma=2.0, testval=self.init[6], shape=len(self.init[6]))
+
+            h0 = pm.HalfNormal('h0', sigma=20., testval=self.init[7], shape=len(self.init[7]))
+            h1 = pm.HalfNormal('h1', sigma=20., testval=self.init[8], shape=len(self.init[8]))
+            h2 = pm.HalfNormal('h2', sigma=20., testval=self.init[9], shape=len(self.init[9]))
+
+            split = pm.HalfNormal('split', sigma=2.0, testval=self.init[10])
+
+            cosi = pm.Uniform('cosi', 0., 1.)
+            i = pm.Deterministic('i', np.arccos(cosi))
+
+            fit = self.mod([b, f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i])
+
+            like = pm.Gamma('like', alpha=1, beta=1.0/fit, observed=self.p)
+
+    def run_pymc3(self):
+        '''Runs PyMC3'''
+        with self.pm_model:
+            self.trace = pm.sample(tune=int(args.iters/2),
+                                    chains=4)
+
+    def out_corner(self):
+        labels=['cosi','i','split','b']
+        chain = np.array([self.trace[label] for label in labels])
+        verbose = [r'$\cos(i)$',r'$i$',r'$\nu_{\rm s}$',r'$b$']
+        corner.corner(chain.T, labels=verbose,
+                        quantiles=[0.16, 0.5, 0.84],
+                        show_titles=True)
+        plt.savefig(self.dir+'corner.png')
+        plt.close('all')
+
+    def out_traceplot(self):
+        pm.traceplot(self.trace,
+                    var_names=['b','cosi','i','split',
+                                'g0','g1','g2',
+                                'h0','h1','h2'])
+        plt.savefig(self.dir+'stanplot.png')
+        plt.close('all')
+
+    def out_modelplot(self):
+        labels=['b','f0','f1','f2','g0','g1','g2','h0','h1','h2','split','i']
+        res = np.array([np.median(self.trace[label],axis=0) for label in labels])
+
+        pg = lk.Periodogram(self.mod.f*u.microhertz, self.p*(cds.ppm**2/u.microhertz))
         ax = pg.plot(alpha=.5, label='Data')
-        plt.scatter(fitlocs, [15]*len(fitlocs),c='k',s=25, label='fit locs')
-        plt.scatter(data['pr_locs'], [15]*len(data['pr_locs']),c='r',s=5, label='true locs')
-        plt.plot(data['f'], model, linewidth=1, label='Model')
+        plt.plot(self.mod.f, self.mod(res), linewidth=2, label='Model')
         plt.legend()
 
         plt.savefig(self.dir+'modelplot.png')
         plt.close('all')
 
-    def out_pickle(self, fit):
-        path = self.dir+'fit.pkl'
-        with open(path, 'wb') as f:
-            pickle.dump(fit.extract(), f)
+    def out_csv(self):
+        df = pm.backends.tracetab.trace_to_dataframe(self.trace)
+        df.to_csv(self.dir+'chains.csv')
 
     def __call__(self):
-        fit = self.run_stan()
-        self.out_pickle(fit)
-        self.out_corner(fit)
-        self.out_stanplot(fit)
-        self.out_modelplot(fit)
+        self.build_model()
+        self.run_pymc3()
+        self.out_csv()
+        self.out_corner()
+        self.out_traceplot()
+        self.out_modelplot()
 
         with open(self.dir+'_summary.txt', "w") as text_file:
             print(fit.stansummary(),file=text_file)
@@ -256,7 +199,7 @@ def get_apodization(freqs, nyquist):
     x = (np.pi * freqs) / (2 * nyquist)
     return (np.sin(x)/x)**2
 
-def get_background(f, a, b, c, d, j, k, white, numax, scale, nyq):
+def get_background(f, a, b, c, d, j, k, white, scale, nyq):
     background = np.zeros(len(f))
     background += get_apodization(f, nyq) * scale\
                     * (harvey(f, a, b, 4.) + harvey(f, c, d, 4.) + harvey(f, j, k, 2.))\
@@ -292,13 +235,13 @@ if __name__ == '__main__':
 
     # Read in the mode locs
     cop = pd.read_csv('../data/copper.csv',index_col=0)
-    locs = cop[cop.KIC == str(kic)].Freq.values[22:28]
-    elocs = cop[cop.KIC == str(kic)].e_Freq.values[22:28]
-    n = cop[cop.KIC == str(kic)].n.values[22:28]
-    modeids = cop[cop.KIC == str(kic)].l.values[22:28]
+    cop = cop[cop.l != 3]
+    locs = cop[cop.KIC == str(kic)].Freq.values[27:30]
+    elocs = cop[cop.KIC == str(kic)].e_Freq.values[27:30]
+    modeids = cop[cop.KIC == str(kic)].l.values[27:30]
 
-    lo = locs.min() - .1*dnu
-    hi = locs.max() + .1*dnu
+    lo = locs.min() - .25*dnu
+    hi = locs.max() + .25*dnu
 
     # Make the frequency range selection
     ff, pp = data['col1'],data['col2']
@@ -307,46 +250,55 @@ if __name__ == '__main__':
     pf = pp[sel].values
 
     #Divide out the background
-    backdir = glob.glob('/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/backfit/'
-                        +str(kic)+'/*_fit.pkl')[0]
+    if os.getlogin() == 'oliver':
+        backdir = glob.glob('/home/oliver/PhD/mnt/RDS/malatium/backfit/'
+                            +str(kic)+'/*_fit.pkl')[0]
+    else:
+        backdir = glob.glob('/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/backfit/'
+                            +str(kic)+'/*_fit.pkl')[0]
     with open(backdir, 'rb') as file:
         backfit = pickle.load(file)
-    labels=['loga','logb','logc','logd','logj','logk','lognumax','white','nyq','scale']
-    pr_phi = np.array([np.median(backfit[label]) for label in labels])
-    bf = pd.DataFrame(backfit)[labels]
-    res = np.array([np.median(bf[label]) for label in labels])
-    res[0:6] = 10**res[0:6]
-    bgmodel = get_background(f, *res)
 
+    labels=['loga','logb','logc','logd','logj','logk','white','scale','nyq']
+    res = np.array([np.median(backfit[label]) for label in labels])
+    res[0:6] = 10**res[0:6]
+
+    bgmodel = get_background(f, *res)
     p = pf / bgmodel
+
+    # Set up the data
+    f0_ = locs[modeids==0]
+    f1_ = locs[modeids==1]
+    f2_ = locs[modeids==2]
+    f0_e = elocs[modeids==0]
+    f1_e = elocs[modeids==1]
+    f2_e = elocs[modeids==2]
+
+    init = [1.,                          # Background
+           f0_,                         # l0 modes
+           f1_,                         # l1 modes
+           f2_,                         # l2 modes
+           np.ones(len(f0_)) * 2.0,     # l0 widths
+           np.ones(len(f1_)) * 2.0,     # l1 widths
+           np.ones(len(f2_)) * 2.0,     # l2 widths
+           np.ones(len(f0_)) * 10.,     # l0 heights
+           np.ones(len(f1_)) * 15.,     # l1 heights
+           np.ones(len(f2_)) * 5.,      # l2 heights
+           1.0,                         # splitting
+           np.pi/2.]
+
+    mod = model(f, f0_, f1_, f2_)
 
     #Plot the data
     pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
     ax = pg.plot(alpha=.5)
-    pg.smooth(filter_width=2.).plot(ax=ax, linewidth=2)
-    plt.scatter(locs, [15]*len(locs),c=modeids, s=20, edgecolor='k')
+    ax.scatter(locs, [15]*len(locs),c=modeids, s=20, edgecolor='k')
+    ax.plot(f, mod(init), lw=2)
     plt.savefig(dir+'dataplot.png')
     plt.close()
 
-    data = {'N':len(f),
-            'M': len(locs),
-            'f':f,
-            'p':p,
-            'pr_locs':locs,
-            'e_locs':elocs,
-            'ids':modeids}
-
-    nus = .5
-    i = np.deg2rad(45.)
-    init = {'logAmp' :   np.ones(len(locs))*1.5,
-            'logGamma': np.zeros(len(locs)),
-            'vsini' : nus*np.sin(i),
-            'vcosi' : nus*np.cos(i),
-            'i' : i,
-            'nus': nus,
-            'locs' : locs,
-            'b': 1.}
-
     # Run stan
-    run = run_stan(data, init, dir)
+    run = run_pymc3(mod, p, init,
+                    [f0_, f1_, f2_], [f0_e, f1_e, f2_e],
+                    dir)
     fit = run()
