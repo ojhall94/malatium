@@ -184,12 +184,9 @@ class run_pymc3:
         self.out_corner()
         self.out_traceplot()
         self.out_modelplot()
-
-        with open(self.dir+'_summary.txt', "w") as text_file:
-            print(fit.stansummary(),file=text_file)
+        pm.summary(self.trace).to_csv(self.dir+'summary.csv')
 
         print('Run complete!')
-        return fit
 
 def harvey(f, a, b, c):
     harvey = 0.9*a**2/b/(1.0 + (f/b)**c);
@@ -301,4 +298,3 @@ if __name__ == '__main__':
     run = run_pymc3(mod, p, init,
                     [f0_, f1_, f2_], [f0_e, f1_e, f2_e],
                     dir)
-    fit = run()
