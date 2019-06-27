@@ -28,8 +28,8 @@ from astropy.io import ascii
 timestr = time.strftime("%m%d-%H%M")
 
 import argparse
-parser = argparse.ArgumentParser(description='Run our PyStan model')
-parser.add_argument('iters', type=int, help='Number of MCMC iterations in PyStan.')
+parser = argparse.ArgumentParser(description='Run our PyMC3 model')
+parser.add_argument('tune', type=int, help='Number of Burn-In steps')
 parser.add_argument('idx',type=int,help='Index on the kiclist')
 args = parser.parse_args()
 
@@ -111,6 +111,7 @@ class run_pymc3:
         self.dir = dir
 
     def build_model(self):
+        print('Building the model')
         self.pm_model = pm.Model()
 
         with self.pm_model:
@@ -139,8 +140,9 @@ class run_pymc3:
 
     def run_pymc3(self):
         '''Runs PyMC3'''
+        print('Running the model')
         with self.pm_model:
-            self.trace = pm.sample(tune=int(args.iters/2),
+            self.trace = pm.sample(tune=args.tune,
                                     chains=4)
 
     def out_corner(self):
@@ -233,9 +235,9 @@ if __name__ == '__main__':
     # Read in the mode locs
     cop = pd.read_csv('../data/copper.csv',index_col=0)
     cop = cop[cop.l != 3]
-    locs = cop[cop.KIC == str(kic)].Freq.values[27:30]
-    elocs = cop[cop.KIC == str(kic)].e_Freq.values[27:30]
-    modeids = cop[cop.KIC == str(kic)].l.values[27:30]
+    locs = cop[cop.KIC == str(kic)].Freq.values#[27:30]
+    elocs = cop[cop.KIC == str(kic)].e_Freq.values#[27:30]
+    modeids = cop[cop.KIC == str(kic)].l.values#[27:30]
 
     lo = locs.min() - .25*dnu
     hi = locs.max() + .25*dnu
@@ -295,6 +297,8 @@ if __name__ == '__main__':
     plt.close()
 
     # Run stan
+    print('About to go into Pymc3')
     run = run_pymc3(mod, p, init,
                     [f0_, f1_, f2_], [f0_e, f1_e, f2_e],
                     dir)
+    run()
