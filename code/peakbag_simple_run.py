@@ -29,7 +29,7 @@ timestr = time.strftime("%m%d-%H%M")
 
 import argparse
 parser = argparse.ArgumentParser(description='Run our PyMC3 model')
-parser.add_argument('tune', type=int, help='Number of Burn-In steps')
+parser.add_argument('iter', type=int, help='Number of iterations steps')
 parser.add_argument('idx',type=int,help='Index on the kiclist')
 args = parser.parse_args()
 
@@ -125,14 +125,19 @@ class run_pymc3:
             g1 = pm.HalfNormal('g1', sigma=2.0, testval=self.init[5], shape=len(self.init[5]))
             g2 = pm.HalfNormal('g2', sigma=2.0, testval=self.init[6], shape=len(self.init[6]))
 
-            h0 = pm.HalfNormal('h0', sigma=20., testval=self.init[7], shape=len(self.init[7]))
-            h1 = pm.HalfNormal('h1', sigma=20., testval=self.init[8], shape=len(self.init[8]))
-            h2 = pm.HalfNormal('h2', sigma=20., testval=self.init[9], shape=len(self.init[9]))
+            a0 = pm.HalfNormal('a0', sigma=20., testval=self.init[7], shape=len(self.init[7]))
+            a1 = pm.HalfNormal('a1', sigma=20., testval=self.init[8], shape=len(self.init[8]))
+            a2 = pm.HalfNormal('a2', sigma=20., testval=self.init[9], shape=len(self.init[9]))
 
-            split = pm.HalfNormal('split', sigma=2.0, testval=self.init[10])
+            h0 = pm.Deterministic('h0', 2*a0**2/np.pi/g0)
+            h1 = pm.Deterministic('h1', 2*a1**2/np.pi/g1)
+            h2 = pm.Deterministic('h2', 2*a2**2/np.pi/g2)
 
+            xsplit = pm.HalfNormal('xsplit', sigma=2.0, testval=self.init[10])
             cosi = pm.Uniform('cosi', 0., 1.)
+
             i = pm.Deterministic('i', np.arccos(cosi))
+            split = pm.Deterministic('split', xsplit/pm.math.sin(i))
 
             fit = self.mod([b, f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i])
 
@@ -142,24 +147,25 @@ class run_pymc3:
         '''Runs PyMC3'''
         print('Running the model')
         with self.pm_model:
-            self.trace = pm.sample(tune=args.tune,
+            self.trace = pm.sample(tune=int(args.iter/2),
+                                    draws=int(args.iter/2),
                                     chains=4)
 
     def out_corner(self):
-        labels=['cosi','i','split','b']
+        labels=['xsplit','cosi','b','i','split']
         chain = np.array([self.trace[label] for label in labels])
-        verbose = [r'$\cos(i)$',r'$i$',r'$\nu_{\rm s}$',r'$b$']
-        corner.corner(chain.T, labels=verbose,
-                        quantiles=[0.16, 0.5, 0.84],
-                        show_titles=True)
+        verbose = [r'$\delta\nu_s^*$',r'$\cos(i)$',r'$b$',r'$i$',r'$\delta\nu_{\rm s}$']
+        corner.corner(chain.T, labels=verbose, quantiles=[0.16, 0.5, 0.84]
+                      ,show_titles=True)
         plt.savefig(self.dir+'corner.png')
         plt.close('all')
 
     def out_traceplot(self):
         pm.traceplot(self.trace,
-                    var_names=['b','cosi','i','split',
+                    var_names=['b','xsplit','cosi',
+                                'i','split',
                                 'g0','g1','g2',
-                                'h0','h1','h2'])
+                                'a0','a1','a2'])
         plt.savefig(self.dir+'stanplot.png')
         plt.close('all')
 
@@ -205,6 +211,14 @@ def get_background(f, a, b, c, d, j, k, white, scale, nyq):
                     + white
     return background
 
+def gaussian(locs, l, numax, Hmax0):
+    fwhm = 0.25 * numax
+    std = fwhm/2.355
+
+    Vl = [1.0, 1.22, 0.71, 0.14]
+
+    return Hmax0 * Vl[l] * np.exp(-0.5 * (locs - numax)**2 / std**2)
+
 def get_folder(kic):
     fol = '/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/peakbag/'+str(kic)
     if not os.path.exists(fol):
@@ -235,9 +249,9 @@ if __name__ == '__main__':
     # Read in the mode locs
     cop = pd.read_csv('../data/copper.csv',index_col=0)
     cop = cop[cop.l != 3]
-    locs = cop[cop.KIC == str(kic)].Freq.values#[27:30]
-    elocs = cop[cop.KIC == str(kic)].e_Freq.values#[27:30]
-    modeids = cop[cop.KIC == str(kic)].l.values#[27:30]
+    locs = cop[cop.KIC == str(kic)].Freq.values#[27:33]
+    elocs = cop[cop.KIC == str(kic)].e_Freq.values#[27:33]
+    modeids = cop[cop.KIC == str(kic)].l.values#[27:33]
 
     lo = locs.min() - .25*dnu
     hi = locs.max() + .25*dnu
@@ -249,21 +263,25 @@ if __name__ == '__main__':
     pf = pp[sel].values
 
     #Divide out the background
-    if os.getlogin() == 'oliver':
-        backdir = glob.glob('/home/oliver/PhD/mnt/RDS/malatium/backfit/'
-                            +str(kic)+'/*_fit.pkl')[0]
-    else:
-        backdir = glob.glob('/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/backfit/'
-                            +str(kic)+'/*_fit.pkl')[0]
-    with open(backdir, 'rb') as file:
-        backfit = pickle.load(file)
+    try:
+        if os.getlogin() == 'oliver':
+            backdir = glob.glob('/home/oliver/PhD/mnt/RDS/malatium/backfit/'
+                                +str(kic)+'/*_fit.pkl')[0]
+        else:
+            backdir = glob.glob('/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/backfit/'
+                                +str(kic)+'/*_fit.pkl')[0]
+        with open(backdir, 'rb') as file:
+            backfit = pickle.load(file)
 
-    labels=['loga','logb','logc','logd','logj','logk','white','scale','nyq']
-    res = np.array([np.median(backfit[label]) for label in labels])
-    res[0:6] = 10**res[0:6]
+        labels=['loga','logb','logc','logd','logj','logk','white','scale','nyq']
+        res = np.array([np.median(backfit[label]) for label in labels])
+        res[0:6] = 10**res[0:6]
 
-    bgmodel = get_background(f, *res)
-    p = pf / bgmodel
+        bgmodel = get_background(f, *res)
+        p = pf / bgmodel
+    except IndexError:
+        pg = lk.periodogram.SNRPeriodogram(f*u.microhertz, pf*(cds.ppm**2/u.microhertz))
+        p = pg.flatten().power.value * 2
 
     # Set up the data
     f0_ = locs[modeids==0]
@@ -280,10 +298,10 @@ if __name__ == '__main__':
            np.ones(len(f0_)) * 2.0,     # l0 widths
            np.ones(len(f1_)) * 2.0,     # l1 widths
            np.ones(len(f2_)) * 2.0,     # l2 widths
-           np.ones(len(f0_)) * 10.,     # l0 heights
-           np.ones(len(f1_)) * 15.,     # l1 heights
-           np.ones(len(f2_)) * 5.,      # l2 heights
-           1.0,                         # splitting
+           np.sqrt(gaussian(f0_, 0, numax, 15.) * 2.0 * np.pi / 2.0), # l0 amps
+           np.sqrt(gaussian(f1_, 1, numax, 15.) * 2.0 * np.pi / 2.0), # l1 amps
+           np.sqrt(gaussian(f2_, 2, numax, 15.) * 2.0 * np.pi / 2.0), # l2 amps
+           1.0 * np.sin(np.pi/2),       # projected splitting
            np.pi/2.]
 
     mod = model(f, f0_, f1_, f2_)
