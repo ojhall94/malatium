@@ -2,6 +2,9 @@
 *.bear
 slurm*
 
+#Doc files with notes
+*.odt
+
 # Data so LFS doesn't shout at me
 *.pow
 *.fits
