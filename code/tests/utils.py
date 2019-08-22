@@ -4,6 +4,82 @@ import pandas as pd
 import pickle
 import numpy as np
 
+def pairplot_divergence(x, y, trace, ax=None, divergence=True, color='C3', divergence_color='C2'):
+    if not ax:
+        _, ax = plt.subplots(1, 1, figsize=(10, 5))
+    ax.plot(x, y, 'o', color=color, alpha=.5)
+    if divergence:
+        divergent = trace['diverging']
+        ax.plot(x[divergent], y[divergent], 'o', color=divergence_color)
+    return ax
+
+def divergence_corner(trace, labels, entry=0):
+    chain = np.array([trace[label] for label in labels])
+    if len(chain.shape) > 2:
+        chain = chain[:,:,entry]
+        print('Only showing the entry [{}] for multi-parameter labels'.format(entry))
+        titleadd = '[{}]'.format(entry)
+    else:
+        titleadd = ''
+    
+    K = len(chain)
+    factor = 2.0           # size of one side of one panel
+    lbdim = 0.5 * factor   # size of left/bottom margin
+    trdim = 0.2 * factor   # size of top/right margin
+    whspace = 0.05         # w/hspace size
+    plotdim = factor * K + factor * (K - 1.) * whspace
+    dim = lbdim + plotdim + trdim
+
+    # Create a new figure if one wasn't provided.
+    fig, axes = plt.subplots(K, K, figsize=(dim, dim))
+
+    lb = lbdim / dim
+    tr = (lbdim + plotdim) / dim
+    fig.subplots_adjust(left=lb, bottom=lb, right=tr, top=tr,
+                        wspace=whspace, hspace=whspace)
+
+    hist_kwargs = dict()
+    hist_kwargs["color"] = hist_kwargs.get("color", 'k')
+    for i, x in enumerate(chain):
+        ax = axes[i,i]
+        bins_1d = int(max(1, 20.))
+        n, _, _ = ax.hist(x, bins=bins_1d, histtype='step')       
+
+
+        title = "{}{}".format(labels[i], titleadd)
+        ax.set_title(title)    
+
+        for j, y in enumerate(chain):
+            ax = axes[i, j]
+
+            if j > i:    
+                ax.set_frame_on(False)
+                ax.set_xticks([])
+                ax.set_yticks([])
+                continue
+            elif j == i:
+                ax.set_xticks([])
+                ax.set_yticks([])            
+                continue    
+
+            ax = pairplot_divergence(y, x, trace, ax=ax)
+
+            if i < K - 1:
+                ax.set_xticklabels([])
+            if j > 0:
+                ax.set_yticklabels([])   
+                
+# plot the estimate for the mean of log(τ) cumulating mean
+def biasplot(label, true):
+    logtau = np.log(trace[label])
+    mlogtau = [np.mean(logtau[:i]) for i in np.arange(1, len(logtau))]
+    plt.figure(figsize=(15, 4))
+    plt.axhline(np.log(true), lw=2.5, color='gray')
+    plt.plot(mlogtau, lw=2.5)
+    plt.xlabel('Iteration')
+    plt.ylabel('MCMC mean of log({})'.format(label))
+    plt.title('MCMC estimation of log({})'.format(label));                
+
 def read_data(target, lower_index, upper_index):
     mal = pd.read_csv('../../data/malatium.csv', index_col=0)
     idx = np.where(mal.KIC == target)[0][0]
