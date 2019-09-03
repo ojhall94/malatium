@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import glob
 from astropy.io import ascii
 import pandas as pd
