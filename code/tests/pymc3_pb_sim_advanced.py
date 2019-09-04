@@ -14,7 +14,6 @@ import lightkurve as lk
 from astropy.units import cds
 from astropy import units as u
 import seaborn as sns
-import mystyle as ms
 
 import corner
 import pystan
@@ -330,7 +329,7 @@ p = mod.model(init_m, theano=False)*np.random.chisquare(2., size=len(f))/2
 # In[14]:
 
 
-with plt.style.context(ms.ms):
+with plt.style.context(lk.MPLSTYLE):
     plt.plot(f, p)
     plt.plot(f, mod.model(init_m, theano=False), lw=3)
     plt.yscale('log')
@@ -507,7 +506,7 @@ else: plt.show()
 # In[ ]:
 
 
-with plt.style.context(ms.ms):
+with plt.style.context(lk.MPLSTYLE):
     res_m = [np.median(trace[label], axis=0) for label in ['f0','f1','f2','g0','g1','g2',
                                                          'h0','h1','h2','split','i','b']]
     plt.plot(f, p)
