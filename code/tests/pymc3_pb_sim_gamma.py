@@ -14,7 +14,6 @@ import lightkurve as lk
 from astropy.units import cds
 from astropy import units as u
 import seaborn as sns
-import mystyle as ms
 
 import corner
 import pystan
@@ -25,6 +24,7 @@ from astropy.io import ascii
 import os
 
 import pymc3 as pm
+from pymc3.gp.util import plot_gp_dist
 import arviz
 import warnings
 warnings.filterwarnings('ignore')
@@ -309,77 +309,77 @@ with plt.style.context(lk.MPLSTYLE):
 # In[14]:
 
 
-pm_model = pm.Model()
-
-with pm_model:
-    m = pm.Normal('m', m_, .1)
-    c = pm.Normal('c', c_, .1)
-    rho = pm.Normal('rho', rho_, 0.01)
-    ls = pm.Normal('ls', 0.3, 0.01)
-
-    mu = pm.gp.mean.Linear(coeffs=m, intercept=c)
-    cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls=ls)
-
-    gp = pm.gp.Latent(cov_func = cov, mean_func=mu)
-    lng = gp.prior('lng', X=nf_)
-
-    g0 = pm.Deterministic('g0', tt.exp(lng)[0:len(f0_)])
-    g1 = pm.Deterministic('g1', tt.exp(lng)[len(f0_):len(f0_)+len(f1_)])
-    g2 = pm.Deterministic('g2', tt.exp(lng)[len(f0_)+len(f1_):])
-
-    pm.Normal('like0', g0, .1, observed=widths[0])
-    pm.Normal('like1', g1, .1, observed=widths[1])
-    pm.Normal('like2', g2, .1, observed=widths[2])
-
-    trace = pm.sample(1000, tune=2000,chains=4, target_accept=.99)
-
-
-# In[15]:
-
-
-print(pm.summary(trace))
-
-
-# In[16]:
-
-
-from pymc3.gp.util import plot_gp_dist
-
-nflin = np.linspace(nf.min(), nf.max(), 100)
-fslin = np.linspace(fs.min(), fs.max(), 100)+f2_.min()
-mulin = nflin * np.median(trace['m']) + np.median(trace['c'])
-
-with pm_model:
-    f_pred = gp.conditional("f_pred", nflin[:,None])
-    expf_pred = pm.Deterministic('expf_pred', tt.exp(f_pred))
-    pred_samples = pm.sample_posterior_predictive(trace, vars=[expf_pred], samples=1000)
-
-
-# In[17]:
-
-
-with plt.style.context(lk.MPLSTYLE):
-    fig, ax = plt.subplots()
-    plot_gp_dist(ax, pred_samples['expf_pred'], fslin, palette='viridis', fill_alpha=.05)
-
-    ax.plot(fslin, np.exp(mulin), label='Mean Trend', lw=2, ls='-.', alpha=.5, zorder=0)
-
-    ax.scatter(f0_, widths[0], label='truth', ec='k',s=50,zorder=5)
-    ax.scatter(f1_, widths[1], label='truth 1', ec='k',s=50,zorder=5)
-    ax.scatter(f2_, widths[2], label='truth 2', ec='k',s=50,zorder=5)
-
-    ax.scatter(f0_, np.median(trace['g0'],axis=0), marker='^', label='mod', s=10,zorder=5)
-    ax.scatter(f1_, np.median(trace['g1'],axis=0), marker='*', label='mod 1', s=10,zorder=5)
-    ax.scatter(f2_, np.median(trace['g2'],axis=0), marker='o', label='mod 2', s=10,zorder=5)
-
-
-    ax.legend(loc='upper center', ncol=2, bbox_to_anchor=(0.5, 1.3))
-    plt.savefig('widthgptest.png')
+# pm_model = pm.Model()
+#
+# with pm_model:
+#     m = pm.Normal('m', m_, .1)
+#     c = pm.Normal('c', c_, .1)
+#     rho = pm.Normal('rho', rho_, 0.01)
+#     ls = pm.Normal('ls', 0.3, 0.01)
+#
+#     mu = pm.gp.mean.Linear(coeffs=m, intercept=c)
+#     cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls=ls)
+#
+#     gp = pm.gp.Latent(cov_func = cov, mean_func=mu)
+#     lng = gp.prior('lng', X=nf_)
+#
+#     g0 = pm.Deterministic('g0', tt.exp(lng)[0:len(f0_)])
+#     g1 = pm.Deterministic('g1', tt.exp(lng)[len(f0_):len(f0_)+len(f1_)])
+#     g2 = pm.Deterministic('g2', tt.exp(lng)[len(f0_)+len(f1_):])
+#
+#     pm.Normal('like0', g0, .1, observed=widths[0])
+#     pm.Normal('like1', g1, .1, observed=widths[1])
+#     pm.Normal('like2', g2, .1, observed=widths[2])
+#
+#     trace = pm.sample(1000, tune=2000,chains=4, target_accept=.99)
+#
+#
+# # In[15]:
+#
+#
+# print(pm.summary(trace))
+#
+#
+# # In[16]:
+#
+#
+# from pymc3.gp.util import plot_gp_dist
+#
+# nflin = np.linspace(nf.min(), nf.max(), 100)
+# fslin = np.linspace(fs.min(), fs.max(), 100)+f2_.min()
+# mulin = nflin * np.median(trace['m']) + np.median(trace['c'])
+#
+# with pm_model:
+#     f_pred = gp.conditional("f_pred", nflin[:,None])
+#     expf_pred = pm.Deterministic('expf_pred', tt.exp(f_pred))
+#     pred_samples = pm.sample_posterior_predictive(trace, vars=[expf_pred], samples=1000)
+#
+#
+# # In[17]:
+#
+#
+# with plt.style.context(lk.MPLSTYLE):
+#     fig, ax = plt.subplots()
+#     plot_gp_dist(ax, pred_samples['expf_pred'], fslin, palette='viridis', fill_alpha=.05)
+#
+#     ax.plot(fslin, np.exp(mulin), label='Mean Trend', lw=2, ls='-.', alpha=.5, zorder=0)
+#
+#     ax.scatter(f0_, widths[0], label='truth', ec='k',s=50,zorder=5)
+#     ax.scatter(f1_, widths[1], label='truth 1', ec='k',s=50,zorder=5)
+#     ax.scatter(f2_, widths[2], label='truth 2', ec='k',s=50,zorder=5)
+#
+#     ax.scatter(f0_, np.median(trace['g0'],axis=0), marker='^', label='mod', s=10,zorder=5)
+#     ax.scatter(f1_, np.median(trace['g1'],axis=0), marker='*', label='mod 1', s=10,zorder=5)
+#     ax.scatter(f2_, np.median(trace['g2'],axis=0), marker='o', label='mod 2', s=10,zorder=5)
+#
+#
+#     ax.legend(loc='upper center', ncol=2, bbox_to_anchor=(0.5, 1.3))
+#     plt.savefig('widthgptest.png')
 
 # In[18]:
 
 
-labels=['m','c','rho','ls','g0','g1','g2']
+# labels=['m','c','rho','ls','g0','g1','g2']
 
 
 # # Now lets try and fit this
@@ -404,9 +404,9 @@ with pm_model:
     sigma1 = pm.HalfCauchy('sigma1', 2., testval=2.)
     sigma2 = pm.HalfCauchy('sigma2', 2., testval=.5)
 
-    f0 = pm.Normal('f0', mod.f0([numax, deltanu_, alpha, epsilon, d01, d02]), sigma0, shape=len(f0_))
-    f1 = pm.Normal('f1', mod.f1([numax, deltanu_, alpha, epsilon, d01, d02]), sigma1, shape=len(f1_))
-    f2 = pm.Normal('f2', mod.f2([numax, deltanu_, alpha, epsilon, d01, d02]), sigma2, shape=len(f2_))
+    f0 = pm.Normal('f0', mod.f0([numax, alpha, epsilon, d01, d02]), sigma0, shape=len(f0_))
+    f1 = pm.Normal('f1', mod.f1([numax, alpha, epsilon, d01, d02]), sigma1, shape=len(f1_))
+    f2 = pm.Normal('f2', mod.f2([numax, alpha, epsilon, d01, d02]), sigma2, shape=len(f2_))
 
     # Mode Linewidths
     m = pm.Normal('m', m_, .1)
