@@ -508,7 +508,7 @@ else: plt.show()
 
 with plt.style.context(lk.MPLSTYLE):
     res_m = [np.median(trace[label], axis=0) for label in ['f0','f1','f2','g0','g1','g2',
-                                                         'h0','h1','h2','split','i','b']]
+                                                         'h0','h1','h2','split','i', 'phi']]
     plt.plot(f, p)
     plt.plot(f, mod.model(res_m, theano=False), lw=3)
     if cpu == 'bear':
