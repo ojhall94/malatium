@@ -271,7 +271,7 @@ nf_ = nf[:,None]
 
 # ### Build the mode amplitudes
 
-# In[11]:
+# In[22]:
 
 
 w_ = (0.25 * numax_)/2.355
@@ -285,14 +285,14 @@ init_h =[numax_,   #numax
          V2_       #ocotopole visibility
         ]
 sigmaA_ = .2
-amps = [mod.A0(f0_, init_h, theano=False) + np.random.randn(len(f0_)) * sigmaA_,
-        mod.A1(f1_, init_h, theano=False) + np.random.randn(len(f0_)) * sigmaA_,
-        mod.A2(f2_, init_h, theano=False) + np.random.randn(len(f0_)) * sigmaA_]
+amps = [np.abs(mod.A0(f0_, init_h, theano=False) + np.random.randn(len(f0_)) * sigmaA_),
+        np.abs(mod.A1(f1_, init_h, theano=False) + np.random.randn(len(f0_)) * sigmaA_),
+        np.abs(mod.A2(f2_, init_h, theano=False) + np.random.randn(len(f0_)) * sigmaA_)]
 
 
 # ### Build the background
 
-# In[53]:
+# In[23]:
 
 
 labels=['loga','logb','logc','logd','logj','logk','white','scale','nyq']
@@ -303,7 +303,7 @@ phi_cholesky = np.linalg.cholesky(phi_sigma)
 
 # ### Construct the model
 
-# In[54]:
+# In[24]:
 
 
 split_ = 1.
@@ -324,7 +324,7 @@ init =[f0_,                         # l0 modes
 p = mod.model(init, theano=False)*np.random.chisquare(2., size=len(f))/2
 
 
-# In[55]:
+# In[25]:
 
 
 with plt.style.context(lk.MPLSTYLE):
@@ -339,7 +339,7 @@ with plt.style.context(lk.MPLSTYLE):
 
 # # Now lets try and fit this
 
-# In[56]:
+# In[26]:
 
 
 pm_model = pm.Model()
@@ -380,18 +380,31 @@ with pm_model:
     like = pm.Gamma('like', alpha=1., beta=1./fit, observed=p)
 
 
-# In[58]:
+# In[27]:
 
 
 for RV in pm_model.basic_RVs:
     print(RV.name, RV.logp(pm_model.test_point))
 
 
-# In[59]:
+# In[28]:
+
+
+start = {'f0' : f0_, 'f1' : f1_, 'f2' : f2_,
+        'xsplit' : split_ * incl_, 'cosi' : np.cos(incl_), 'phi' : phi_,
+        'g0' : widths[0], 'g1' : widths[1], 'g2' : widths[2],
+        'a0' : amps[0], 'a1' : amps[1], 'a2' : amps[2]}
+
+
+# In[29]:
 
 
 with pm_model:
-    trace = pm.sample(chains=4, target_accept=.99)
+    trace = pm.sample(chains=4,
+                        target_accept=.99,
+                        start = start,
+                     init = 'advi+adapt_diag',
+                     progressbar=True)
 
 
 # In[ ]:

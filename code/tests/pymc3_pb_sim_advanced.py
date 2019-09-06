@@ -47,7 +47,7 @@ class model():
         self.npts = len(f)
         self.M = [len(n0_), len(n1_), len(n2_)]
         self.deltanu = deltanu_
-
+        
     def epsilon(self, i):
         eps = tt.zeros((3,3))
         eps0 = tt.set_subtensor(eps[0][0], 1.)
@@ -60,19 +60,19 @@ class model():
         eps = tt.set_subtensor(eps[0], eps0)
         eps = tt.set_subtensor(eps[1], eps1)
         eps = tt.set_subtensor(eps[2], eps2)
-
+        
         return eps
-
+            
     def lor(self, freq, h, w):
         return h / (1.0 + 4.0/tt.sqr(w)*tt.sqr((self.f - freq)))
-
+    
     def mode(self, l, freqs, hs, ws, eps, split=0):
         for idx in range(self.M[l]):
             for m in range(-l, l+1, 1):
-                self.modes += self.lor(freqs[idx] + (m*split),
-                                     hs[idx] * eps[l,abs(m)],
+                self.modes += self.lor(freqs[idx] + (m*split), 
+                                     hs[idx] * eps[l,abs(m)], 
                                      ws[idx])
-
+  
     def model(self, p, theano=True):
         f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i, phi = p
 
@@ -86,19 +86,19 @@ class model():
         white = phi[6]
         scale = phi[7]
         nyq = phi[8]
-
+        
         # Calculate the modes
-        eps = self.epsilon(i)
+        eps = self.epsilon(i)        
         self.modes = np.zeros(self.npts)
         self.mode(0, f0, h0, g0, eps)
         self.mode(1, f1, h1, g1, eps, split)
         self.mode(2, f2, h2, g2, eps, split)
         self.modes *= self.get_apodization(nyq)
-
+            
         #Calculate the background
         self.back = self.get_background(loga, logb, logc, logd, logj, logk,
-                                       white, scale, nyq)
-
+                                       white, scale, nyq)            
+            
         #Create the model
         self.mod = self.modes + self.back
         if theano:
@@ -107,24 +107,24 @@ class model():
             return self.mod.eval()
 
     # Small separations are fractional
-    def asymptotic(self, n, numax, alpha, epsilon, d=0.):
+    def asymptotic(self, n, numax, alpha, epsilon, d=0.): 
         nmax = (numax / self.deltanu) - epsilon
         curve = (alpha/2.)*(n-nmax)*(n-nmax)
         return (n + epsilon + d + curve) * self.deltanu
 
     def f0(self, p):
         numax, alpha, epsilon, d01, d02 = p
-
+        
         return self.asymptotic(self.n0, numax, alpha, epsilon, 0.)
-
+    
     def f1(self, p):
         numax, alpha, epsilon, d01, d02 = p
-
+        
         return self.asymptotic(self.n1, numax, alpha, epsilon, d01)
-
+    
     def f2(self, p):
         numax, alpha, epsilon, d01, d02 = p
-
+        
         return self.asymptotic(self.n2+1, numax, alpha, epsilon, -d02)
 
     def gaussian(self, freq, numax, w, A):
@@ -137,23 +137,23 @@ class model():
             return height
         else:
             return height.eval()
-
+    
     def A1(self, f, p, theano=True):
         numax, w, A, V1, V2 = p
-        height = self.gaussian(f, numax, w, A)*V1
+        height = self.gaussian(f, numax, w, A)*V1        
         if theano:
             return height
         else:
             return height.eval()
-
+    
     def A2(self, f, p, theano=True):
         numax, w, A, V1, V2 = p
-        height = self.gaussian(f, numax, w, A)*V2
+        height = self.gaussian(f, numax, w, A)*V2      
         if theano:
             return height
         else:
             return height.eval()
-
+        
     def harvey(self, a, b, c):
         harvey = 0.9*tt.sqr(a)/b/(1.0 + tt.pow((self.f/b), c))
         return harvey
@@ -165,7 +165,7 @@ class model():
     def get_background(self, loga, logb, logc, logd, logj, logk, white, scale, nyq):
         background = np.zeros(len(self.f))
         background += self.get_apodization(nyq) * scale                          * (self.harvey(tt.pow(10, loga), tt.pow(10, logb), 4.)                         +  self.harvey(tt.pow(10, logc), tt.pow(10, logd), 4.)                         +  self.harvey(tt.pow(10, logj), tt.pow(10, logk), 2.))                        +  white
-        return background
+        return background              
 
 
 # ### Build the range
@@ -292,14 +292,12 @@ amps = [mod.A0(f0_, init_h, theano=False) + np.random.randn(len(f0_)) * sigmaA_,
 
 # ### Build the background
 
-# In[20]:
+# In[12]:
 
 
 labels=['loga','logb','logc','logd','logj','logk','white','scale','nyq']
 phi_ =  [   1.6,   2.6,   1.6,   3.0,   1.7,   0.5,    0.4,     1., nyq]
-phi_stds = [0.01, 0.02, 0.01, 0.03, 0.01, 0.005, 0.004, 0.1, 85.]
-phi_sigma = np.zeros([len(phi_), len(phi_)])
-np.fill_diagonal(phi_sigma, phi_stds)
+phi_sigma = np.genfromtxt('phi_sigma.txt')
 phi_cholesky = np.linalg.cholesky(phi_sigma)
 
 
@@ -347,7 +345,7 @@ with plt.style.context(lk.MPLSTYLE):
 if cpu != 'bear':
     pm_model = pm.Model()
 
-    with pm_model:
+    with pm_model:   
         # Background treatment
         phi = pm.MvNormal('phi', mu=phi_, chol=phi_cholesky, testval=phi_, shape=len(phi_))
 
@@ -385,83 +383,104 @@ if cpu != 'bear':
 
 # # Now lets try and fit this
 
-# In[21]:
+# In[18]:
 
 
 pm_model = pm.Model()
 
-with pm_model:
+with pm_model:   
     # Mode locations
-    numax = pm.Normal('numax', numax_, 1., testval=numax_)
-    alpha = pm.Normal('alpha', alpha_, 0.001, testval=alpha_)
+    numax = pm.Normal('numax', numax_, 10., testval=numax_)
+    alpha = pm.Normal('alpha', alpha_, 0.01, testval=alpha_)
     epsilon = pm.Normal('epsilon', epsilon_, 1., testval=epsilon_)
-    d01     = pm.Normal('d01', d01_, 0.01, testval=d01_)
-    d02     = pm.Normal('d02', d02_, 0.01, testval=d02_)
-
+    d01     = pm.Normal('d01', d01_, 0.1, testval=d01_)   
+    d02     = pm.Normal('d02', d02_, 0.1, testval=d02_)
+    
     sigma0 = pm.HalfCauchy('sigma0', 2., testval=1.5)
     sigma1 = pm.HalfCauchy('sigma1', 2., testval=2.)
     sigma2 = pm.HalfCauchy('sigma2', 2., testval=.5)
-
+    
     f0 = pm.Normal('f0', mod.f0([numax, alpha, epsilon, d01, d02]), sigma0, shape=len(f0_))
     f1 = pm.Normal('f1', mod.f1([numax, alpha, epsilon, d01, d02]), sigma1, shape=len(f1_))
     f2 = pm.Normal('f2', mod.f2([numax, alpha, epsilon, d01, d02]), sigma2, shape=len(f2_))
 
     # Mode Linewidths
-    m = pm.Normal('m', m_, .1)
-    c = pm.Normal('c', c_, .1)
-    rho = pm.Normal('rho', rho_, 0.01)
-    ls = pm.Normal('ls', 0.3, 0.01)
-
+    m = pm.Normal('m', m_, 1., testval=m_) 
+    c = pm.Normal('c', c_, 1., testval=c_)
+    rho = pm.Normal('rho', rho_, 0.1, testval=rho_) 
+    ls = pm.Normal('ls', 0.3, 0.1, testval=L_)
+    
     mu = pm.gp.mean.Linear(coeffs=m, intercept=c)
-    cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls=ls)
+    cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls=ls)     
 
-    gp = pm.gp.Latent(cov_func = cov, mean_func=mu)
+    gp = pm.gp.Latent(cov_func = cov, mean_func=mu)    
     lng = gp.prior('lng', X=nf_)
 
     g0 = pm.Deterministic('g0', tt.exp(lng)[0:len(f0_)])
     g1 = pm.Deterministic('g1', tt.exp(lng)[len(f0_):len(f0_)+len(f1_)])
-    g2 = pm.Deterministic('g2', tt.exp(lng)[len(f0_)+len(f1_):])
+    g2 = pm.Deterministic('g2', tt.exp(lng)[len(f0_)+len(f1_):])          
 
     # Mode Amplitude & Height
-    w = pm.Normal('w', w_, 1., testval=w_)
+    w = pm.Normal('w', w_, 10., testval=w_)
     A = pm.Normal('A', A_, 1., testval=A_)
     V1 = pm.Normal('V1', V1_, 0.1, testval=V1_)
     V2 = pm.Normal('V2', V2_, 0.1, testval=V2_)
-
+    
     sigmaA = pm.HalfCauchy('sigmaA', 1., testval=0.2)
     Da0 = pm.Normal('Da0',0, 1, shape=len(f0_))
     Da1 = pm.Normal('Da1',0, 1, shape=len(f1_))
     Da2 = pm.Normal('Da2',0, 1, shape=len(f2_))
-
-    a0 = pm.Deterministic('a0', sigmaA * Da0 + mod.A0(f0_, [numax, w, A, V1, V2]))
-    a1 = pm.Deterministic('a1', sigmaA * Da1 + mod.A1(f1_, [numax, w, A, V1, V2]))
-    a2 = pm.Deterministic('a2', sigmaA * Da2 + mod.A2(f2_, [numax, w, A, V1, V2]))
-
+                    
+    a0 = pm.Deterministic('a0', sigmaA * Da0 + mod.A0(f0_, [numax, w, A, V1, V2])) 
+    a1 = pm.Deterministic('a1', sigmaA * Da1 + mod.A1(f1_, [numax, w, A, V1, V2])) 
+    a2 = pm.Deterministic('a2', sigmaA * Da2 + mod.A2(f2_, [numax, w, A, V1, V2]))   
+    
     h0 = pm.Deterministic('h0', 2*tt.sqr(a0)/np.pi/g0)
     h1 = pm.Deterministic('h1', 2*tt.sqr(a1)/np.pi/g1)
     h2 = pm.Deterministic('h2', 2*tt.sqr(a2)/np.pi/g2)
-
+    
     # Mode splitting
     xsplit = pm.HalfNormal('xsplit', sigma=2.0, testval=init_m[9] * np.sin(init_m[10]))
     cosi = pm.Uniform('cosi', 0., 1., testval=np.cos(init_m[10]))
-
+    
     i = pm.Deterministic('i', tt.arccos(cosi))
     split = pm.Deterministic('split', xsplit/tt.sin(i))
-
+    
     # Background treatment
     phi = pm.MvNormal('phi', mu=phi_, chol=phi_cholesky, testval=phi_, shape=len(phi_))
-
+    
     # Construct model
     fit = mod.model([f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i, phi])
-
+    
     like = pm.Gamma('like', alpha=1., beta=1./fit, observed=p)
 
 
-# In[ ]:
+# In[19]:
+
+
+for RV in pm_model.basic_RVs:
+    print(RV.name, RV.logp(pm_model.test_point))
+
+
+# In[20]:
+
+
+start = {'numax' : numax_, 'alpha' : alpha_, 'epsilon' : epsilon_, 'd01' : d01_, 'd02' : d02_,
+        'sigma0' : sigma0_, 'sigma1' : sigma1_, 'sigma2' : sigma2_, 'f0' : f0_, 'f1' : f1_, 'f2' : f2_,
+        'm' : m_, 'c' : c_, 'rho' : rho_, 'ls' : L_, 'w' : w_, 'A' : A_, 'V1' : V1_, 'V2' : V2_, 'sigmaA' : sigmaA_,
+        'xsplit' : split_ * incl_, 'cosi' : np.cos(incl_), 'phi' : phi_,
+        'g0' : widths[0], 'g1' : widths[1], 'g2' : widths[2], 'a0' : amps[0], 'a1' : amps[1], 'a2' : amps[2]}
+
+
+# In[21]:
 
 
 with pm_model:
-    trace = pm.sample(chains=4, target_accept=.99)
+    trace = pm.sample(tune=5, draws=5,
+                      chains=4,
+                      target_accept=.99,
+                      start = start,
+                      init = 'advi+adapt_diag')
 
 
 # In[ ]:
@@ -508,69 +527,69 @@ else: plt.show()
 
 with plt.style.context(lk.MPLSTYLE):
     res_m = [np.median(trace[label], axis=0) for label in ['f0','f1','f2','g0','g1','g2',
-                                                         'h0','h1','h2','split','i', 'phi']]
+                                                         'h0','h1','h2','split','i','b']]
     plt.plot(f, p)
     plt.plot(f, mod.model(res_m, theano=False), lw=3)
     if cpu == 'bear':
         plt.savefig('modelfit.png')
     else: plt.show()
-
+    
     fig, ax = plt.subplots()
     res = [np.median(trace[label]) for label in ['numax', 'w', 'A', 'V1','V2']]
     resls = [np.median(trace[label],axis=0) for label in ['a0','a1','a2']]
-
+       
     ax.plot(f0_, mod.A0(f0_, res,theano=False), label='0 Trend',lw=2, zorder=1)
     ax.plot(f1_, mod.A1(f1_, res,theano=False), label='1 Trend',lw=2, zorder=1)
     ax.plot(f2_, mod.A2(f2_, res,theano=False), label='2 Trend',lw=2, zorder=1)
 
     ax.scatter(f0_, amps[0], marker='^',label='0 Errd',  s=50, zorder=2)
     ax.scatter(f1_, amps[1], marker='*',label='1 Errd',  s=50, zorder=2)
-    ax.scatter(f2_, amps[2], marker='o',label='2 Errd',  s=50, zorder=2)
-
+    ax.scatter(f2_, amps[2], marker='o',label='2 Errd',  s=50, zorder=2)   
+  
     ax.plot(f0_, mod.A0(f0_, init_h, theano=False), label='0 Pure',lw=2, zorder=1)
     ax.plot(f1_, mod.A1(f1_, init_h, theano=False), label='1 Pure',lw=2, zorder=1)
     ax.plot(f2_, mod.A2(f2_, init_h, theano=False), label='2 Pure',lw=2, zorder=1)
 
     ax.scatter(f0_, resls[0], marker='^',label='0 mod', s=10, zorder=3)
     ax.scatter(f1_, resls[1], marker='*',label='1 mod', s=10, zorder=3)
-    ax.scatter(f2_, resls[2], marker='o',label='2 mod', s=10, zorder=3)
-
-    ax.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.3))
+    ax.scatter(f2_, resls[2], marker='o',label='2 mod', s=10, zorder=3)    
+    
+    ax.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.3))      
     ax.set_xlabel('Frequency')
     ax.set_ylabel('Amplitude')
-
+    
     if cpu == 'bear':
         plt.savefig('amplitudefit.png')
     else: plt.show()
-
+    
     fig, ax = plt.subplots()
     res = [np.median(trace[label]) for label in ['numax', 'alpha', 'epsilon','d01','d02']]
     resls = [np.median(trace[label],axis=0) for label in ['f0','f1','f2']]
     stdls = [np.std(trace[label],axis=0) for label in ['f0','f1','f2']]
-
+       
     ax.plot(mod.f0(res)%deltanu_, n0_, label='0 Trend',lw=2, zorder=1)
     ax.plot(mod.f1(res)%deltanu_, n1_, label='1 Trend',lw=2, zorder=1)
     ax.plot(mod.f2(res)%deltanu_, n2_, label='2 Trend',lw=2, zorder=1)
 
     ax.scatter(f0_%deltanu_, n0_, marker='^',label='0 Truth (glitch)',  s=50, zorder=2)
     ax.scatter(f1_%deltanu_, n1_, marker='*',label='1 Truth (glitch)',  s=50, zorder=2)
-    ax.scatter(f2_%deltanu_, n2_, marker='o',label='2 Truth (glitch)',  s=50, zorder=2)
-
+    ax.scatter(f2_%deltanu_, n2_, marker='o',label='2 Truth (glitch)',  s=50, zorder=2)   
+    
     ax.plot(f0_true%deltanu_, n0_, alpha=.5, label='0 Truth (pure)',  lw=2, zorder=1)
     ax.plot(f1_true%deltanu_, n1_, alpha=.5, label='1 Truth (pure)',  lw=2, zorder=1)
-    ax.plot(f2_true%deltanu_, n2_, alpha=.5, label='2 Truth (pure)',  lw=2, zorder=1)
-
+    ax.plot(f2_true%deltanu_, n2_, alpha=.5, label='2 Truth (pure)',  lw=2, zorder=1)      
+    
     ax.scatter(resls[0]%deltanu_, n0_, marker='^',label='0 mod', s=10, zorder=3)
     ax.scatter(resls[1]%deltanu_, n1_, marker='*',label='1 mod', s=10, zorder=3)
-    ax.scatter(resls[2]%deltanu_, n2_, marker='o',label='2 mod', s=10, zorder=3)
-
+    ax.scatter(resls[2]%deltanu_, n2_, marker='o',label='2 mod', s=10, zorder=3)    
+    
     ax.set_xlabel(r'Frequency mod $\Delta\nu$')
     ax.set_ylabel('Overtone order n')
-    ax.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.3))
-
+    ax.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.3))    
+    
     if cpu == 'bear':
         plt.savefig('frequencyfit.png')
-    else: plt.show()
+    else: plt.show()    
 
 
 # In[ ]:
@@ -597,20 +616,20 @@ with plt.style.context(lk.MPLSTYLE):
 
     ax.scatter(f0_, widths[0], label='truth', ec='k',s=50,zorder=5)
     ax.scatter(f1_, widths[1], label='truth 1', ec='k',s=50,zorder=5)
-    ax.scatter(f2_, widths[2], label='truth 2', ec='k',s=50,zorder=5)
-
+    ax.scatter(f2_, widths[2], label='truth 2', ec='k',s=50,zorder=5) 
+    
     ax.scatter(f0_, np.median(trace['g0'],axis=0), marker='^', label='mod', s=10,zorder=5)
     ax.scatter(f1_, np.median(trace['g1'],axis=0), marker='*', label='mod 1', s=10,zorder=5)
-    ax.scatter(f2_, np.median(trace['g2'],axis=0), marker='o', label='mod 2', s=10,zorder=5)
-
+    ax.scatter(f2_, np.median(trace['g2'],axis=0), marker='o', label='mod 2', s=10,zorder=5)        
+    
     ax.errorbar(f0_, np.median(trace['g0'],axis=0), yerr=np.std(trace['g0'],axis=0), fmt='|', c='k', lw=3, alpha=.5)
     ax.errorbar(f1_, np.median(trace['g1'],axis=0), yerr=np.std(trace['g1'],axis=0), fmt='|', c='k', lw=3, alpha=.5)
-    ax.errorbar(f2_, np.median(trace['g2'],axis=0), yerr=np.std(trace['g2'],axis=0), fmt='|', c='k', lw=3, alpha=.5)
-
-    ax.legend(loc='upper center', ncol=2, bbox_to_anchor=(0.5, 1.3))
+    ax.errorbar(f2_, np.median(trace['g2'],axis=0), yerr=np.std(trace['g2'],axis=0), fmt='|', c='k', lw=3, alpha=.5)          
+     
+    ax.legend(loc='upper center', ncol=2, bbox_to_anchor=(0.5, 1.3))    
     if cpu == 'bear':
         plt.savefig('widthfit.png')
-    else: plt.show()
+    else: plt.show()        
 
 
 # In[ ]:
@@ -629,7 +648,7 @@ truth = phi_
 corner.corner(phichain, truths=truth, show_titles=True, labels=verbose)
 if cpu == 'bear':
     plt.savefig('backcorner.png')
-else: plt.show()
+else: plt.show() 
 
 
 # In[ ]:
@@ -645,3 +664,4 @@ plt.legend()
 
 
 sys.exit()
+
