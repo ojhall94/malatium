@@ -206,8 +206,8 @@ class run_pymc3:
 
         self.init['m'] = ben.loc[ben.KIC == kic].m.values
         self.init['c'] = ben.loc[ben.KIC == kic].c.values
-        self.init['rho'] = ben.loc[ben.KIC == kic].rho.values
-        self.init['L'] = ben.loc[ben.KIC == kic].L.values
+        self.init['rho'] = np.abs(ben.loc[ben.KIC == kic].rho.values)
+        self.init['L'] = np.abs(ben.loc[ben.KIC == kic].L.values)
 
         self.init['w'] = (0.25 * mal.loc[mal['KIC'] == int(kic)].numax.values)/2.355
         self.init['A'] = np.nanmax(self.p)
