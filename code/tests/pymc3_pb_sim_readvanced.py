@@ -1,9 +1,9 @@
 
 # coding: utf-8
 
-# # We're going to combine all components into a single model
+# # We're going to strip some components off the advanced model
 
-# In[2]:
+# In[1]:
 
 
 import numpy as np
@@ -30,12 +30,12 @@ import arviz
 import warnings
 warnings.filterwarnings('ignore')
 
-cpu = 'home'
+cpu = 'bear'
 
 
 # ## Build the model
 
-# In[3]:
+# In[2]:
 
 
 class model():
@@ -74,18 +74,18 @@ class model():
                                      ws[idx])
   
     def model(self, p, theano=True):
-        f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i, phi = p
+        f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i, aphi, bphi = p
 
         # Unpack background parameters
-        loga = phi[0]
-        logb = phi[1]
-        logc = phi[2]
-        logd = phi[3]
-        logj = phi[4]
-        logk = phi[5]
-        white = phi[6]
-        scale = phi[7]
-        nyq = phi[8]
+        loga = aphi[0]
+        logb = aphi[1]
+        logc = aphi[2]
+        logd = aphi[3]
+        logj = aphi[4]
+        logk = aphi[5]
+        white = bphi[0]
+        scale = bphi[1]
+        nyq = bphi[2]
         
         # Calculate the modes
         eps = self.epsilon(i)        
@@ -170,7 +170,7 @@ class model():
 
 # ### Build the range
 
-# In[4]:
+# In[3]:
 
 
 nmodes = 10
@@ -185,7 +185,7 @@ ff = np.arange(fs, nyq, fs)
 
 # ### Build the frequencies
 
-# In[5]:
+# In[4]:
 
 
 deltanu_  =  60.
@@ -196,13 +196,13 @@ d01_ = deltanu_/2. / deltanu_
 d02_ = 6. / deltanu_
 
 
-# In[6]:
+# In[5]:
 
 
 mod = model(ff, n0_, n1_, n2_, deltanu_)
 
 
-# In[7]:
+# In[6]:
 
 
 init_f = [numax_, alpha_, epsilon_, d01_, d02_]
@@ -219,7 +219,7 @@ f1_ = mod.f1(init_f) + np.random.randn(len(f1_true)) * sigma1_
 f2_ = mod.f2(init_f) + np.random.randn(len(f2_true)) * sigma2_
 
 
-# In[8]:
+# In[7]:
 
 
 lo = f2_.min() - .25*deltanu_
@@ -231,7 +231,7 @@ f = ff[sel]
 
 # ### Reset model for new frequency range
 
-# In[9]:
+# In[8]:
 
 
 mod = model(f, n0_, n1_, n2_, deltanu_)
@@ -239,14 +239,14 @@ mod = model(f, n0_, n1_, n2_, deltanu_)
 
 # ### Build the linewidths
 
-# In[10]:
+# In[9]:
 
 
 def kernel(n, rho, L):
     return rho**2 * np.exp(-0.5 * np.subtract.outer(n,n)**2 / L**2)
 
 
-# In[11]:
+# In[10]:
 
 
 m_ = .5
@@ -271,7 +271,7 @@ nf_ = nf[:,None]
 
 # ### Build the mode amplitudes
 
-# In[12]:
+# In[11]:
 
 
 w_ = (0.25 * numax_)/2.355
@@ -292,18 +292,21 @@ amps = [mod.A0(f0_, init_h, theano=False) + np.random.randn(len(f0_)) * sigmaA_,
 
 # ### Build the background
 
-# In[13]:
+# In[12]:
 
 
-labels=['loga','logb','logc','logd','logj','logk','white','scale','nyq']
-phi_ =  [   1.6,   2.6,   1.6,   3.0,   1.7,   0.5,    0.4,     1., nyq]
+labels=['loga','logb','logc','logd','logj','logk',
+        'white','scale','nyq']
+aphi_ =[   1.6,   2.6,   1.6,   3.0,   1.7,   0.5]
+bphi_ = [0.4,     1., nyq]
 phi_sigma = np.genfromtxt('phi_sigma.txt')
-phi_cholesky = np.linalg.cholesky(phi_sigma)
+aphi_cholesky = np.linalg.cholesky(phi_sigma[:6,:6])
+bphi_sigma = np.sqrt(np.diag(phi_sigma)[6:])
 
 
 # ### Construct the model
 
-# In[14]:
+# In[13]:
 
 
 split_ = 1.
@@ -319,73 +322,35 @@ init_m =[f0_,                         # l0 modes
        amps[2]**2 * 2.0 / np.pi / widths[2] ,# l2 heights
        split_,       # splitting
        incl_,                    # inclination angle
-       phi_                           # background parameters
-        ]
+       aphi_,                           # background parameters
+       bphi_ ]
 p = mod.model(init_m, theano=False)*np.random.chisquare(2., size=len(f))/2
 
 
-# In[15]:
+# In[14]:
 
 
 with plt.style.context(lk.MPLSTYLE):
     plt.plot(f, p)
     plt.plot(f, mod.model(init_m, theano=False), lw=3)
-    plt.yscale('log')
-    plt.xscale('log')
+#     plt.yscale('log')
+#     plt.xscale('log')
     if cpu == 'bear':
-        plt.savefig('data.png')
+        plt.savefig('redata.png')
     else: plt.show()
 
-
-# ## First lets fit the background alone...
 
 # In[15]:
 
 
-if cpu != 'bear':
-    pm_model = pm.Model()
-
-    with pm_model:   
-        # Background treatment
-        phi = pm.MvNormal('phi', mu=phi_, chol=phi_cholesky, testval=phi_, shape=len(phi_))
-
-        # Construct the model
-        fit = mod.model([*init_m[:11], phi])
-        like = pm.Gamma('like', alpha=1, beta=1.0/fit, observed=p)
-
-        trace = pm.sample(target_accept=.99)
-
-
-# In[16]:
-
-
-if cpu != 'bear':
-    pm.summary(trace)
-
-
-# In[17]:
-
-
-if cpu != 'bear':
-    labels=['loga','logb','logc','logd','logj','logk',
-            'white','scale','nyq']
-    verbose=[r'$\log_{10}a$',r'$\log_{10}b$',
-            r'$\log_{10}c$',r'$\log_{10}d$',
-            r'$\log_{10}j$',r'$\log_{10}k$',
-            'white','scale',r'$\nu_{\rm nyq}$']
-
-    phichain = np.array([trace['phi'][:,idx] for idx in range(len(phi_))]).T
-    truth = phi_
-
-    corner.corner(phichain, truths=truth, show_titles=True, labels=verbose)
-    plt.show()
+sys.exit()
 
 
 # # Now lets try and fit this
 
 # ## Building the initial guesses
 
-# In[17]:
+# In[ ]:
 
 
 init = {}
@@ -398,11 +363,9 @@ init['sigma0'] = sigma0_
 init['sigma1'] = sigma1_
 init['sigma2'] = sigma2_
 
-init['m'] = m_
-init['c'] = c_
-init['rho'] = rho_
-init['L'] = L_
-
+init['g0'] = widths[0]
+init['g1'] = widths[1]
+init['g2'] = widths[2]
 
 init['w'] = w_
 init['A'] = A_
@@ -420,13 +383,13 @@ init['cosi'] = np.cos(incl_)
 
 # ## Building the model
 
-# In[19]:
+# In[ ]:
 
 
 pm_model = pm.Model()
 
 with pm_model:   
-     # Mode locations
+    # Mode locations
     numax =  pm.Normal('numax', init['numax'], 10., testval = init['numax'])
     alpha =  pm.Normal('alpha', init['alpha'], 0.01, testval = init['alpha'])
     epsilon = pm.Normal('epsilon', init['epsilon'], 1., testval = init['epsilon'])
@@ -442,20 +405,9 @@ with pm_model:
     f2 = pm.Normal('f2', mod.f2([numax, alpha, epsilon, d01, d02]), sigma2, shape=len(f2_))
 
     # Mode Linewidths
-    m = pm.Normal('m', init['m'], 1., testval = init['m'])
-    c = pm.Normal('c', init['c'], 1., testval = init['c'])
-    rho = pm.Normal('rho', init['rho'], 0.1, testval = init['rho'])
-    ls = pm.Normal('ls', init['L'], 0.1)
-
-    mu = pm.gp.mean.Linear(coeffs=m, intercept=c)
-    cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls=ls)
-
-    gp = pm.gp.Latent(cov_func = cov, mean_func=mu)
-    lng = gp.prior('lng', X=nf_)
-
-    g0 = pm.Deterministic('g0', tt.exp(lng)[0:len(f0_)])
-    g1 = pm.Deterministic('g1', tt.exp(lng)[len(f0_):len(f0_)+len(f1_)])
-    g2 = pm.Deterministic('g2', tt.exp(lng)[len(f0_)+len(f1_):])
+    g0 = pm.HalfNormal('g0', sigma=2.0, shape=len(init['g0']), testval=init['g0'])
+    g1 = pm.HalfNormal('g1', sigma=2.0, shape=len(init['g1']), testval=init['g1'])
+    g2 = pm.HalfNormal('g2', sigma=2.0, shape=len(init['g2']), testval=init['g2'])
 
     # Mode Amplitude & Height
     w = pm.Normal('w', init['w'], 10., testval=init['w'])
@@ -482,28 +434,29 @@ with pm_model:
 
     i = pm.Deterministic('i', tt.arccos(cosi))
     split = pm.Deterministic('split', xsplit/tt.sin(i))
-
+    
     # Background treatment
-    phi = pm.MvNormal('phi', mu=phi_, chol=phi_cholesky, testval=phi_, shape=len(phi_))
-
+    aphi = pm.MvNormal('aphi', mu=aphi_, chol=aphi_cholesky, testval=aphi_, shape=len(aphi_))
+    bphi = pm.Normal('bphi', mu=bphi_, sigma=bphi_sigma, testval=bphi_, shape=len(bphi_))
+    
     # Construct model
-    fit = mod.model([f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i, phi])
-
+    fit = mod.model([f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i, aphi, bphi])
+    
     like = pm.Gamma('like', alpha=1., beta=1./fit, observed=p)
 
 
-# In[20]:
+# In[ ]:
 
 
 for RV in pm_model.basic_RVs:
     print(RV.name, RV.logp(pm_model.test_point))
 
 
-# In[21]:
+# In[ ]:
 
 
 with pm_model:
-    trace = pm.sample(tune=5, draws=5,
+    trace = pm.sample(tune=100, draws=100,
                       chains=4,
                       target_accept=.99,
                       start = init,
@@ -514,16 +467,16 @@ with pm_model:
 
 
 df = pm.backends.tracetab.trace_to_dataframe(trace)
-df.to_csv('testchains.csv')
+df.to_csv('retestchains.csv')
 
 
-# In[22]:
+# In[ ]:
 
 
 pm.summary(trace)
 
 
-# In[23]:
+# In[ ]:
 
 
 labels = ['numax','alpha','epsilon','d01','d02',
@@ -533,11 +486,11 @@ truths = [numax_, alpha_, epsilon_, d01_, d02_,
          split_, incl_]
 corner.corner(chain.T, labels=labels, truths=truths, quantiles=[.16, .5, .84], truth_color='r',show_titles=True)
 if cpu == 'bear':
-    plt.savefig('corner1.png')
+    plt.savefig('recorner1.png')
 else: plt.show()
 
 
-# In[24]:
+# In[ ]:
 
 
 labels = ['sigma0','sigma1','sigma2','w','A','V1','V2','sigmaA']
@@ -545,20 +498,20 @@ chain = np.array([trace[label] for label in labels])
 truths = [sigma0_, sigma1_, sigma2_,w_, A_, V1_, V2_, 0.2]
 corner.corner(chain.T, labels=labels, truths=truths, quantiles=[.16, .5, .84], truth_color='r',show_titles=True)
 if cpu == 'bear':
-    plt.savefig('corner2.png')
+    plt.savefig('recorner2.png')
 else: plt.show()
 
 
-# In[25]:
+# In[ ]:
 
 
 with plt.style.context(lk.MPLSTYLE):
     res_m = [np.median(trace[label], axis=0) for label in ['f0','f1','f2','g0','g1','g2',
-                                                         'h0','h1','h2','split','i','phi']]
+                                                         'h0','h1','h2','split','i','aphi','bphi']]
     plt.plot(f, p)
     plt.plot(f, mod.model(res_m, theano=False), lw=3)
     if cpu == 'bear':
-        plt.savefig('modelfit.png')
+        plt.savefig('remodelfit.png')
     else: plt.show()
     
     fig, ax = plt.subplots()
@@ -586,7 +539,7 @@ with plt.style.context(lk.MPLSTYLE):
     ax.set_ylabel('Amplitude')
     
     if cpu == 'bear':
-        plt.savefig('amplitudefit.png')
+        plt.savefig('reamplitudefit.png')
     else: plt.show()
     
     fig, ax = plt.subplots()
@@ -615,39 +568,23 @@ with plt.style.context(lk.MPLSTYLE):
     ax.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.3))    
     
     if cpu == 'bear':
-        plt.savefig('frequencyfit.png')
+        plt.savefig('refrequencyfit.png')
     else: plt.show()    
 
 
-# In[26]:
-
-
-nflin = np.linspace(nf.min(), nf.max(), 100)
-fslin = np.linspace(fs.min(), fs.max(), 100)+f2_.min()
-mulin = nflin * np.median(trace['m']) + np.median(trace['c'])
-
-with pm_model:
-    f_pred = gp.conditional("f_pred", nflin[:,None])
-    expf_pred = pm.Deterministic('expf_pred', tt.exp(f_pred))
-    pred_samples = pm.sample_posterior_predictive(trace, vars=[expf_pred], samples=1000)
-
-
-# In[27]:
+# In[ ]:
 
 
 with plt.style.context(lk.MPLSTYLE):
     fig, ax = plt.subplots()
-    plot_gp_dist(ax, pred_samples['expf_pred'], fslin, palette='viridis', fill_alpha=.05)
-
-    ax.plot(fslin, np.exp(mulin), label='Mean Trend', lw=2, ls='-.', alpha=.5, zorder=0)
 
     ax.scatter(f0_, widths[0], label='truth', ec='k',s=50,zorder=5)
     ax.scatter(f1_, widths[1], label='truth 1', ec='k',s=50,zorder=5)
     ax.scatter(f2_, widths[2], label='truth 2', ec='k',s=50,zorder=5) 
     
-    ax.scatter(f0_, np.median(trace['g0'],axis=0), marker='^', label='mod', s=10,zorder=5)
-    ax.scatter(f1_, np.median(trace['g1'],axis=0), marker='*', label='mod 1', s=10,zorder=5)
-    ax.scatter(f2_, np.median(trace['g2'],axis=0), marker='o', label='mod 2', s=10,zorder=5)        
+    ax.scatter(f0_, np.median(trace['g0'],axis=0), marker='^', ec='k', label='mod', s=10,zorder=5)
+    ax.scatter(f1_, np.median(trace['g1'],axis=0), marker='*', ec='k', label='mod 1', s=10,zorder=5)
+    ax.scatter(f2_, np.median(trace['g2'],axis=0), marker='o', ec='k', label='mod 2', s=10,zorder=5)        
     
     ax.errorbar(f0_, np.median(trace['g0'],axis=0), yerr=np.std(trace['g0'],axis=0), fmt='|', c='k', lw=3, alpha=.5)
     ax.errorbar(f1_, np.median(trace['g1'],axis=0), yerr=np.std(trace['g1'],axis=0), fmt='|', c='k', lw=3, alpha=.5)
@@ -659,7 +596,7 @@ with plt.style.context(lk.MPLSTYLE):
     else: plt.show()        
 
 
-# In[28]:
+# In[ ]:
 
 
 labels=['loga','logb','logc','logd','logj','logk',
@@ -669,16 +606,18 @@ verbose=[r'$\log_{10}a$',r'$\log_{10}b$',
         r'$\log_{10}j$',r'$\log_{10}k$',
         'white','scale',r'$\nu_{\rm nyq}$']
 
-phichain = np.array([trace['phi'][:,idx] for idx in range(len(phi_))]).T
-truth = phi_
+aphichain = np.array([trace['aphi'][:, idx] for idx in range(len(aphi_))]).T
+bphichain = np.array([trace['bphi'][:, idx] for idx in range(len(bphi_))]).T
+phichain = np.concatenate((aphichain, bphichain),axis=1)
+truth = np.concatenate((aphi_, bphi_))
 
 corner.corner(phichain, truths=truth, show_titles=True, labels=verbose)
 if cpu == 'bear':
-    plt.savefig('backcorner.png')
+    plt.savefig('rebackcorner.png')
 else: plt.show() 
 
 
-# In[29]:
+# In[ ]:
 
 
 residual = p/mod.model(res_m, theano=False)
