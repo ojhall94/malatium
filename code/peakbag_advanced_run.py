@@ -210,7 +210,7 @@ class run_pymc3:
         self.init['L'] = np.abs(ben.loc[ben.KIC == kic].L.values[0])
 
         self.init['w'] = (0.25 * mal.loc[mal['KIC'] == int(kic)].numax.values[0])/2.355
-        self.init['A'] = np.nanmax(self.p)
+        self.init['A'] = np.sqrt(np.pi* np.nanmax(self.p) / 2)
         self.init['V1'] = 1.2
         self.init['V2'] = 0.7
         self.init['sigmaA'] = 0.5
@@ -296,7 +296,7 @@ class run_pymc3:
             self.trace = pm.sample(tune = int(args.iter/2),
                                     draws = int(args.iter/2),
                                     chains = 4,
-                                    init = 'advi+adapt_diag',
+                                    init = 'adapt_diag',
                                     start = self.init,
                                     target_accept = 0.99)
 
@@ -314,7 +314,7 @@ class run_pymc3:
                     r'$m$', r'$c$', r'$\rho$', r'$L$',
                     r'$w$', r'$A$', r'$V_1$', r'$V_2$', r'$\sigma_A$',
                     r'$\delta\nu_{\rm s}$', r'$\cos(i)$', r'$\nu_{\rm s}$', r'$i$']
-        corner.corner(chain.T, labels=verbose, quantiles=[0.16, 0.5, 0.84]
+        corner.corner(chain, labels=verbose, quantiles=[0.16, 0.5, 0.84]
                       ,show_titles=True)
         plt.savefig(self.dir+'corner.png')
         plt.close('all')
@@ -365,9 +365,9 @@ class run_pymc3:
             ax.plot(self.mod.f1(res)%self.mod.deltanu, self.mod.n1, label='1 Trend',lw=2, zorder=1)
             ax.plot(self.mod.f2(res)%self.mod.deltanu, self.mod.n2, label='2 Trend',lw=2, zorder=1)
 
-            ax.scatter(resls[0]%self.mod.deltanu_, self.mod.n0, marker='^',label='0 mod', s=10, zorder=3)
-            ax.scatter(resls[1]%self.mod.deltanu_, self.mod.n1, marker='*',label='1 mod', s=10, zorder=3)
-            ax.scatter(resls[2]%self.mod.deltanu_, self.mod.n2, marker='o',label='2 mod', s=10, zorder=3)
+            ax.scatter(resls[0]%self.mod.deltanu, self.mod.n0, marker='^',label='0 mod', s=10, zorder=3)
+            ax.scatter(resls[1]%self.mod.deltanu, self.mod.n1, marker='*',label='1 mod', s=10, zorder=3)
+            ax.scatter(resls[2]%self.mod.deltanu, self.mod.n2, marker='o',label='2 mod', s=10, zorder=3)
 
             ax.set_xlabel(r'Frequency mod $\Delta\nu$')
             ax.set_ylabel('Overtone order n')
@@ -378,12 +378,9 @@ class run_pymc3:
 
             fig, ax = plt.subplots()
             resls = [np.median(self.trace[label],axis=0) for label in ['f0','f1','f2']]
-            nflin = np.linspace(self.nf.min(), self.nf.max(), 100)
-            mulin = nflin * np.median(self.trace['m']) + np.median(self.trace['c'])
+            nflin = np.linspace(self.nf_.min(), self.nf_.max(), 100)
 
             plot_gp_dist(ax, self.trace['g0'], resls[0], palette='viridis', fill_alpha=.05)
-
-            ax.plot(resls[0], np.exp(mulin), label='Mean Trend', lw=2, ls='-.', alpha=.5, zorder=0)
 
             ax.scatter(resls[0], np.median(self.trace['g0'],axis=0), marker='^', label='mod', s=10,zorder=5)
             ax.scatter(resls[1], np.median(self.trace['g1'],axis=0), marker='*', label='mod 1', s=10,zorder=5)
@@ -398,8 +395,6 @@ class run_pymc3:
             plt.savefig(self.dir + 'widthfit.png')
             plt.close()
 
-
-
     def out_csv(self):
         df = pm.backends.tracetab.trace_to_dataframe(self.trace)
         df.to_csv(self.dir+'chains.csv')
@@ -411,8 +406,8 @@ class run_pymc3:
         self.out_csv()
         pm.summary(self.trace).to_csv(self.dir+'summary.csv')
         self.out_corner()
+        self.out_diagnostic_plots()        
         self.out_modelplot()
-        self.out_diagnostic_plots()
         print('Run complete!')
 
 
@@ -482,6 +477,9 @@ if __name__ == '__main__':
     f0_ = locs[modeids==0]
     f1_ = locs[modeids==1]
     f2_ = locs[modeids==2]
+    n0_ = cop.loc[cop.KIC == str(kic)].loc[cop.l == 0].n.values
+    n1_ = cop.loc[cop.KIC == str(kic)].loc[cop.l == 1].n.values
+    n2_ = cop.loc[cop.KIC == str(kic)].loc[cop.l == 2].n.values
     fs = np.concatenate((f0_, f1_, f2_))
     fs -= fs.min()
     nf = fs/fs.max()
@@ -502,7 +500,7 @@ if __name__ == '__main__':
            phi_                         # background terms
            ]
 
-    mod = model(f, f0_, f1_, f2_, deltanu_)
+    mod = model(f, n0_, n1_, n2_, deltanu_)
 
     #Plot the data
     pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
@@ -510,9 +508,10 @@ if __name__ == '__main__':
     ax.scatter(locs, [15]*len(locs),c=modeids, s=20, edgecolor='k')
     ax.plot(f, mod.model(init, theano=False), lw=2)
     plt.savefig(dir+'dataplot.png')
+    # plt.show()
     plt.close()
 
     # Run stan
     print('About to go into Pymc3')
     run = run_pymc3(mod, p, nf_, kic, phi_, phi_cholesky, dir)
-    # run()
+    run()
