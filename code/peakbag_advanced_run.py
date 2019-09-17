@@ -261,7 +261,7 @@ class run_pymc3:
             V1 = pm.Lognormal('V1', mu = np.log(self.init['V1']), sigma = 0.1, testval=self.init['V1'])
             V2 = pm.Lognormal('V2', mu = np.log(self.init['V2']), sigma = 0.1, testval=self.init['V2'])
 
-            sigmaA = pm.HalfCauchy('sigmaA', beta = 1., testval = init['sigmaA'])
+            sigmaA = pm.HalfCauchy('sigmaA', beta = 1., testval = self.init['sigmaA'])
             Da0 = pm.Normal('Da0', mu = 0., sigma = 1., shape=len(self.mod.n0))
             Da1 = pm.Normal('Da1', mu = 0., sigma = 1., shape=len(self.mod.n1))
             Da2 = pm.Normal('Da2', mu = 0., sigma = 1., shape=len(self.mod.n2))
@@ -442,9 +442,10 @@ if __name__ == '__main__':
     # Read in the mode locs
     cop = pd.read_csv('../data/copper.csv',index_col=0)
     cop = cop[cop.l != 3]
-    locs = cop[cop.KIC == str(kic)].Freq.values
-    elocs = cop[cop.KIC == str(kic)].e_Freq.values
-    modeids = cop[cop.KIC == str(kic)].l.values
+    locs = cop[cop.KIC == str(kic)].Freq.values[15:24]
+    elocs = cop[cop.KIC == str(kic)].e_Freq.values[15:24]
+    modeids = cop[cop.KIC == str(kic)].l.values[15:24]
+    nids = cop[cop.KIC == str(kic)].n.values[15:24]
 
     lo = locs.min() - .25*deltanu_
     hi = locs.max() + .25*deltanu_
@@ -475,12 +476,12 @@ if __name__ == '__main__':
         print("Can't read in the background for some reason")
 
     # Build the first guesses
-    f0_ = locs[modeids==0][16:28]
-    f1_ = locs[modeids==1][16:28]
-    f2_ = locs[modeids==2][16:28]
-    n0_ = cop.loc[cop.KIC == str(kic)].loc[cop.l == 0].n.values[16:28]
-    n1_ = cop.loc[cop.KIC == str(kic)].loc[cop.l == 1].n.values[16:28]
-    n2_ = cop.loc[cop.KIC == str(kic)].loc[cop.l == 2].n.values[16:28]
+    f0_ = locs[modeids==0]
+    f1_ = locs[modeids==1]
+    f2_ = locs[modeids==2]
+    n0_ = nids[modeids==0]
+    n1_ = nids[modeids==1]
+    n2_ = nids[modeids==2]
     fs = np.concatenate((f0_, f1_, f2_))
     fs -= fs.min()
     nf = fs/fs.max()
