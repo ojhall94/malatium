@@ -315,7 +315,11 @@ class run_pymc3:
                     r'$m$', r'$c$', r'$\rho$', r'$L$',
                     r'$w$', r'$A$', r'$V_1$', r'$V_2$', r'$\sigma_A$',
                     r'$\delta\nu_{\rm s}$', r'$\cos(i)$', r'$\nu_{\rm s}$', r'$i$']
-        corner.corner(chain, labels=verbose, quantiles=[0.16, 0.5, 0.84]
+        try:
+            corner.corner(chain.T, labels=verbose, quantiles=[0.16, 0.5, 0.84]
+                      ,show_titles=True)
+        except AssertionError:
+            corner.corner(chain, labels=verbose, quantiles=[0.16, 0.5, 0.84]
                       ,show_titles=True)
         plt.savefig(self.dir+'corner.png')
         plt.close('all')
