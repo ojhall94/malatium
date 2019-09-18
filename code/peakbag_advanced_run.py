@@ -446,10 +446,10 @@ if __name__ == '__main__':
     # Read in the mode locs
     cop = pd.read_csv('../data/copper.csv',index_col=0)
     cop = cop[cop.l != 3]
-    locs = cop[cop.KIC == str(kic)].Freq.values[15:24]
-    elocs = cop[cop.KIC == str(kic)].e_Freq.values[15:24]
-    modeids = cop[cop.KIC == str(kic)].l.values[15:24]
-    nids = cop[cop.KIC == str(kic)].n.values[15:24]
+    locs = cop[cop.KIC == str(kic)].Freq.values#[15:24]
+    elocs = cop[cop.KIC == str(kic)].e_Freq.values#[15:24]
+    modeids = cop[cop.KIC == str(kic)].l.values#[15:24]
+    nids = cop[cop.KIC == str(kic)].n.values#[15:24]
 
     lo = locs.min() - .25*deltanu_
     hi = locs.max() + .25*deltanu_
