@@ -170,7 +170,7 @@ class model():
 
 # ### Build the range
 
-# In[32]:
+# In[3]:
 
 
 nmodes = 4
@@ -185,7 +185,7 @@ ff = np.arange(fs, nyq, fs)
 
 # ### Build the frequencies
 
-# In[33]:
+# In[4]:
 
 
 deltanu_  =  60.
@@ -196,13 +196,13 @@ d01_ = deltanu_/2. / deltanu_
 d02_ = 6. / deltanu_
 
 
-# In[34]:
+# In[5]:
 
 
 mod = model(ff, n0_, n1_, n2_, deltanu_)
 
 
-# In[35]:
+# In[6]:
 
 
 init_f = [numax_, alpha_, epsilon_, d01_, d02_]
@@ -219,7 +219,7 @@ f1_ = mod.f1(init_f) + np.random.randn(len(f1_true)) * sigma1_
 f2_ = mod.f2(init_f) + np.random.randn(len(f2_true)) * sigma2_
 
 
-# In[36]:
+# In[7]:
 
 
 lo = f2_.min() - .25*deltanu_
@@ -231,7 +231,7 @@ f = ff[sel]
 
 # ### Reset model for new frequency range
 
-# In[37]:
+# In[8]:
 
 
 mod = model(f, n0_, n1_, n2_, deltanu_)
@@ -239,14 +239,14 @@ mod = model(f, n0_, n1_, n2_, deltanu_)
 
 # ### Build the linewidths
 
-# In[38]:
+# In[9]:
 
 
 def kernel(n, rho, L):
     return rho**2 * np.exp(-0.5 * np.subtract.outer(n,n)**2 / L**2)
 
 
-# In[39]:
+# In[10]:
 
 
 m_ = .5
@@ -271,7 +271,7 @@ nf_ = nf[:,None]
 
 # ### Build the mode amplitudes
 
-# In[40]:
+# In[11]:
 
 
 w_ = (0.25 * numax_)/2.355
@@ -292,7 +292,7 @@ amps = [mod.A0(f0_, init_h, theano=False) + np.random.randn(len(f0_)) * sigmaA_,
 
 # ### Build the background
 
-# In[41]:
+# In[12]:
 
 
 labels=['loga','logb','logc','logd','logj','logk','white','scale','nyq']
@@ -303,7 +303,7 @@ phi_cholesky = np.linalg.cholesky(phi_sigma)
 
 # ### Construct the model
 
-# In[42]:
+# In[13]:
 
 
 split_ = 1.
@@ -324,7 +324,7 @@ init_m =[f0_,                         # l0 modes
 p = mod.model(init_m, theano=False)*np.random.chisquare(2., size=len(f))/2
 
 
-# In[43]:
+# In[14]:
 
 
 with plt.style.context(lk.MPLSTYLE):
@@ -385,7 +385,7 @@ if cpu != 'bear':
 
 # ## Building the initial guesses
 
-# In[44]:
+# In[18]:
 
 
 init = {}
@@ -420,53 +420,59 @@ init['cosi'] = np.cos(incl_)
 
 # ## Building the model
 
-# In[45]:
+# In[19]:
+
+
+nf_
+
+
+# In[30]:
 
 
 pm_model = pm.Model()
 
 with pm_model:   
      # Mode locations
-    numax =  pm.Normal('numax', init['numax'], 10., testval = init['numax'])
-    alpha =  pm.Lognormal('alpha', np.log(init['alpha']), 0.01, testval = init['alpha'])
-    epsilon = pm.Normal('epsilon', init['epsilon'], 1., testval = init['epsilon'])
-    d01     = pm.Lognormal('d01', np.log(init['d01']), 0.1, testval = init['d01'])
-    d02     = pm.Lognormal('d02', np.log(init['d02']), 0.1, testval = init['d02'])
+    numax =  pm.Normal('numax', mu = init['numax'], sigma = 10., testval = init['numax'])
+    alpha =  pm.Lognormal('alpha', mu = np.log(init['alpha']), sigma = 0.01, testval = init['alpha'])
+    epsilon = pm.Normal('epsilon', mu = init['epsilon'], sigma = 1., testval = init['epsilon'])
+    d01     = pm.Lognormal('d01', mu = np.log(init['d01']), sigma = 0.1, testval = init['d01'])
+    d02     = pm.Lognormal('d02', mu = np.log(init['d02']), sigma = 0.1, testval = init['d02'])
 
-    sigma0 = pm.HalfCauchy('sigma0', 2., testval = init['sigma0'])
-    sigma1 = pm.HalfCauchy('sigma1', 2., testval = init['sigma1'])
-    sigma2 = pm.HalfCauchy('sigma2', 2., testval = init['sigma2'])
+    sigma0 = pm.HalfCauchy('sigma0', beta = 2., testval = init['sigma0'])
+    sigma1 = pm.HalfCauchy('sigma1', beta = 2., testval = init['sigma1'])
+    sigma2 = pm.HalfCauchy('sigma2', beta = 2., testval = init['sigma2'])
 
-    f0 = pm.Normal('f0', mod.f0([numax, alpha, epsilon, d01, d02]), sigma0, shape=len(f0_))
-    f1 = pm.Normal('f1', mod.f1([numax, alpha, epsilon, d01, d02]), sigma1, shape=len(f1_))
-    f2 = pm.Normal('f2', mod.f2([numax, alpha, epsilon, d01, d02]), sigma2, shape=len(f2_))
+    f0 = pm.Normal('f0', mu = mod.f0([numax, alpha, epsilon, d01, d02]), sigma = sigma0, shape=len(f0_))
+    f1 = pm.Normal('f1', mu = mod.f1([numax, alpha, epsilon, d01, d02]), sigma = sigma1, shape=len(f1_))
+    f2 = pm.Normal('f2', mu = mod.f2([numax, alpha, epsilon, d01, d02]), sigma = sigma2, shape=len(f2_))
 
     # Mode Linewidths
-    m = pm.Normal('m', init['m'], 1., testval = init['m'])
-    c = pm.Normal('c', init['c'], 1., testval = init['c'])
-    rho = pm.Lognormal('rho', np.log(init['rho']), 0.1, testval = init['rho'])
-    ls = pm.Lognormal('ls', np.log(init['L']), 0.1, testval = init['L'])
+    m = pm.Normal('m', mu = init['m'], sigma = 1., testval = init['m'])
+    c = pm.Normal('c', mu = init['c'], sigma = 1., testval = init['c'])
+    rho = pm.Lognormal('rho', mu = np.log(init['rho']), sigma = 0.1, testval = init['rho'])
+    ls = pm.TruncatedNormal('ls', mu = np.log(init['L']), sigma = 0.1, lower=0., testval = init['L'])
 
-    mu = pm.gp.mean.Linear(coeffs=m, intercept=c)
-    cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls=ls)
+    mu = pm.gp.mean.Linear(coeffs = m, intercept = c)
+    cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls = ls)
 
-    gp = pm.gp.Latent(cov_func = cov, mean_func=mu)
-    lng = gp.prior('lng', X=nf_)
+    gp = pm.gp.Latent(cov_func = cov, mean_func = mu)
+    lng = gp.prior('lng', X = nf_)
 
     g0 = pm.Deterministic('g0', tt.exp(lng)[0:len(f0_)])
     g1 = pm.Deterministic('g1', tt.exp(lng)[len(f0_):len(f0_)+len(f1_)])
     g2 = pm.Deterministic('g2', tt.exp(lng)[len(f0_)+len(f1_):])
 
     # Mode Amplitude & Height
-    w = pm.Lognormal('w', np.log(init['w']), 10., testval=init['w'])
-    A = pm.Lognormal('A', np.log(init['A']), 1., testval=init['A'])
-    V1 = pm.Lognormal('V1', np.log(init['V1']), 0.1, testval=init['V1'])
-    V2 = pm.Lognormal('V2', np.log(init['V2']), 0.1, testval=init['V2'])
+    w = pm.Lognormal('w', mu = np.log(init['w']), sigma = 10., testval=init['w'])
+    A = pm.Lognormal('A', mu = np.log(init['A']), sigma = 1., testval=init['A'])
+    V1 = pm.Lognormal('V1', mu = np.log(init['V1']), sigma = 0.1, testval=init['V1'])
+    V2 = pm.Lognormal('V2', mu = np.log(init['V2']), sigma = 0.1, testval=init['V2'])
 
-    sigmaA = pm.HalfCauchy('sigmaA', 1., testval = init['sigmaA'])
-    Da0 = pm.Normal('Da0',0, 1, shape=len(f0_))
-    Da1 = pm.Normal('Da1',0, 1, shape=len(f1_))
-    Da2 = pm.Normal('Da2',0, 1, shape=len(f2_))
+    sigmaA = pm.HalfCauchy('sigmaA', beta = 1., testval = init['sigmaA'])
+    Da0 = pm.Normal('Da0', mu = 0., sigma = 1., shape=len(f0_))
+    Da1 = pm.Normal('Da1', mu = 0., sigma = 1., shape=len(f1_))
+    Da2 = pm.Normal('Da2', mu = 0., sigma = 1., shape=len(f2_))
 
     a0 = pm.Deterministic('a0', sigmaA * Da0 + mod.A0(f0_, [numax, w, A, V1, V2]))
     a1 = pm.Deterministic('a1', sigmaA * Da1 + mod.A1(f1_, [numax, w, A, V1, V2]))
@@ -484,22 +490,22 @@ with pm_model:
     split = pm.Deterministic('split', xsplit/tt.sin(i))
 
     # Background treatment
-    phi = pm.MvNormal('phi', mu=phi_, chol=phi_cholesky, testval=phi_, shape=len(phi_))
+    phi = pm.MvNormal('phi', mu = phi_, chol = phi_cholesky, testval = phi_, shape = len(phi_))
 
     # Construct model
     fit = mod.model([f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i, phi])
 
-    like = pm.Gamma('like', alpha=1., beta=1./fit, observed=p)
+    like = pm.Gamma('like', alpha = 1., beta = 1./fit, observed = p)
 
 
-# In[46]:
+# In[31]:
 
 
 for RV in pm_model.basic_RVs:
     print(RV.name, RV.logp(pm_model.test_point))
 
 
-# In[47]:
+# In[ ]:
 
 
 with pm_model:
