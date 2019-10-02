@@ -138,13 +138,13 @@ def first_guess(numax):
             np.log10(j), np.log10(k),
             np.log10(numax)]
 
-def rebin(f, p, binsize=10):
-    m = int(len(p)/binsize)
-
-    bin_f = f[:m*binsize].reshape((m, binsize)).mean(1)
-    bin_p = p[:m*binsize].reshape((m, binsize)).mean(1)
-
-    return bin_f, bin_p
+# def rebin(f, p, binsize=10):
+#     m = int(len(p)/binsize)
+#
+#     bin_f = f[:m*binsize].reshape((m, binsize)).mean(1)
+#     bin_p = p[:m*binsize].reshape((m, binsize)).mean(1)
+#
+#     return bin_f, bin_p
 
 class run_stan:
     def __init__(self, data, init, dir):
@@ -263,7 +263,7 @@ if __name__ == '__main__':
 
     # Get the star data
     mal = pd.read_csv('../data/malatium.csv', index_col=0)
-    star = mal.loc[idx]
+    star = mal.iloc[idx]
     kic = star.KIC
     numax = star.numax
     dnu = star.dnu
@@ -285,17 +285,17 @@ if __name__ == '__main__':
     # Make the frequency range selection
     ff, pp = data['col1'],data['col2']
     sel = (ff > lo) & (ff < hi)
-    tf = ff[~sel].values
-    tp = pp[~sel].values
+    f = ff[~sel].values
+    p = pp[~sel].values
 
     #Make extra accomodations for KIC 347720
     if kic == 3427720:
-        sel = (tf > 90.) & (tf < 400.)
-        tf = tf[~sel]
-        tp = tp[~sel]
+        sel = (f > 90.) & (f < 400.)
+        f = f[~sel]
+        p = p[~sel]
 
     #Rebin the frequencies
-    f, p = rebin(tf, tp, binsize=10)
+    # f, p = rebin(tf, tp, binsize=10)
 
     # Initiate the first guesses
     white = 1.
@@ -315,9 +315,9 @@ if __name__ == '__main__':
             'scale': 1.}
 
     #Instead lets quickly plot the data for a test
-    # pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
-    # ax = pg.plot(scale='log')
-    # plt.savefig(dir+'test.png')
+#    pg = lk.Periodogram(f*u.microhertz, p*(cds.ppm**2/u.microhertz))
+#    ax = pg.plot(scale='log')
+#    plt.savefig(dir+'test.png')
 
     # Run stan
     run = run_stan(data, init, dir)

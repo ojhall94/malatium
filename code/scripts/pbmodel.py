@@ -145,7 +145,7 @@ class star():
         return (np.sin(x)/x)**2
 
     def get_noise(self):
-        return np.random.chisquare(2, size=len(self.freqs))
+        return np.random.chisquare(2, size=len(self.freqs))/2.
 
     def asymodelocs(self, n, l, m):
         #d00, d01, d02, d03
