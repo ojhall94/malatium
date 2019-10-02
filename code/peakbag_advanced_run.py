@@ -224,46 +224,47 @@ class run_pymc3:
 
         with self.pm_model:
             # Mode locations
-            numax =  pm.Normal('numax', self.init['numax'], 10., testval = self.init['numax'])
-            alpha =  pm.Normal('alpha', self.init['alpha'], 0.01, testval = self.init['alpha'])
-            epsilon = pm.Normal('epsilon', self.init['epsilon'], 1., testval = self.init['epsilon'])
-            d01     = pm.Normal('d01', self.init['d01'], 0.1, testval = self.init['d01'])
-            d02     = pm.Normal('d02', self.init['d02'], 0.1, testval = self.init['d02'])
+            numax =  pm.Normal('numax', mu = self.init['numax'], sigma = 10., testval = self.init['numax'])
+            alpha =  pm.Lognormal('alpha', mu = np.log(self.init['alpha']), sigma = 0.01, testval = self.init['alpha'])
+            epsilon = pm.Normal('epsilon', mu = self.init['epsilon'], sigma = 1., testval = self.init['epsilon'])
+            d01     = pm.Lognormal('d01', mu = np.log(self.init['d01']), sigma = 0.1, testval = self.init['d01'])
+            d02     = pm.Lognormal('d02', mu = np.log(self.init['d02']), sigma = 0.1, testval = self.init['d02'])
 
-            sigma0 = pm.HalfCauchy('sigma0', 2., testval = self.init['sigma0'])
-            sigma1 = pm.HalfCauchy('sigma1', 2., testval = self.init['sigma1'])
-            sigma2 = pm.HalfCauchy('sigma2', 2., testval = self.init['sigma2'])
 
-            f0 = pm.Normal('f0', mod.f0([numax, alpha, epsilon, d01, d02]), sigma0, shape=len(f0_))
-            f1 = pm.Normal('f1', mod.f1([numax, alpha, epsilon, d01, d02]), sigma1, shape=len(f1_))
-            f2 = pm.Normal('f2', mod.f2([numax, alpha, epsilon, d01, d02]), sigma2, shape=len(f2_))
+            sigma0 = pm.HalfCauchy('sigma0', beta = 2., testval = self.init['sigma0'])
+            sigma1 = pm.HalfCauchy('sigma1', beta = 2., testval = self.init['sigma1'])
+            sigma2 = pm.HalfCauchy('sigma2', beta = 2., testval = self.init['sigma2'])
+
+            f0 = pm.Normal('f0', mu = self.mod.f0([numax, alpha, epsilon, d01, d02]), sigma = sigma0, shape=len(self.mod.n0))
+            f1 = pm.Normal('f1', mu = self.mod.f1([numax, alpha, epsilon, d01, d02]), sigma = sigma1, shape=len(self.mod.n1))
+            f2 = pm.Normal('f2', mu = self.mod.f2([numax, alpha, epsilon, d01, d02]), sigma = sigma2, shape=len(self.mod.n2))
 
             # Mode Linewidths
             m = pm.Normal('m', self.init['m'], 1., testval = self.init['m'])
             c = pm.Normal('c', self.init['c'], 1., testval = self.init['c'])
-            rho = pm.Normal('rho', self.init['rho'], 0.1, testval = self.init['rho'])
-            ls = pm.Normal('ls', self.init['L'], 0.1)
+            rho = pm.Lognormal('rho', mu = np.log(self.init['rho']), sigma = 0.1, testval = self.init['rho'])
+            ls = pm.TruncatedNormal('ls', mu = np.log(self.init['L']), sigma = 0.1, lower=0., testval = self.init['L'])
 
-            mu = pm.gp.mean.Linear(coeffs=m, intercept=c)
-            cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls=ls)
+            mu = pm.gp.mean.Linear(coeffs = m, intercept = c)
+            cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls = ls)
 
-            gp = pm.gp.Latent(cov_func = cov, mean_func=mu)
-            lng = gp.prior('lng', X=self.nf_)
+            gp = pm.gp.Latent(cov_func = cov, mean_func = mu)
+            lng = gp.prior('lng', X = self.nf_)
 
             g0 = pm.Deterministic('g0', tt.exp(lng)[0:len(f0_)])
             g1 = pm.Deterministic('g1', tt.exp(lng)[len(f0_):len(f0_)+len(f1_)])
             g2 = pm.Deterministic('g2', tt.exp(lng)[len(f0_)+len(f1_):])
 
             # Mode Amplitude & Height
-            w = pm.Normal('w', self.init['w'], 10., testval=self.init['w'])
-            A = pm.Normal('A', self.init['A'], 1., testval=self.init['A'])
-            V1 = pm.Normal('V1', self.init['V1'], 0.1, testval=self.init['V1'])
-            V2 = pm.Normal('V2', self.init['V2'], 0.1, testval=self.init['V2'])
+            w = pm.Lognormal('w', mu = np.log(self.init['w']), sigma = 10., testval=self.init['w'])
+            A = pm.Lognormal('A', mu = np.log(self.init['A']), sigma = 1., testval=self.init['A'])
+            V1 = pm.Lognormal('V1', mu = np.log(self.init['V1']), sigma = 0.1, testval=self.init['V1'])
+            V2 = pm.Lognormal('V2', mu = np.log(self.init['V2']), sigma = 0.1, testval=self.init['V2'])
 
-            sigmaA = pm.HalfCauchy('sigmaA', 1., testval = self.init['sigmaA'])
-            Da0 = pm.Normal('Da0',0, 1, shape=len(f0_))
-            Da1 = pm.Normal('Da1',0, 1, shape=len(f1_))
-            Da2 = pm.Normal('Da2',0, 1, shape=len(f2_))
+            sigmaA = pm.HalfCauchy('sigmaA', beta = 1., testval = self.init['sigmaA'])
+            Da0 = pm.Normal('Da0', mu = 0., sigma = 1., shape=len(self.mod.n0))
+            Da1 = pm.Normal('Da1', mu = 0., sigma = 1., shape=len(self.mod.n1))
+            Da2 = pm.Normal('Da2', mu = 0., sigma = 1., shape=len(self.mod.n2))
 
             a0 = pm.Deterministic('a0', sigmaA * Da0 + mod.A0(f0_, [numax, w, A, V1, V2]))
             a1 = pm.Deterministic('a1', sigmaA * Da1 + mod.A1(f1_, [numax, w, A, V1, V2]))
@@ -274,7 +275,7 @@ class run_pymc3:
             h2 = pm.Deterministic('h2', 2*tt.sqr(a2)/np.pi/g2)
 
             # Mode splitting
-            xsplit = pm.HalfNormal('xsplit', sigma=2.0, testval = self.init['xsplit'])
+            xsplit = pm.HalfNormal('xsplit', sigma=  2.0, testval = self.init['xsplit'])
             cosi = pm.Uniform('cosi', 0., 1., testval = self.init['cosi'])
 
             i = pm.Deterministic('i', tt.arccos(cosi))
@@ -314,7 +315,11 @@ class run_pymc3:
                     r'$m$', r'$c$', r'$\rho$', r'$L$',
                     r'$w$', r'$A$', r'$V_1$', r'$V_2$', r'$\sigma_A$',
                     r'$\delta\nu_{\rm s}$', r'$\cos(i)$', r'$\nu_{\rm s}$', r'$i$']
-        corner.corner(chain, labels=verbose, quantiles=[0.16, 0.5, 0.84]
+        try:
+            corner.corner(chain.T, labels=verbose, quantiles=[0.16, 0.5, 0.84]
+                      ,show_titles=True)
+        except AssertionError:
+            corner.corner(chain, labels=verbose, quantiles=[0.16, 0.5, 0.84]
                       ,show_titles=True)
         plt.savefig(self.dir+'corner.png')
         plt.close('all')
@@ -406,7 +411,7 @@ class run_pymc3:
         self.out_csv()
         pm.summary(self.trace).to_csv(self.dir+'summary.csv')
         self.out_corner()
-        self.out_diagnostic_plots()        
+        self.out_diagnostic_plots()
         self.out_modelplot()
         print('Run complete!')
 
@@ -441,9 +446,10 @@ if __name__ == '__main__':
     # Read in the mode locs
     cop = pd.read_csv('../data/copper.csv',index_col=0)
     cop = cop[cop.l != 3]
-    locs = cop[cop.KIC == str(kic)].Freq.values
-    elocs = cop[cop.KIC == str(kic)].e_Freq.values
-    modeids = cop[cop.KIC == str(kic)].l.values
+    locs = cop[cop.KIC == str(kic)].Freq.values#[15:24]
+    elocs = cop[cop.KIC == str(kic)].e_Freq.values#[15:24]
+    modeids = cop[cop.KIC == str(kic)].l.values#[15:24]
+    nids = cop[cop.KIC == str(kic)].n.values#[15:24]
 
     lo = locs.min() - .25*deltanu_
     hi = locs.max() + .25*deltanu_
@@ -477,9 +483,9 @@ if __name__ == '__main__':
     f0_ = locs[modeids==0]
     f1_ = locs[modeids==1]
     f2_ = locs[modeids==2]
-    n0_ = cop.loc[cop.KIC == str(kic)].loc[cop.l == 0].n.values
-    n1_ = cop.loc[cop.KIC == str(kic)].loc[cop.l == 1].n.values
-    n2_ = cop.loc[cop.KIC == str(kic)].loc[cop.l == 2].n.values
+    n0_ = nids[modeids==0]
+    n1_ = nids[modeids==1]
+    n2_ = nids[modeids==2]
     fs = np.concatenate((f0_, f1_, f2_))
     fs -= fs.min()
     nf = fs/fs.max()
