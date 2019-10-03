@@ -8,6 +8,7 @@ slurm*
 # Data so LFS doesn't shout at me
 *.pow
 *.fits
+data/jvs_models/
 
 # Binary files
 *~
