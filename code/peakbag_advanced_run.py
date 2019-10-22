@@ -431,6 +431,11 @@ if __name__ == '__main__':
     numax_ = star.numax
     deltanu_ = star.dnu
 
+    #Print a big label
+    print('#################################\n')
+    print(f'RUNNING KIC {str(kic)} | IDX {str(idx)} \n')
+    print('#################################\n')
+
     #Get the output director
     if os.getlogin() == 'oliver':
         dir = 'tests/output_fmr/'
@@ -520,3 +525,8 @@ if __name__ == '__main__':
     print('About to go into Pymc3')
     run = run_pymc3(mod, p, nf_, kic, phi_, phi_cholesky, dir)
     run()
+
+    #Print a big label
+    print('#################################\n')
+    print(f'DONE RUNNING KIC {str(kic)} | IDX {str(idx)} \n')
+    print('#################################\n')
