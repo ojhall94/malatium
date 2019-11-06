@@ -215,7 +215,7 @@ class run_pymc3:
         self.init['V2'] = 0.7
         self.init['sigmaA'] = 0.5
 
-        self.init['xsplit'] = 1.0 * np.sin(np.pi/4)
+        self.init['xsplit'] = 0.75
         self.init['cosi'] = np.cos(np.pi/4)
 
     def build_model(self):
@@ -230,7 +230,6 @@ class run_pymc3:
             d01     = pm.Lognormal('d01', mu = np.log(self.init['d01']), sigma = 0.1, testval = self.init['d01'])
             d02     = pm.Lognormal('d02', mu = np.log(self.init['d02']), sigma = 0.1, testval = self.init['d02'])
 
-
             sigma0 = pm.HalfCauchy('sigma0', beta = 2., testval = self.init['sigma0'])
             sigma1 = pm.HalfCauchy('sigma1', beta = 2., testval = self.init['sigma1'])
             sigma2 = pm.HalfCauchy('sigma2', beta = 2., testval = self.init['sigma2'])
@@ -243,10 +242,10 @@ class run_pymc3:
             m = pm.Normal('m', self.init['m'], 1., testval = self.init['m'])
             c = pm.Normal('c', self.init['c'], 1., testval = self.init['c'])
             rho = pm.Lognormal('rho', mu = np.log(self.init['rho']), sigma = 0.1, testval = self.init['rho'])
-            ls = pm.TruncatedNormal('ls', mu = np.log(self.init['L']), sigma = 0.1, lower=0., testval = self.init['L'])
+            # ls = pm.TruncatedNormal('ls', mu = np.log(self.init['L']), sigma = 0.1, lower=0., testval = self.init['L'])
 
             mu = pm.gp.mean.Linear(coeffs = m, intercept = c)
-            cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls = ls)
+            cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls = self.init['L'])
 
             gp = pm.gp.Latent(cov_func = cov, mean_func = mu)
             lng = gp.prior('lng', X = self.nf_)
@@ -275,7 +274,7 @@ class run_pymc3:
             h2 = pm.Deterministic('h2', 2*tt.sqr(a2)/np.pi/g2)
 
             # Mode splitting
-            xsplit = pm.HalfNormal('xsplit', sigma=  2.0, testval = self.init['xsplit'])
+            xsplit = pm.Lognormal('xsplit', mu = np.log(self.init['xsplit']), sigma=  0.75, testval = self.init['xsplit'])
             cosi = pm.Uniform('cosi', 0., 1., testval = self.init['cosi'])
 
             i = pm.Deterministic('i', tt.arccos(cosi))
@@ -304,7 +303,7 @@ class run_pymc3:
     def out_corner(self):
         labels = ['numax','alpha','epsilon','d01','d02',    # Mode frequencies
                     'sigma0','sigma1','sigma2',             # Mode frequencies
-                    'm','c','rho','ls',                     # Mode width
+                    'm','c','rho',                     # Mode width
                     'w','A','V1','V2','sigmaA',             # Mode amplitude
                     'xsplit','cosi','split','i'             # Mode splitting
                     ]
@@ -312,7 +311,7 @@ class run_pymc3:
         chain = np.array([self.trace[label] for label in labels])
         verbose = [r'$\nu_{\rm max}$', r'$\alpha$',r'$\epsilon$',r'$\delta_{01}$',r'$\delta{02}$',
                     r'$\sigma_0$', r'$\sigma_1$', r'$\sigma_2$',
-                    r'$m$', r'$c$', r'$\rho$', r'$L$',
+                    r'$m$', r'$c$', r'$\rho$',
                     r'$w$', r'$A$', r'$V_1$', r'$V_2$', r'$\sigma_A$',
                     r'$\delta\nu_{\rm s}$', r'$\cos(i)$', r'$\nu_{\rm s}$', r'$i$']
         try:
@@ -432,6 +431,11 @@ if __name__ == '__main__':
     numax_ = star.numax
     deltanu_ = star.dnu
 
+    #Print a big label
+    print('#################################\n')
+    print(f'RUNNING KIC {str(kic)} | IDX {str(idx)} \n')
+    print('#################################\n')
+
     #Get the output director
     if os.getlogin() == 'oliver':
         dir = 'tests/output_fmr/'
@@ -521,3 +525,8 @@ if __name__ == '__main__':
     print('About to go into Pymc3')
     run = run_pymc3(mod, p, nf_, kic, phi_, phi_cholesky, dir)
     run()
+
+    #Print a big label
+    print('#################################\n')
+    print(f'DONE RUNNING KIC {str(kic)} | IDX {str(idx)} \n')
+    print('#################################\n')
