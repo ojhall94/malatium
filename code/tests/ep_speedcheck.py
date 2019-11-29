@@ -22,7 +22,7 @@ class model_if():
         self.npts = len(f)
         self.M = [len(n0_), len(n1_), len(n2_)]
         self.deltanu = deltanu_
-        
+
     def epsilon(self, i, l, m):
         if l == 0:
             return 1
@@ -41,14 +41,14 @@ class model_if():
 
     def lor(self, freq, h, w):
         return h / (1.0 + 4.0/tt.sqr(w)*tt.sqr((self.f - freq)))
-    
+
     def mode(self, l, freqs, hs, ws, i, split=0):
         for idx in range(self.M[l]):
             for m in range(-l, l+1, 1):
-                self.modes += self.lor(freqs[idx] + (m*split), 
-                                     hs[idx] * self.epsilon(i, l,abs(m)), 
+                self.modes += self.lor(freqs[idx] + (m*split),
+                                     hs[idx] * self.epsilon(i, l,abs(m)),
                                      ws[idx])
-  
+
     def model(self, p, theano=True):
         f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i, aphi, bphi = p
 
@@ -62,24 +62,72 @@ class model_if():
         white = bphi[0]
         scale = bphi[1]
         nyq = bphi[2]
-        
+
         # Calculate the modes
         self.modes = np.zeros(self.npts)
         self.mode(0, f0, h0, g0, i)
         self.mode(1, f1, h1, g1, i, split)
         self.mode(2, f2, h2, g2, i, split)
         self.modes *= self.get_apodization(nyq)
-            
+
         #Calculate the background
         self.back = self.get_background(loga, logb, logc, logd, logj, logk,
-                                       white, scale, nyq)            
-            
+                                       white, scale, nyq)
+
         #Create the model
         self.mod = self.modes + self.back
         if theano:
             return self.mod
         else:
             return self.mod.eval()
+
+    # Small separations are fractional
+    def asymptotic(self, n, numax, alpha, epsilon, d=0.):
+        nmax = (numax / self.deltanu) - epsilon
+        curve = (alpha/2.)*(n-nmax)*(n-nmax)
+        return (n + epsilon + d + curve) * self.deltanu
+
+    def f0(self, p):
+        numax, alpha, epsilon, d01, d02 = p
+
+        return self.asymptotic(self.n0, numax, alpha, epsilon, 0.)
+
+    def f1(self, p):
+        numax, alpha, epsilon, d01, d02 = p
+
+        return self.asymptotic(self.n1, numax, alpha, epsilon, d01)
+
+    def f2(self, p):
+        numax, alpha, epsilon, d01, d02 = p
+
+        return self.asymptotic(self.n2+1, numax, alpha, epsilon, -d02)
+
+    def gaussian(self, freq, numax, w, A):
+        return A * tt.exp(-0.5 * tt.sqr((freq - numax)) / tt.sqr(w))
+
+    def A0(self, f, p, theano=True):
+        numax, w, A, V1, V2 = p
+        height = self.gaussian(f, numax, w, A)
+        if theano:
+            return height
+        else:
+            return height.eval()
+
+    def A1(self, f, p, theano=True):
+        numax, w, A, V1, V2 = p
+        height = self.gaussian(f, numax, w, A)*V1
+        if theano:
+            return height
+        else:
+            return height.eval()
+
+    def A2(self, f, p, theano=True):
+        numax, w, A, V1, V2 = p
+        height = self.gaussian(f, numax, w, A)*V2
+        if theano:
+            return height
+        else:
+            return height.eval()
 
     def harvey(self, a, b, c):
         harvey = 0.9*tt.sqr(a)/b/(1.0 + tt.pow((self.f/b), c))
@@ -96,12 +144,12 @@ class model_if():
                         +  self.harvey(tt.pow(10, logc), tt.pow(10, logd), 4.) \
                         +  self.harvey(tt.pow(10, logj), tt.pow(10, logk), 2.))\
                         +  white
-        return background              
+        return background
 
 if __name__ == "__main__":
     print('~~~~~~~~~~~~~ TT MODEL, IF STATEMENT EPSILON ~~~~~~~~~~~~~')
-        
-        
+
+
         ### Build the range
 
     nmodes = 10
@@ -243,12 +291,12 @@ if __name__ == "__main__":
     init['a2'] = amps[2]
 
     init['xsplit'] = split_ * np.sin(incl_)
-    init['cosi'] = np.cos(incl_)    
+    init['cosi'] = np.cos(incl_)
 
 
     pm_model = pm.Model()
 
-    with pm_model:   
+    with pm_model:
         # Mode locations
         numax =  pm.Normal('numax', init['numax'], 10., testval = init['numax'])
         alpha =  pm.Normal('alpha', init['alpha'], 0.01, testval = init['alpha'])
@@ -294,24 +342,24 @@ if __name__ == "__main__":
 
         i = pm.Deterministic('i', tt.arccos(cosi))
         split = pm.Deterministic('split', xsplit/tt.sin(i))
-        
+
         # Background treatment
         aphi = pm.MvNormal('aphi', mu=aphi_, chol=aphi_cholesky, testval=aphi_, shape=len(aphi_))
         bphi = pm.Normal('bphi', mu=bphi_, sigma=bphi_sigma, testval=bphi_, shape=len(bphi_))
-        
+
         # Construct model
         fit = mod.model([f0, f1, f2, g0, g1, g2, h0, h1, h2, split, i, aphi, bphi])
-        
-        like = pm.Gamma('like', alpha=1., beta=1./fit, observed=p)    
+
+        like = pm.Gamma('like', alpha=1., beta=1./fit, observed=p)
 
     for RV in pm_model.basic_RVs:
-        print(RV.name, RV.logp(pm_model.test_point))        
+        print(RV.name, RV.logp(pm_model.test_point))
 
     with pm_model:
         trace = pm.sample(tune=100, draws=100,
                         chains=4,
                         target_accept=.99,
                         start = init,
-                        init = 'adapt_diag')        
+                        init = 'adapt_diag')
 
-    pm.summary(trace)                        
+    pm.summary(trace)
