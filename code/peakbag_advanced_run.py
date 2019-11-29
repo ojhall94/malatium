@@ -44,29 +44,30 @@ class model():
         self.M = [len(n0_), len(n1_), len(n2_)]
         self.deltanu = deltanu_
 
-    def epsilon(self, i):
-        eps = tt.zeros((3,3))
-        eps0 = tt.set_subtensor(eps[0][0], 1.)
-        eps1 = tt.set_subtensor(eps[1][0], tt.sqr(tt.cos(i)))
-        eps1 = tt.set_subtensor(eps1[1], 0.5 * tt.sqr(tt.sin(i)))
-        eps2 = tt.set_subtensor(eps[2][0], 0.25 * tt.sqr((3. * tt.sqr(tt.cos(i)) - 1.)))
-        eps2 = tt.set_subtensor(eps2[1], (3./8.) * tt.sqr(tt.sin(2*i)))
-        eps2 = tt.set_subtensor(eps2[2], (3./8.) * tt.sin(i)**4)
-
-        eps = tt.set_subtensor(eps[0], eps0)
-        eps = tt.set_subtensor(eps[1], eps1)
-        eps = tt.set_subtensor(eps[2], eps2)
-
-        return eps
-
+    def epsilon(self, i, l, m):
+        if l == 0:
+            return 1
+        if l == 1:
+            if m == 0:
+                return tt.sqr(tt.cos(i))
+            if np.abs(m) == 1:
+                return 0.5 * tt.sqr(tt.sin(i))
+        if l == 2:
+            if m == 0:
+                return 0.25 * tt.sqr((3. * tt.sqr(tt.cos(i)) - 1.))
+            if np.abs(m) ==1:
+                return (3./8.) * tt.sqr(tt.sin(2*i))
+            if np.abs(m) == 2:
+                return (3./8.) * tt.sin(i)**4
+                
     def lor(self, freq, h, w):
         return h / (1.0 + 4.0/tt.sqr(w)*tt.sqr((self.f - freq)))
 
-    def mode(self, l, freqs, hs, ws, eps, split=0):
+    def mode(self, l, freqs, hs, ws, i, split=0):
         for idx in range(self.M[l]):
             for m in range(-l, l+1, 1):
                 self.modes += self.lor(freqs[idx] + (m*split),
-                                     hs[idx] * eps[l,abs(m)],
+                                     hs[idx] * self.epsilon(i, l, abs(m)),
                                      ws[idx])
 
     def model(self, p, theano=True):
@@ -84,11 +85,10 @@ class model():
         nyq = phi[8]
 
         # Calculate the modes
-        eps = self.epsilon(i)
         self.modes = np.zeros(self.npts)
-        self.mode(0, f0, h0, g0, eps)
-        self.mode(1, f1, h1, g1, eps, split)
-        self.mode(2, f2, h2, g2, eps, split)
+        self.mode(0, f0, h0, g0, i)
+        self.mode(1, f1, h1, g1, i, split)
+        self.mode(2, f2, h2, g2, i, split)
         self.modes *= self.get_apodization(nyq)
 
         #Calculate the background
