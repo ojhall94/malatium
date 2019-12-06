@@ -271,10 +271,21 @@ if __name__ == '__main__':
     #Get the output director
     dir = get_folder(kic)
 
-    # Get the power spectrum
-    # Col1 = frequency in microHz, Col2 = psd
-    sfile = glob.glob('../data/*{}*.pow'.format(kic))
-    data = ascii.read(sfile[0]).to_pandas()
+    #Alternative arrangements for 16 Cyg A&B
+    if kic == '12069424':
+        sfile = glob.glob(f'../../data/16Cyg/*100002741*PSD*.fits')[0]
+        data = fits.open(sfile)[0].data
+        ff, pp = data[:,0]*1e6, data[:,1]
+    elif kic == '12069449':
+        sfile = glob.glob(f'../../data/16Cyg/*100002742*PSD*.fits')[0]
+        data = fits.open(sfile)[0].data
+        ff, pp = data[:,0]*1e6, data[:,1]
+    else:
+        # Get the power spectrum
+        # Col1 = frequency in microHz, Col2 = psd
+        sfile = glob.glob('../data/*{}*.pow'.format(kic))
+        data = ascii.read(sfile[0]).to_pandas()
+        ff, pp = data['col1'],data['col2']
 
     # Read in the mode locs
     cop = pd.read_csv('../data/copper.csv',index_col=0)
@@ -283,7 +294,6 @@ if __name__ == '__main__':
     hi = locs.max() + .1*dnu
 
     # Make the frequency range selection
-    ff, pp = data['col1'],data['col2']
     sel = (ff > lo) & (ff < hi)
     f = ff[~sel].values
     p = pp[~sel].values
