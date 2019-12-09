@@ -424,7 +424,8 @@ def get_folder(kic):
 if __name__ == '__main__':
     print('#################################\n')
     print(f'THIS IS A HIGH SNR MODE-ONLY RUN')
-    print('#################################\n')    idx = int(args.idx)
+    print('#################################\n')
+    idx = int(args.idx)
 
     #Get the star data
     mal = pd.read_csv('../data/malatium.csv', index_col=0)
@@ -450,15 +451,18 @@ if __name__ == '__main__':
         dir = get_folder(kic)
 
     #Alternative arrangements for 16 Cyg A&B
-    if kic == '12069424':
-        sfile = glob.glob(f'../../data/16Cyg/*100002741*PSD*.fits')[0]
+    if kic == 12069424:
+        print('16 Cyg A')
+        sfile = glob.glob(f'../data/16Cyg/*100002741*PSD*.fits')[0]
         data = fits.open(sfile)[0].data
         ff, pp = data[:,0]*1e6, data[:,1]
-    elif kic == '12069449':
-        sfile = glob.glob(f'../../data/16Cyg/*100002742*PSD*.fits')[0]
+    elif kic == 12069449:
+        print('16 Cyg B')
+        sfile = glob.glob(f'../data/16Cyg/*100002742*PSD*.fits')[0]
         data = fits.open(sfile)[0].data
         ff, pp = data[:,0]*1e6, data[:,1]
     else:
+        print('Other star')
         # Get the power spectrum
         # Col1 = frequency in microHz, Col2 = psd
         sfile = glob.glob('../data/*{}*.pow'.format(kic))

@@ -7,4 +7,5 @@
 #done
 
 
-sbatch --export=idx=80 backfit.bear
+sbatch --export=idx=62 backfit.bear
+sbatch --export=idx=63 backfit.bear
