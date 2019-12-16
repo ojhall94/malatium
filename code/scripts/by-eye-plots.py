@@ -113,6 +113,7 @@ def save_corner(chains, kic, idx):
 
 def get_models(chains, kic, idx, ati):
     bro = pd.read_csv('../../data/bronze.csv', index_col=0)
+    bro = bro[bro.l != 3]
     star = bro[bro.KIC == str(kic)]
     res = [star.loc[star.l == 0].f.values,
             star.loc[star.l == 1].f.values,
@@ -154,13 +155,16 @@ def get_models(chains, kic, idx, ati):
 
     fig, ax = plt.subplots(N, figsize=[10,2*N])
     plt.subplots_adjust(hspace=0.0)
+
     for i, n in enumerate(ns):
-        s = star.loc[star.n == n].loc[star.l != 2] 
+        s = star.copy()
+        s.loc[s.l == 2, 'n'] += 1            
+        s = s.loc[s.n == n]
         lo = s.f.min() - 0.25 * deltanu
         hi = s.f.max() + 0.25 * deltanu
         ref = f[(f > lo) & (f < hi)]        
         rep = p[(f > lo) & (f < hi)]
-        smp = smooth(ref, rep, filter_width=0.1)
+        smp = smooth(ref, rep, filter_width=1.)
 
         mod = model(ref, n0, n1, n2, deltanu)
         M = mod.model(res, theano=False)
@@ -203,7 +207,7 @@ if __name__ == "__main__":
     ati = pd.read_csv('../../data/atium.csv', index_col=0)
 
     #Visual inspection of the corner plots
-    for idx in tqdm(range(2)):
+    for idx in tqdm(np.arange(1, 95)):
         kic = ati.loc[idx].KIC
 
         print('#############################')
