@@ -150,7 +150,10 @@ def get_models(chains, kic, idx, ati):
 
     full_plot(mod, p, res, kic, idx)
 
-    ns = np.unique(star.n.values)
+
+    s = star.copy()
+    s.loc[s.l == 2, 'n'] += 1     
+    ns = np.unique(s.n.values)
     N = len(ns)
 
     fig, ax = plt.subplots(N, figsize=[10,2*N])
