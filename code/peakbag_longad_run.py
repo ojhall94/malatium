@@ -435,7 +435,7 @@ if __name__ == '__main__':
     deltanu_ = star.dnu
 
     # Check we're only picking the right stars
-    allow = ['12069424', '12069449', '8006161', '79607040']
+    allow = [7970740, 8006161, 12069424, 12069449, 8478994]
     if kic not in allow:
         raise ValueError("This KIC not allowed")
 
@@ -465,13 +465,20 @@ if __name__ == '__main__':
         print('Other star')
         # Get the power spectrum
         # Col1 = frequency in microHz, Col2 = psd
-        sfile = glob.glob('../data/*{}*.pow'.format(kic))
+        sfile = glob.glob(f'../data/*{kic}*.pow')
         data = ascii.read(sfile[0]).to_pandas()
         ff, pp = data['col1'],data['col2']
 
     # Read in the mode locs
-    cop = pd.read_csv('../data/copper.csv',index_col=0)
-    cop = cop[(cop.l != 3) & (cop.lnK != 6.)]
+    if kic == 8478994:
+        print('Kages target')
+        cop = pd.read_csv('../data/copper.csv', index_col=0)
+        cop = cop[(cop.l != 3) & (cop.n > 21) & (cop.n < 27)]  
+
+    else:
+        print('Other star')
+        cop = pd.read_csv('../data/copper.csv',index_col=0)
+        cop = cop[(cop.l != 3) & (cop.lnK == 6.)]
     locs = cop[cop.KIC == str(kic)].Freq.values
     elocs = cop[cop.KIC == str(kic)].e_Freq.values
     modeids = cop[cop.KIC == str(kic)].l.values
