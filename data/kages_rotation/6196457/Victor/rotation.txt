@@ -1,0 +1,2 @@
+# nusini nusini_errp nusini_errm angle angle_errp angle_errm period period_errp 
+0.2652650565 0.254389192163 0.254389192163 11.7035802879 62.9944470787 7.19936538042 3.0 32.0 2.0 

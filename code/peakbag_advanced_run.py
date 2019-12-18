@@ -44,29 +44,30 @@ class model():
         self.M = [len(n0_), len(n1_), len(n2_)]
         self.deltanu = deltanu_
 
-    def epsilon(self, i):
-        eps = tt.zeros((3,3))
-        eps0 = tt.set_subtensor(eps[0][0], 1.)
-        eps1 = tt.set_subtensor(eps[1][0], tt.sqr(tt.cos(i)))
-        eps1 = tt.set_subtensor(eps1[1], 0.5 * tt.sqr(tt.sin(i)))
-        eps2 = tt.set_subtensor(eps[2][0], 0.25 * tt.sqr((3. * tt.sqr(tt.cos(i)) - 1.)))
-        eps2 = tt.set_subtensor(eps2[1], (3./8.) * tt.sqr(tt.sin(2*i)))
-        eps2 = tt.set_subtensor(eps2[2], (3./8.) * tt.sin(i)**4)
-
-        eps = tt.set_subtensor(eps[0], eps0)
-        eps = tt.set_subtensor(eps[1], eps1)
-        eps = tt.set_subtensor(eps[2], eps2)
-
-        return eps
-
+    def epsilon(self, i, l, m):
+        if l == 0:
+            return 1
+        if l == 1:
+            if m == 0:
+                return tt.sqr(tt.cos(i))
+            if np.abs(m) == 1:
+                return 0.5 * tt.sqr(tt.sin(i))
+        if l == 2:
+            if m == 0:
+                return 0.25 * tt.sqr((3. * tt.sqr(tt.cos(i)) - 1.))
+            if np.abs(m) ==1:
+                return (3./8.) * tt.sqr(tt.sin(2*i))
+            if np.abs(m) == 2:
+                return (3./8.) * tt.sin(i)**4
+                
     def lor(self, freq, h, w):
         return h / (1.0 + 4.0/tt.sqr(w)*tt.sqr((self.f - freq)))
 
-    def mode(self, l, freqs, hs, ws, eps, split=0):
+    def mode(self, l, freqs, hs, ws, i, split=0):
         for idx in range(self.M[l]):
             for m in range(-l, l+1, 1):
                 self.modes += self.lor(freqs[idx] + (m*split),
-                                     hs[idx] * eps[l,abs(m)],
+                                     hs[idx] * self.epsilon(i, l, abs(m)),
                                      ws[idx])
 
     def model(self, p, theano=True):
@@ -84,11 +85,10 @@ class model():
         nyq = phi[8]
 
         # Calculate the modes
-        eps = self.epsilon(i)
         self.modes = np.zeros(self.npts)
-        self.mode(0, f0, h0, g0, eps)
-        self.mode(1, f1, h1, g1, eps, split)
-        self.mode(2, f2, h2, g2, eps, split)
+        self.mode(0, f0, h0, g0, i)
+        self.mode(1, f1, h1, g1, i, split)
+        self.mode(2, f2, h2, g2, i, split)
         self.modes *= self.get_apodization(nyq)
 
         #Calculate the background
@@ -215,7 +215,7 @@ class run_pymc3:
         self.init['V2'] = 0.7
         self.init['sigmaA'] = 0.5
 
-        self.init['xsplit'] = 1.0 * np.sin(np.pi/4)
+        self.init['xsplit'] = 0.75
         self.init['cosi'] = np.cos(np.pi/4)
 
     def build_model(self):
@@ -230,7 +230,6 @@ class run_pymc3:
             d01     = pm.Lognormal('d01', mu = np.log(self.init['d01']), sigma = 0.1, testval = self.init['d01'])
             d02     = pm.Lognormal('d02', mu = np.log(self.init['d02']), sigma = 0.1, testval = self.init['d02'])
 
-
             sigma0 = pm.HalfCauchy('sigma0', beta = 2., testval = self.init['sigma0'])
             sigma1 = pm.HalfCauchy('sigma1', beta = 2., testval = self.init['sigma1'])
             sigma2 = pm.HalfCauchy('sigma2', beta = 2., testval = self.init['sigma2'])
@@ -243,10 +242,10 @@ class run_pymc3:
             m = pm.Normal('m', self.init['m'], 1., testval = self.init['m'])
             c = pm.Normal('c', self.init['c'], 1., testval = self.init['c'])
             rho = pm.Lognormal('rho', mu = np.log(self.init['rho']), sigma = 0.1, testval = self.init['rho'])
-            ls = pm.TruncatedNormal('ls', mu = np.log(self.init['L']), sigma = 0.1, lower=0., testval = self.init['L'])
+            # ls = pm.TruncatedNormal('ls', mu = np.log(self.init['L']), sigma = 0.1, lower=0., testval = self.init['L'])
 
             mu = pm.gp.mean.Linear(coeffs = m, intercept = c)
-            cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls = ls)
+            cov = tt.sqr(rho) * pm.gp.cov.ExpQuad(1, ls = self.init['L'])
 
             gp = pm.gp.Latent(cov_func = cov, mean_func = mu)
             lng = gp.prior('lng', X = self.nf_)
@@ -275,7 +274,7 @@ class run_pymc3:
             h2 = pm.Deterministic('h2', 2*tt.sqr(a2)/np.pi/g2)
 
             # Mode splitting
-            xsplit = pm.HalfNormal('xsplit', sigma=  2.0, testval = self.init['xsplit'])
+            xsplit = pm.Lognormal('xsplit', mu = np.log(self.init['xsplit']), sigma=  0.75, testval = self.init['xsplit'])
             cosi = pm.Uniform('cosi', 0., 1., testval = self.init['cosi'])
 
             i = pm.Deterministic('i', tt.arccos(cosi))
@@ -304,7 +303,7 @@ class run_pymc3:
     def out_corner(self):
         labels = ['numax','alpha','epsilon','d01','d02',    # Mode frequencies
                     'sigma0','sigma1','sigma2',             # Mode frequencies
-                    'm','c','rho','ls',                     # Mode width
+                    'm','c','rho',                     # Mode width
                     'w','A','V1','V2','sigmaA',             # Mode amplitude
                     'xsplit','cosi','split','i'             # Mode splitting
                     ]
@@ -312,7 +311,7 @@ class run_pymc3:
         chain = np.array([self.trace[label] for label in labels])
         verbose = [r'$\nu_{\rm max}$', r'$\alpha$',r'$\epsilon$',r'$\delta_{01}$',r'$\delta{02}$',
                     r'$\sigma_0$', r'$\sigma_1$', r'$\sigma_2$',
-                    r'$m$', r'$c$', r'$\rho$', r'$L$',
+                    r'$m$', r'$c$', r'$\rho$',
                     r'$w$', r'$A$', r'$V_1$', r'$V_2$', r'$\sigma_A$',
                     r'$\delta\nu_{\rm s}$', r'$\cos(i)$', r'$\nu_{\rm s}$', r'$i$']
         try:
@@ -432,6 +431,11 @@ if __name__ == '__main__':
     numax_ = star.numax
     deltanu_ = star.dnu
 
+    #Print a big label
+    print('#################################\n')
+    print(f'RUNNING KIC {str(kic)} | IDX {str(idx)} \n')
+    print('#################################\n')
+
     #Get the output director
     if os.getlogin() == 'oliver':
         dir = 'tests/output_fmr/'
@@ -521,3 +525,8 @@ if __name__ == '__main__':
     print('About to go into Pymc3')
     run = run_pymc3(mod, p, nf_, kic, phi_, phi_cholesky, dir)
     run()
+
+    #Print a big label
+    print('#################################\n')
+    print(f'DONE RUNNING KIC {str(kic)} | IDX {str(idx)} \n')
+    print('#################################\n')
