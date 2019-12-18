@@ -16,12 +16,12 @@ class mix():
                                 ' Prot(days)': 'Prot',
                                 ' Age(Gyr)': 'Age',
                                 ' Mass(Msun)': 'Mass'}
-        self.bw = np.array([0.02, 10.0, 0.1, 0.2])
+        self.bw = np.array([0.02, 10.0, 0.01, 0.01])
         self.mass = [0, 0]
         self.teff = [0, 0]
         self.age = [0,0]
         self.prot = [0, 0]
-        self.cols = ['Teff', 'Mass', 'Age', 'Prot', 'P_A']
+        self.cols = ['Mass', 'Teff', 'Age', 'Prot', 'P_A']
         self.get_data()
 
     def get_data(self):
@@ -30,6 +30,10 @@ class mix():
         self.df_stan = pd.read_csv(self.standard_file)
         self.df_rocrit.rename(columns=self.mapper, inplace=True)
         self.df_stan.rename(columns=self.mapper, inplace=True)
+        self.df_rocrit['Age'] = np.log(self.df_rocrit.Age)
+        self.df_stan['Age'] = np.log(self.df_stan.Age)
+        self.df_rocrit['Prot'] = np.log(self.df_rocrit.Prot)
+        self.df_stan['Prot'] = np.log(self.df_stan.Prot)
 
     def print_len(self):
         ''' Print the length of the full data set '''
@@ -37,7 +41,7 @@ class mix():
         print(f'Length of dataset standard : {len(self.df_stan)}')
 
     def select_down(self, mass=[1.0, 0.1], teff=[5777.0, 100.0],
-                          age=[4.5, 2.0]):
+                          age=[np.log(5.5), 0.4]):
         ''' Select only a subset of stars within the models '''
         self.sel_rocrit = self.df_rocrit.loc[np.abs(self.df_rocrit.Mass - mass[0]) < mass[1]]
         self.sel_rocrit = self.sel_rocrit.loc[np.abs(self.sel_rocrit.Teff - teff[0]) < teff[1]]
@@ -56,11 +60,11 @@ class mix():
                 data=self.sel_stan[['Mass', 'Teff', 'Age', 'Prot']].sample(frac=1.0).values,
                                                var_type='cccc', bw=self.bw)
 
-    def plot_kde_example(self, age=4.5, npts=100):
+    def plot_kde_example(self, age=np.log(5.5), npts=100):
         ''' Make an example plot to check the KDE is smooth '''
         prot = np.linspace(20.0, 30.0, npts)
-        solar_d_ro = [self.dens_rocrit.pdf([1.0, 5777.0, age, n]) for n in prot]
-        solar_d_stan = [self.dens_stan.pdf([1.0, 5777.0, age, n]) for n in prot]
+        solar_d_ro = [self.dens_rocrit.pdf([1.0, 5777.0, age, n]) for n in np.log(prot)]
+        solar_d_stan = [self.dens_stan.pdf([1.0, 5777.0, age, n]) for n in np.log(prot)]
         fig, ax = plt.subplots()
         ax.plot(prot, solar_d_ro / np.max(solar_d_ro))
         ax.plot(prot, solar_d_stan / np.max(solar_d_stan))
@@ -111,10 +115,12 @@ class mix():
         if  frac_acc < 0.2:
             warnings.warn('Sampler acceptance fraction is low : {frac_acc}')
 
-    def corner(self):
+    def corner(self, input):
         ''' Plot a corner plot '''
         samples = self.sampler.get_chain(flat=True)
-        corner.corner(samples, labels=self.cols);
+        hall = [input['mass'][0], input['teff'][0],\
+                input['logage'][0], input['logprot'][0], np.nan]
+        corner.corner(samples, truths=hall, labels=self.cols);
 
     def save_samples(self):
         ''' Save the samples to csv '''
@@ -133,17 +139,17 @@ class mix():
             list of length 2 with [value, uncertainty].
 
         '''
-        self.select_down(mass=[input['mass'][0], 0.3],
-                         teff=[input['teff'][0], 200.0],
-                         age=[input['age'][0], 2.0])
+        self.select_down(mass=[input['mass'][0], input['mass'][1]*3],
+                         teff=[input['teff'][0], input['teff'][1]*3],
+                         age=[input['logage'][0], input['logage'][1]*3])
         self.make_kde()
         self.set_obs(ID=input['ID'],
                      mass=input['mass'],
                      teff=input['teff'],
-                     age=input['age'],
-                     prot=input['prot'])
+                     age=input['logage'],
+                     prot=input['logprot'])
         self.mcmc()
-        self.corner()
+        self.corner(input)
         self.save_samples()
 
     def __call__(self):
