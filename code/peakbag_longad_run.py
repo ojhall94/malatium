@@ -25,7 +25,7 @@ import time
 import lightkurve as lk
 import astropy.units as u
 from astropy.units import cds
-from astropy.io import ascii
+from astropy.io import ascii, fits
 timestr = time.strftime("%m%d-%H%M")
 
 import argparse
@@ -489,8 +489,8 @@ if __name__ == '__main__':
 
     # Make the frequency range selection
     sel = (ff > lo) & (ff < hi)
-    f = ff[sel].values
-    p = pp[sel].values
+    f = ff[sel]
+    p = pp[sel]
 
     #Read in the background values
     try:
