@@ -3,10 +3,12 @@ import lightkurve as lk
 import pandas as pd
 import astropy.units as u
 from tqdm import tqdm
+import math
 import glob
 import matplotlib.pyplot as plt
 import seaborn as sns
 from astropy.io import ascii
+from astropy.convolution import convolve, Box1DKernel
 import corner
 import matplotlib.gridspec as gridspec
 import warnings
@@ -109,8 +111,9 @@ def save_corner(chains, kic, idx):
     plt.savefig(f'/home/oliver/PhD/mnt/RDS/malatium/peakbag/byeye/{kic}_corner.png')
     plt.close()
 
-def get_models(chains, kic, idx):
+def get_models(chains, kic, idx, ati):
     bro = pd.read_csv('../../data/bronze.csv', index_col=0)
+    bro = bro[bro.l != 3]
     star = bro[bro.KIC == str(kic)]
     res = [star.loc[star.l == 0].f.values,
             star.loc[star.l == 1].f.values,
@@ -147,23 +150,31 @@ def get_models(chains, kic, idx):
 
     full_plot(mod, p, res, kic, idx)
 
-    ns = np.unique(star.n.values)
+
+    s = star.copy()
+    s.loc[s.l == 2, 'n'] += 1     
+    ns = np.unique(s.n.values)
     N = len(ns)
 
     fig, ax = plt.subplots(N, figsize=[10,2*N])
     plt.subplots_adjust(hspace=0.0)
+
     for i, n in enumerate(ns):
-        s = star.loc[star.n == n].loc[star.l != 2] 
+        s = star.copy()
+        s.loc[s.l == 2, 'n'] += 1            
+        s = s.loc[s.n == n]
         lo = s.f.min() - 0.25 * deltanu
         hi = s.f.max() + 0.25 * deltanu
         ref = f[(f > lo) & (f < hi)]        
         rep = p[(f > lo) & (f < hi)]
+        smp = smooth(ref, rep, filter_width=1.)
 
         mod = model(ref, n0, n1, n2, deltanu)
         M = mod.model(res, theano=False)
 
-        ax[i].plot(ref, rep, c='k', lw=1, alpha=1.)
-        ax[i].plot(ref, M, c='w', lw=2)
+        ax[i].plot(ref, rep, c='k', lw=1, alpha=.5)
+        ax[i].plot(ref, smp, c='k', lw=1, alpha=1.)
+        ax[i].plot(ref, M, c='r', lw=1)
 
         markers = ['o',',','^']
         sc = star.copy()
@@ -179,6 +190,13 @@ def get_models(chains, kic, idx):
     plt.savefig(f'/home/oliver/PhD/mnt/RDS/malatium/peakbag/byeye/{kic}_echelle.png', dpi=450)            
     plt.close()
 
+def smooth(f, p, filter_width=35):
+    fs = np.mean(np.diff(f))
+
+    box_kernel = Box1DKernel(math.ceil((filter_width/fs)))
+    smooth_power = convolve(p, box_kernel)
+    return smooth_power
+
 
 def full_plot(mod, p, res, kic, idx):
     pg = lk.Periodogram(mod.f*u.microhertz, p*(u.cds.ppm**2/u.microhertz))
@@ -192,8 +210,13 @@ if __name__ == "__main__":
     ati = pd.read_csv('../../data/atium.csv', index_col=0)
 
     #Visual inspection of the corner plots
-    for idx in tqdm(range(95)):
+    for idx in tqdm(np.arange(1, 95)):
         kic = ati.loc[idx].KIC
+
+        print('#############################')
+        print(f'RUNNING KIC {kic}, IDX {idx}')
+        print('#############################')
+
         files = glob.glob('/home/oliver/PhD/mnt/RDS/malatium/peakbag/{}/*chains.csv'.format(str(kic)))
 
         try:
@@ -202,7 +225,7 @@ if __name__ == "__main__":
             continue
 
         save_corner(chains, kic, idx)
-        get_models(chains, kic, idx)
+        get_models(chains, kic, idx, ati)
     
 
 
