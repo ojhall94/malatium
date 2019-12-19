@@ -10,9 +10,12 @@ import warnings
 class mix():
     ''' Holder for the mixture model on JVS rotation models '''
     def __init__(self):
-        self.rocrit_file = 'rocrit_model.csv'
-        self.standard_file = 'standard_model.csv'
-        self.mapper = mapper = {'#Teff(K)': 'Teff',
+        self.rocrit_file = '../data/jvs_models/rocrit_model.csv'
+        self.standard_file = '../data/jvs_models/standard_model.csv'
+        self.d = '/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/models'
+
+        self.mapper = mapper = {'# Teff(K)': 'Teff',
+                                '#Teff(K)': 'Teff',
                                 ' Prot(days)': 'Prot',
                                 ' Age(Gyr)': 'Age',
                                 ' Mass(Msun)': 'Mass'}
@@ -22,6 +25,8 @@ class mix():
         self.age = [0,0]
         self.prot = [0, 0]
         self.cols = ['Mass', 'Teff', 'Age', 'Prot', 'P_A']
+        self.latexcols = [r'$M$', r'$T_{\rm eff}$', r'$\log{\tau}$', r'\log{P}$', r'$P_A$']
+
         self.get_data()
 
     def get_data(self):
@@ -120,13 +125,15 @@ class mix():
         samples = self.sampler.get_chain(flat=True)
         hall = [input['mass'][0], input['teff'][0],\
                 input['logage'][0], input['logprot'][0], np.nan]
-        corner.corner(samples, truths=hall, labels=self.cols);
+        corner.corner(samples, truths=hall, labels=self.latexcols)
+        plt.savefig(f'{self.d}/{self.ID}_corner.pdf')
+        plt.close('all')
 
     def save_samples(self):
         ''' Save the samples to csv '''
         samples = self.sampler.get_chain(flat=True)
         output = pd.DataFrame(data=samples, columns=self.cols)
-        output.to_csv(f'samples_{self.ID}.csv')
+        output.to_csv(f'{self.d}/{self.ID}_samples.csv')
 
     def run_one_star(self, input):
         ''' run the whole thing for a single star
