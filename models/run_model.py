@@ -51,6 +51,7 @@ if __name__ == "__main__":
 
     # Run the model
     print('Running emcee')
+    
     mix = mix()
     mix.run_one_star(star)
     print('Run complete!')

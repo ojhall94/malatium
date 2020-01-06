@@ -25,7 +25,7 @@ class mix():
         self.age = [0,0]
         self.prot = [0, 0]
         self.cols = ['Mass', 'Teff', 'Age', 'Prot', 'P_A']
-        self.latexcols = [r'$M$', r'$T_{\rm eff}$', r'$\log{\tau}$', r'\log{P}$', r'$P_A$']
+        self.latexcols = [r'$M$', r'$T_{\rm eff}$', r'$\log{\tau}$', r'$\log{P}$', r'$P_A$']
 
         self.get_data()
 
@@ -126,7 +126,7 @@ class mix():
         hall = [input['mass'][0], input['teff'][0],\
                 input['logage'][0], input['logprot'][0], np.nan]
         corner.corner(samples, truths=hall, labels=self.latexcols)
-        plt.savefig(f'{self.d}/{self.ID}_corner.pdf')
+        plt.savefig(f'{self.d}/{self.ID}_corner.png')
         plt.close('all')
 
     def save_samples(self):
