@@ -479,6 +479,7 @@ if __name__ == '__main__':
         print('Other star')
         cop = pd.read_csv('../data/copper.csv',index_col=0)
         cop = cop[(cop.l != 3) & (cop.lnK == 6.)]
+
     locs = cop[cop.KIC == str(kic)].Freq.values
     elocs = cop[cop.KIC == str(kic)].e_Freq.values
     modeids = cop[cop.KIC == str(kic)].l.values
@@ -489,8 +490,8 @@ if __name__ == '__main__':
 
     # Make the frequency range selection
     sel = (ff > lo) & (ff < hi)
-    f = ff[sel]
-    p = pp[sel]
+    f = ff[sel].values
+    p = pp[sel].values
 
     #Read in the background values
     try:
