@@ -6,6 +6,7 @@ import seaborn as sns
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
 import warnings
+import sys
 
 class mix():
     ''' Holder for the mixture model on JVS rotation models '''
@@ -58,12 +59,17 @@ class mix():
 
     def make_kde(self):
         ''' Make a KDE with a preselected bin width '''
-        self.dens_rocrit = sm.nonparametric.KDEMultivariate(
-                data=self.sel_rocrit[['Mass', 'Teff', 'Age', 'Prot']].sample(frac=1.0).values,
-                                               var_type='cccc', bw=self.bw)
-        self.dens_stan = sm.nonparametric.KDEMultivariate(
-                data=self.sel_stan[['Mass', 'Teff', 'Age', 'Prot']].sample(frac=1.0).values,
-                                               var_type='cccc', bw=self.bw)
+        try:
+            self.dens_rocrit = sm.nonparametric.KDEMultivariate(
+                    data=self.sel_rocrit[['Mass', 'Teff', 'Age', 'Prot']].sample(frac=1.0).values,
+                                                var_type='cccc', bw=self.bw)
+            self.dens_stan = sm.nonparametric.KDEMultivariate(
+                    data=self.sel_stan[['Mass', 'Teff', 'Age', 'Prot']].sample(frac=1.0).values,
+                                                var_type='cccc', bw=self.bw)
+        except ValueError:
+            print('Star out of range of one of the KDEs.')
+            np.savetxt(f'{self.d}/{self.ID}_out_of_range.txt', [1])
+            sys.exit()
 
     def plot_kde_example(self, age=np.log(5.5), npts=100):
         ''' Make an example plot to check the KDE is smooth '''
@@ -146,15 +152,21 @@ class mix():
             list of length 2 with [value, uncertainty].
 
         '''
+        # Run a Prot check
+        if np.isnan(input['logprot'][0]):
+            print('No results for rotation.')
+            np.savetxt(f'{self.d}/{self.ID}_incomplete.txt', [0])
+
         self.select_down(mass=[input['mass'][0], input['mass'][1]*3],
                          teff=[input['teff'][0], input['teff'][1]*3],
                          age=[input['logage'][0], input['logage'][1]*3])
-        self.make_kde()
         self.set_obs(ID=input['ID'],
                      mass=input['mass'],
                      teff=input['teff'],
                      age=input['logage'],
                      prot=input['logprot'])
+        self.make_kde()
+
         self.mcmc()
         self.corner(input)
         self.save_samples()
