@@ -112,7 +112,7 @@ class mix():
         self.age = age
         self.prot = prot
 
-    def mcmc(self, nwalkers=32, burnin=1000, sample=2000):
+    def mcmc(self, nwalkers=32, burnin=2500, sample=5000):
         ''' Run the mcmc part '''
         ndim = 5
         self.sampler = emcee.EnsembleSampler(nwalkers, ndim, self.likelihood)
@@ -155,7 +155,7 @@ class mix():
         # Run a Prot check
         if np.isnan(input['logprot'][0]):
             print('No results for rotation.')
-            np.savetxt(f'{self.d}/{self.ID}_incomplete.txt', [0])
+            np.savetxt(f'{self.d}/{input['ID']}_incomplete.txt', [0])
 
         self.select_down(mass=[input['mass'][0], input['mass'][1]*3],
                          teff=[input['teff'][0], input['teff'][1]*3],
