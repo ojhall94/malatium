@@ -141,7 +141,7 @@ class mix():
         output = pd.DataFrame(data=samples, columns=self.cols)
         output.to_csv(f'{self.d}/{self.ID}_samples.csv')
 
-    def run_one_star(self, input):
+    def run_one_star(self, inp):
         ''' run the whole thing for a single star
 
         Inputs
@@ -153,22 +153,22 @@ class mix():
 
         '''
         # Run a Prot check
-        if np.isnan(input['logprot'][0]):
+        if np.isnan(inp['logprot'][0]):
             print('No results for rotation.')
-            np.savetxt(f'{self.d}/{input['ID']}_incomplete.txt', [0])
+            np.savetxt(f'{self.d}/{inp["ID"]}_incomplete.txt', [0])
 
-        self.select_down(mass=[input['mass'][0], input['mass'][1]*3],
-                         teff=[input['teff'][0], input['teff'][1]*3],
-                         age=[input['logage'][0], input['logage'][1]*3])
-        self.set_obs(ID=input['ID'],
-                     mass=input['mass'],
-                     teff=input['teff'],
-                     age=input['logage'],
-                     prot=input['logprot'])
+        self.select_down(mass=[inp['mass'][0], inp['mass'][1]*3],
+                         teff=[inp['teff'][0], inp['teff'][1]*3],
+                         age=[inp['logage'][0], inp['logage'][1]*3])
+        self.set_obs(ID=inp['ID'],
+                     mass=inp['mass'],
+                     teff=inp['teff'],
+                     age=inp['logage'],
+                     prot=inp['logprot'])
         self.make_kde()
 
         self.mcmc()
-        self.corner(input)
+        self.corner(inp)
         self.save_samples()
 
     def __call__(self):
