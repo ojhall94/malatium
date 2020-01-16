@@ -210,7 +210,7 @@ if __name__ == "__main__":
     ati = pd.read_csv('../../data/atium.csv', index_col=0)
 
     #Visual inspection of the corner plots
-    for idx in tqdm(np.arange(1, 95)):
+    for idx in tqdm([27, 28, 62, 63, 81]):
         kic = ati.loc[idx].KIC
 
         print('#############################')
