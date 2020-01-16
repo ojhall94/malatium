@@ -18,7 +18,7 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
     # Read in the data
-    dfile = "../data/data_for_guy.csv"
+    dfile = "../data/atium.csv"
     df = pd.read_csv(dfile, index_col=0)
 
     # Build the input list
