@@ -13,7 +13,7 @@ class mix():
     def __init__(self):
         self.rocrit_file = '../data/jvs_models/rocrit_model.csv'
         self.standard_file = '../data/jvs_models/standard_model.csv'
-        self.d = '/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/models'
+        self.d = '/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/models_syst'
 
         self.mapper = mapper = {'# Teff(K)': 'Teff',
                                 '#Teff(K)': 'Teff',
