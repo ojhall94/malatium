@@ -21,16 +21,17 @@ if __name__ == "__main__":
     dfile = "../data/atium.csv"
     df = pd.read_csv(dfile, index_col=0)
 
+    ## Below: systematic increase blocks
     # Increase uncertainties on age and mass
-    df['upage'][df.source == 'K'] += 0.06 * df['age'][df.source == 'K'] 
-    df['loage'][df.source == 'K'] += 0.06 * df['age'][df.source == 'K']
-    df['upage'][df.source == 'L'] += 0.08 * df['age'][df.source == 'L'] 
-    df['loage'][df.source == 'L'] += 0.08 * df['age'][df.source == 'L']
+    # df['upage'][df.source == 'K'] += 0.06 * df['age'][df.source == 'K'] 
+    # df['loage'][df.source == 'K'] += 0.06 * df['age'][df.source == 'K']
+    # df['upage'][df.source == 'L'] += 0.08 * df['age'][df.source == 'L'] 
+    # df['loage'][df.source == 'L'] += 0.08 * df['age'][df.source == 'L']
 
-    df['upmodmass'][df.source == 'K'] += 0.02 * df['modmass'][df.source == 'K'] 
-    df['lomodmass'][df.source == 'K'] += 0.02 * df['modmass'][df.source == 'K']
-    df['upmodmass'][df.source == 'L'] += 0.016 * df['modmass'][df.source == 'L'] 
-    df['lomodmass'][df.source == 'L'] += 0.016 * df['modmass'][df.source == 'L']    
+    # df['upmodmass'][df.source == 'K'] += 0.02 * df['modmass'][df.source == 'K'] 
+    # df['lomodmass'][df.source == 'K'] += 0.02 * df['modmass'][df.source == 'K']
+    # df['upmodmass'][df.source == 'L'] += 0.016 * df['modmass'][df.source == 'L'] 
+    # df['lomodmass'][df.source == 'L'] += 0.016 * df['modmass'][df.source == 'L']    
 
     # Build the input list
     df['logage'] = np.log(df.age)

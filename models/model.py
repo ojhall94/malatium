@@ -11,15 +11,13 @@ import sys
 class mix():
     ''' Holder for the mixture model on JVS rotation models '''
     def __init__(self):
-        self.rocrit_file = '../data/jvs_models/rocrit_model.csv'
-        self.standard_file = '../data/jvs_models/standard_model.csv'
-        self.d = '/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/models_syst'
+        self.rocrit_file = '../data/jvs_models/rocrit_population.h5'
+        self.standard_file = '../data/jvs_models/standard_population.h5'
+        self.d = '/rds/projects/2018/daviesgr-asteroseismic-computation/ojh251/malatium/models_upgrade'
 
-        self.mapper = mapper = {'# Teff(K)': 'Teff',
-                                '#Teff(K)': 'Teff',
-                                ' Prot(days)': 'Prot',
-                                ' Age(Gyr)': 'Age',
-                                ' Mass(Msun)': 'Mass'}
+        self.mapper = mapper = {'period': 'Prot',
+                                'age': 'Age',
+                                'mass': 'Mass'}
         self.bw = np.array([0.02, 10.0, 0.01, 0.01])
         self.mass = [0, 0]
         self.teff = [0, 0]
@@ -32,8 +30,8 @@ class mix():
 
     def get_data(self):
         ''' load in the data and fix the column titles '''
-        self.df_rocrit = pd.read_csv(self.rocrit_file)
-        self.df_stan = pd.read_csv(self.standard_file)
+        self.df_rocrit = pd.read_hdf(self.rocrit_file, key='sample', mode='r')
+        self.df_stan = pd.read_hdf(self.standard_file, key='sample', mode='r')
         self.df_rocrit.rename(columns=self.mapper, inplace=True)
         self.df_stan.rename(columns=self.mapper, inplace=True)
         self.df_rocrit['Age'] = np.log(self.df_rocrit.Age)
