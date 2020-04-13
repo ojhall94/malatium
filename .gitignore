@@ -10,6 +10,7 @@ slurm*
 *.fits
 data/jvs_models/
 data/16Cyg
+models/Output/
 
 # Binary files
 *~
