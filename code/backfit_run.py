@@ -17,7 +17,7 @@ import corner
 import glob
 import time
 import lightkurve as lk
-from astropy.io import ascii
+from astropy.io import ascii, fits
 timestr = time.strftime("%m%d-%H%M")
 
 import argparse
@@ -263,7 +263,7 @@ if __name__ == '__main__':
 
     # Get the star data
     mal = pd.read_csv('../data/malatium.csv', index_col=0)
-    star = mal.iloc[idx]
+    star = mal.loc[idx]
     kic = star.KIC
     numax = star.numax
     dnu = star.dnu
@@ -271,10 +271,24 @@ if __name__ == '__main__':
     #Get the output director
     dir = get_folder(kic)
 
-    # Get the power spectrum
-    # Col1 = frequency in microHz, Col2 = psd
-    sfile = glob.glob('../data/*{}*.pow'.format(kic))
-    data = ascii.read(sfile[0]).to_pandas()
+    #Alternative arrangements for 16 Cyg A&B
+    if kic == 12069424:
+        print('RUNNING 16 CYG A')
+        sfile = glob.glob(f'../data/16Cyg/*100002741*PSD*.fits')[0]
+        data = fits.open(sfile)[0].data
+        ff, pp = data[:,0]*1e6, data[:,1]
+    elif kic == 12069449:
+        print('RUNNING 16 CYG B')
+        sfile = glob.glob(f'../data/16Cyg/*100002742*PSD*.fits')[0]
+        data = fits.open(sfile)[0].data
+        ff, pp = data[:,0]*1e6, data[:,1]
+    else:
+        print('WRONG DATA')
+        # Get the power spectrum
+        # Col1 = frequency in microHz, Col2 = psd
+        sfile = glob.glob('../data/*{}*.pow'.format(kic))
+        data = ascii.read(sfile[0]).to_pandas()
+        ff, pp = data['col1'],data['col2']
 
     # Read in the mode locs
     cop = pd.read_csv('../data/copper.csv',index_col=0)
@@ -283,10 +297,9 @@ if __name__ == '__main__':
     hi = locs.max() + .1*dnu
 
     # Make the frequency range selection
-    ff, pp = data['col1'],data['col2']
     sel = (ff > lo) & (ff < hi)
-    f = ff[~sel].values
-    p = pp[~sel].values
+    f = ff[~sel]
+    p = pp[~sel]
 
     #Make extra accomodations for KIC 347720
     if kic == 3427720:
@@ -319,6 +332,6 @@ if __name__ == '__main__':
 #    ax = pg.plot(scale='log')
 #    plt.savefig(dir+'test.png')
 
-    # Run stan
+    # Run stan 
     run = run_stan(data, init, dir)
     fit = run()

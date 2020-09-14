@@ -1,3 +1,19 @@
+#BB stuff
+*.bear
+slurm*
+
+#Doc files with notes
+*.odt
+
+# Data so LFS doesn't shout at me
+*.pow
+*.fits
+data/jvs_models/
+data/16Cyg
+
+# Binary files
+*~
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -8,6 +24,7 @@ __pycache__/
 
 # File
 data/kepler_dr2_1arcsec.fits
+code/tests/output_fmr/
 
 # Distribution / packaging
 .Python
@@ -19,6 +36,7 @@ eggs/
 .eggs/
 lib/
 lib64/
+*.pkl
 parts/
 sdist/
 var/
