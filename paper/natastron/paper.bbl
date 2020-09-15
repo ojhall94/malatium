@@ -1,0 +1,23 @@
+\begin{thebibliography}{1}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\providecommand{\bibinfo}[2]{#2}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{vansaders+2016}
+\bibinfo{author}{{van Saders}, J.~L.} \emph{et~al.}
+\newblock \bibinfo{title}{Weakened magnetic braking as the origin of
+  anomalously rapid rotation in old field stars}.
+\newblock \emph{\bibinfo{journal}{Nature}} \textbf{\bibinfo{volume}{529}},
+  \bibinfo{pages}{181} (\bibinfo{year}{2016}).
+
+\bibitem{vansaders+pinsonneault2013}
+\bibinfo{author}{{van Saders}, J.~L.} \& \bibinfo{author}{Pinsonneault, M.~H.}
+\newblock \bibinfo{title}{Fast {{Star}}, {{Slow Star}}; {{Old Star}}, {{Young
+  Star}}: {{Subgiant Rotation}} as a {{Population}} and {{Stellar Physics
+  Diagnostic}}}.
+\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+  \textbf{\bibinfo{volume}{776}}, \bibinfo{pages}{67} (\bibinfo{year}{2013}).
+
+\end{thebibliography}

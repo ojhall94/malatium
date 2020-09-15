@@ -1,51 +1,46 @@
 This is BibTeX, Version 0.99d (TeX Live 2020)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: paper.aux
-I couldn't open style file nature.bst
----line 3 of file paper.aux
- : \bibstyle{nature
- :                 }
-I'm skipping whatever remains of this command
-I found no style file---while reading file paper.aux
-You've used 1 entry,
-            0 wiz_defined-function locations,
-            86 strings with 515 characters,
-and the built_in function-call counts, 0 in all, are:
-= -- 0
-> -- 0
+The style file: naturemag.bst
+Database file #1: library.bib
+You've used 2 entries,
+            2348 wiz_defined-function locations,
+            989 strings with 9278 characters,
+and the built_in function-call counts, 725 in all, are:
+= -- 45
+> -- 16
 < -- 0
-+ -- 0
-- -- 0
-* -- 0
-:= -- 0
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
++ -- 8
+- -- 4
+* -- 91
+:= -- 88
+add.period$ -- 6
+call.type$ -- 2
+change.case$ -- 2
 chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 0
-format.name$ -- 0
-if$ -- 0
+cite$ -- 2
+duplicate$ -- 71
+empty$ -- 67
+format.name$ -- 6
+if$ -- 138
 int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 0
-num.names$ -- 0
-pop$ -- 0
-preamble$ -- 0
+int.to.str$ -- 2
+missing$ -- 16
+newline$ -- 18
+num.names$ -- 2
+pop$ -- 9
+preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 0
+skip$ -- 10
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
+substring$ -- 15
+swap$ -- 70
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 0
-(There were 2 error messages)
+while$ -- 4
+width$ -- 3
+write$ -- 29
