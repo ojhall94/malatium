@@ -205,6 +205,14 @@
 \newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
   \textbf{\bibinfo{volume}{835}}, \bibinfo{pages}{173} (\bibinfo{year}{2017}).
 
+\bibitem{garcia+2014}
+\bibinfo{author}{Garc{\'i}a, R.~A.} \emph{et~al.}
+\newblock \bibinfo{title}{Rotation and magnetism of {{Kepler}} pulsating
+  solar-like stars. {{Towards}} asteroseismically calibrated age-rotation
+  relations}.
+\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
+  \textbf{\bibinfo{volume}{572}}, \bibinfo{pages}{A34} (\bibinfo{year}{2014}).
+
 \bibitem{bedding+2010}
 \bibinfo{author}{Bedding, T.~R.} \emph{et~al.}
 \newblock \bibinfo{title}{Solar-like {{Oscillations}} in {{Low}}-luminosity
@@ -213,12 +221,27 @@
   \textbf{\bibinfo{volume}{713}}, \bibinfo{pages}{L176--L181}
   (\bibinfo{year}{2010}).
 
-\bibitem{garcia+2014}
-\bibinfo{author}{Garc{\'i}a, R.~A.} \emph{et~al.}
-\newblock \bibinfo{title}{Rotation and magnetism of {{Kepler}} pulsating
-  solar-like stars. {{Towards}} asteroseismically calibrated age-rotation
-  relations}.
+\bibitem{kraft1967}
+\bibinfo{author}{Kraft, R.~P.}
+\newblock \bibinfo{title}{Studies of {{Stellar Rotation}}. {{V}}. {{The
+  Dependence}} of {{Rotation}} on {{Age}} among {{Solar}}-{{Type Stars}}}.
+\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+  \textbf{\bibinfo{volume}{150}}, \bibinfo{pages}{551} (\bibinfo{year}{1967}).
+
+\bibitem{bonanno+frohlich2015}
+\bibinfo{author}{Bonanno, A.} \& \bibinfo{author}{Fr{\"o}hlich, H.-E.}
+\newblock \bibinfo{title}{A {{Bayesian}} estimation of the helioseismic solar
+  age}.
 \newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
-  \textbf{\bibinfo{volume}{572}}, \bibinfo{pages}{A34} (\bibinfo{year}{2014}).
+  \textbf{\bibinfo{volume}{580}}, \bibinfo{pages}{A130} (\bibinfo{year}{2015}).
+
+\bibitem{paxton+2017}
+\bibinfo{author}{Paxton, B.} \emph{et~al.}
+\newblock \bibinfo{title}{Modules for {{Experiments}} in {{Stellar
+  Astrophysics}} ({{MESA}}): {{Convective Boundaries}}, {{Element Diffusion}},
+  and {{Massive Star Explosions}}}.
+\newblock \emph{\bibinfo{journal}{arXiv:1710.08424 [astro-ph]}}
+  (\bibinfo{year}{2017}).
+\newblock \eprint{1710.08424}.
 
 \end{thebibliography}
