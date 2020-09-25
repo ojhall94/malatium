@@ -1,0 +1,27 @@
+\contentsline {section}{\numberline {1}Asteroseismic Methods}{14}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Asteroseismic Data}{14}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Asteroseismic Model}{15}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Convective Background}{16}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Modes of Oscillation}{16}{subsubsection.1.2.2}%
+\contentsline {subsubsection}{\numberline {1.2.3}Mode Frequencies and Rotational Splitting}{17}{subsubsection.1.2.3}%
+\contentsline {subsubsection}{\numberline {1.2.4}Mode Linewidth}{17}{subsubsection.1.2.4}%
+\contentsline {subsubsection}{\numberline {1.2.5}Mode Heights and Angle of Inclination}{18}{subsubsection.1.2.5}%
+\contentsline {subsubsection}{\numberline {1.2.6}Likelihood Function}{19}{subsubsection.1.2.6}%
+\contentsline {subsubsection}{\numberline {1.2.7}Fitting the convective background}{20}{subsubsection.1.2.7}%
+\contentsline {subsubsection}{\numberline {1.2.8}Obtaining First Guesses and Prior Values}{20}{subsubsection.1.2.8}%
+\contentsline {subsubsection}{\numberline {1.2.9}Priors on our Hyperparameters}{21}{subsubsection.1.2.9}%
+\contentsline {subsubsection}{\numberline {1.2.10}Fitting procedure}{22}{subsubsection.1.2.10}%
+\contentsline {section}{\numberline {2}Gyrochronology Methods}{23}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Stellar Models}{23}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Bayesian Mixture Models}{24}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Fitting procedure}{26}{subsubsection.2.2.1}%
+\contentsline {section}{\numberline {3}Verifying asteroseismic results}{27}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Priors on rotational parameters}{27}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Comparisons to previous studies}{28}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Internal vs external rotation}{30}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Verifying consequences for gyrochronology}{33}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Rotational models for different stellar types}{33}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Limits of our stellar models}{34}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Systematic uncertainties from asteroseismology}{35}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Binaries and Planet Hosts}{35}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Evidence for Weakened Magnetic Braking in the literature}{36}{subsection.4.5}%

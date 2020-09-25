@@ -1,55 +1,60 @@
 This is BibTeX, Version 0.99d (TeX Live 2020)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: paper.aux
-White space in argument---line 37 of file paper.aux
- : \citation{bonanno+frohlich2015
- :                                }
-I'm skipping whatever remains of this command
-White space in argument---line 41 of file paper.aux
- : \citation{bonanno+frohlich2015
- :                                }
-I'm skipping whatever remains of this command
 The style file: naturemag.bst
+Illegal, another \bibstyle command---line 386 of file paper.aux
+ : \bibstyle
+ :          {naturemag}
+I'm skipping whatever remains of this command
+Illegal, another \bibdata command---line 387 of file paper.aux
+ : \bibdata
+ :         {library.bib}
+I'm skipping whatever remains of this command
 Database file #1: library.bib
-You've used 30 entries,
+Warning--I didn't find a database entry for "["
+Warning--empty journal in dejong+2014
+Warning--empty journal in dalton+2014
+Warning--empty journal in seabold+perktold2010
+Warning--empty journal in girardi+2015
+You've used 96 entries,
             2348 wiz_defined-function locations,
-            1148 strings with 18296 characters,
-and the built_in function-call counts, 11461 in all, are:
-= -- 763
-> -- 304
+            1506 strings with 45985 characters,
+and the built_in function-call counts, 36909 in all, are:
+= -- 2569
+> -- 904
 < -- 0
-+ -- 152
-- -- 76
-* -- 1422
-:= -- 1286
-add.period$ -- 96
-call.type$ -- 30
-change.case$ -- 30
++ -- 451
+- -- 226
+* -- 4480
+:= -- 4094
+add.period$ -- 298
+call.type$ -- 96
+change.case$ -- 99
 chr.to.int$ -- 0
-cite$ -- 30
-duplicate$ -- 1114
-empty$ -- 1040
-format.name$ -- 101
-if$ -- 2290
+cite$ -- 100
+duplicate$ -- 3534
+empty$ -- 3401
+format.name$ -- 310
+if$ -- 7457
 int.to.chr$ -- 0
-int.to.str$ -- 30
-missing$ -- 250
-newline$ -- 164
-num.names$ -- 30
-pop$ -- 160
+int.to.str$ -- 96
+missing$ -- 783
+newline$ -- 498
+num.names$ -- 98
+pop$ -- 550
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 216
+skip$ -- 724
 stack$ -- 0
-substring$ -- 323
-swap$ -- 1115
+substring$ -- 1279
+swap$ -- 3479
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 0
-while$ -- 59
-width$ -- 32
-write$ -- 347
+warning$ -- 4
+while$ -- 205
+width$ -- 98
+write$ -- 1075
 (There were 2 error messages)
