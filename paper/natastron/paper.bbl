@@ -228,13 +228,6 @@
 \newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
   \textbf{\bibinfo{volume}{150}}, \bibinfo{pages}{551} (\bibinfo{year}{1967}).
 
-\bibitem{bonanno+frohlich2015}
-\bibinfo{author}{Bonanno, A.} \& \bibinfo{author}{Fr{\"o}hlich, H.-E.}
-\newblock \bibinfo{title}{A {{Bayesian}} estimation of the helioseismic solar
-  age}.
-\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
-  \textbf{\bibinfo{volume}{580}}, \bibinfo{pages}{A130} (\bibinfo{year}{2015}).
-
 \bibitem{paxton+2017}
 \bibinfo{author}{Paxton, B.} \emph{et~al.}
 \newblock \bibinfo{title}{Modules for {{Experiments}} in {{Stellar
@@ -243,5 +236,18 @@
 \newblock \emph{\bibinfo{journal}{arXiv:1710.08424 [astro-ph]}}
   (\bibinfo{year}{2017}).
 \newblock \eprint{1710.08424}.
+
+\bibitem{skumanich1972}
+\bibinfo{author}{Skumanich, A.}
+\newblock \bibinfo{title}{{{TIME SCALES FOR Ca}} n {{EMISSION DECAY}},
+  {{ROTATIONAL BRAKING}}, {{AND LITHIUM DEPLETION}}}.
+\newblock \emph{\bibinfo{journal}{ApJ. . .}} \bibinfo{pages}{4}
+  (\bibinfo{year}{1972}).
+
+\bibitem{kawaler1988}
+\bibinfo{author}{Kawaler, S.~D.}
+\newblock \bibinfo{title}{Angular momentum loss in low-mass stars}.
+\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+  \textbf{\bibinfo{volume}{333}}, \bibinfo{pages}{236} (\bibinfo{year}{1988}).
 
 \end{thebibliography}
