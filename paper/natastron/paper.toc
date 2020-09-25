@@ -15,13 +15,14 @@
 \contentsline {subsection}{\numberline {2.1}Stellar Models}{23}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Bayesian Mixture Models}{24}{subsection.2.2}%
 \contentsline {subsubsection}{\numberline {2.2.1}Fitting procedure}{26}{subsubsection.2.2.1}%
-\contentsline {section}{\numberline {3}Verifying asteroseismic results}{27}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Priors on rotational parameters}{27}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Comparisons to previous studies}{28}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Internal vs external rotation}{30}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Verifying consequences for gyrochronology}{33}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Rotational models for different stellar types}{33}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Limits of our stellar models}{34}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Systematic uncertainties from asteroseismology}{35}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Binaries and Planet Hosts}{35}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Evidence for Weakened Magnetic Braking in the literature}{36}{subsection.4.5}%
+\contentsline {section}{\numberline {3}Results}{27}{section.3}%
+\contentsline {section}{\numberline {4}Verifying asteroseismic results}{27}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Priors on rotational parameters}{27}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Comparisons to previous studies}{28}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Internal vs external rotation}{31}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Verifying consequences for gyrochronology}{33}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Rotational models for different stellar types}{33}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Limits of our stellar models}{34}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Systematic uncertainties from asteroseismology}{35}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Binaries and Planet Hosts}{35}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Evidence for Weakened Magnetic Braking in the literature}{36}{subsection.5.5}%
