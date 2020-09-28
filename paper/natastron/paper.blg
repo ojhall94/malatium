@@ -2,59 +2,51 @@ This is BibTeX, Version 0.99d (TeX Live 2020)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: paper.aux
 The style file: naturemag.bst
-Illegal, another \bibstyle command---line 386 of file paper.aux
- : \bibstyle
- :          {naturemag}
-I'm skipping whatever remains of this command
-Illegal, another \bibdata command---line 387 of file paper.aux
- : \bibdata
- :         {library.bib}
-I'm skipping whatever remains of this command
 Database file #1: library.bib
 Warning--I didn't find a database entry for "["
 Warning--empty journal in dejong+2014
 Warning--empty journal in dalton+2014
 Warning--empty journal in seabold+perktold2010
 Warning--empty journal in girardi+2015
-You've used 96 entries,
+You've used 97 entries,
             2348 wiz_defined-function locations,
-            1506 strings with 45985 characters,
-and the built_in function-call counts, 36909 in all, are:
-= -- 2569
-> -- 904
+            1513 strings with 46132 characters,
+and the built_in function-call counts, 37308 in all, are:
+= -- 2600
+> -- 912
 < -- 0
-+ -- 451
-- -- 226
-* -- 4480
-:= -- 4094
-add.period$ -- 298
-call.type$ -- 96
-change.case$ -- 99
++ -- 455
+- -- 228
+* -- 4530
+:= -- 4138
+add.period$ -- 301
+call.type$ -- 97
+change.case$ -- 100
 chr.to.int$ -- 0
-cite$ -- 100
-duplicate$ -- 3534
-empty$ -- 3401
-format.name$ -- 310
-if$ -- 7457
+cite$ -- 101
+duplicate$ -- 3569
+empty$ -- 3438
+format.name$ -- 313
+if$ -- 7536
 int.to.chr$ -- 0
-int.to.str$ -- 96
-missing$ -- 783
-newline$ -- 498
-num.names$ -- 98
-pop$ -- 550
+int.to.str$ -- 97
+missing$ -- 791
+newline$ -- 503
+num.names$ -- 99
+pop$ -- 555
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 724
+skip$ -- 729
 stack$ -- 0
-substring$ -- 1279
-swap$ -- 3479
+substring$ -- 1304
+swap$ -- 3514
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 4
-while$ -- 205
-width$ -- 98
-write$ -- 1075
-(There were 2 error messages)
+while$ -- 208
+width$ -- 99
+write$ -- 1086
+(There were 5 warnings)
