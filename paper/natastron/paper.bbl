@@ -224,6 +224,19 @@
   (\bibinfo{year}{2017}).
 \newblock \eprint{1710.08424}.
 
+\bibitem{hunter2007}
+\bibinfo{author}{Hunter, J.~D.}
+\newblock \bibinfo{title}{Matplotlib: {{A 2D Graphics Environment}}}.
+\newblock \emph{\bibinfo{journal}{Computing in Science and Engineering}}
+  \textbf{\bibinfo{volume}{9}}, \bibinfo{pages}{90--95} (\bibinfo{year}{2007}).
+
+\bibitem{benomar+2018}
+\bibinfo{author}{Benomar, O.} \emph{et~al.}
+\newblock \bibinfo{title}{Asteroseismic detection of latitudinal differential
+  rotation in 13 {{Sun}}-like stars}.
+\newblock \emph{\bibinfo{journal}{Science}} \textbf{\bibinfo{volume}{361}},
+  \bibinfo{pages}{1231} (\bibinfo{year}{2018}).
+
 \bibitem{lund+2014}
 \bibinfo{author}{Lund, M.~N.}, \bibinfo{author}{Miesch, M.~S.} \&
   \bibinfo{author}{{Christensen-Dalsgaard}, J.}
@@ -288,6 +301,15 @@
 \newblock \emph{\bibinfo{journal}{Astrophysics and Space Science Proceedings}}
   \textbf{\bibinfo{volume}{26}}, \bibinfo{pages}{165} (\bibinfo{year}{2012}).
 
+\bibitem{berger+2020}
+\bibinfo{author}{Berger, T.~A.} \emph{et~al.}
+\newblock \bibinfo{title}{The \${{Gaia}}\$-\${{Kepler}}\$ {{Stellar Properties
+  Catalog I}}: {{Homogeneous Fundamental Properties}} for 186,000
+  \${{Kepler}}\$ {{Stars}}}.
+\newblock \emph{\bibinfo{journal}{arXiv:2001.07737 [astro-ph]}}
+  (\bibinfo{year}{2020}).
+\newblock \eprint{2001.07737}.
+
 \bibitem{gelman+rubin1992}
 \bibinfo{author}{Gelman, A.} \& \bibinfo{author}{Rubin, D.~B.}
 \newblock \bibinfo{title}{Inference from {{Iterative Simulation Using Multiple
@@ -320,6 +342,14 @@
   Society}} \textbf{\bibinfo{volume}{485}}, \bibinfo{pages}{L68}
   (\bibinfo{year}{2019}).
 
+\bibitem{barnes2010}
+\bibinfo{author}{Barnes, S.~A.}
+\newblock \bibinfo{title}{A {{Simple Nonlinear Model}} for the {{Rotation}} of
+  {{Main}}-sequence {{Cool Stars}}. {{I}}. {{Introduction}}, {{Implications}}
+  for {{Gyrochronology}}, and {{Color}}-{{Period Diagrams}}}.
+\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+  \textbf{\bibinfo{volume}{722}}, \bibinfo{pages}{222} (\bibinfo{year}{2010}).
+
 \bibitem{deng+2012}
 \bibinfo{author}{Deng, L.-C.} \emph{et~al.}
 \newblock \bibinfo{title}{{{LAMOST Experiment}} for {{Galactic Understanding}}
@@ -340,121 +370,6 @@
   generation wide-field spectroscopy facility for the {{William Herschel
   Telescope}}} \textbf{\bibinfo{volume}{9147}}, \bibinfo{pages}{91470L}
   (\bibinfo{year}{2014}).
-
-\bibitem{astropycollaboration+2013}
-\bibinfo{author}{{Astropy Collaboration}} \emph{et~al.}
-\newblock \bibinfo{title}{Astropy: {{A}} community {{Python}} package for
-  astronomy}.
-\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
-  \textbf{\bibinfo{volume}{558}}, \bibinfo{pages}{A33} (\bibinfo{year}{2013}).
-
-\bibitem{astropycollaboration+2018}
-\bibinfo{author}{{Astropy Collaboration}} \emph{et~al.}
-\newblock \bibinfo{title}{The {{Astropy Project}}: {{Building}} an
-  {{Open}}-science {{Project}} and {{Status}} of the v2.0 {{Core Package}}}.
-\newblock \emph{\bibinfo{journal}{The Astronomical Journal}}
-  \textbf{\bibinfo{volume}{156}}, \bibinfo{pages}{123} (\bibinfo{year}{2018}).
-
-\bibitem{ginsburg+2019}
-\bibinfo{author}{Ginsburg, A.} \emph{et~al.}
-\newblock \bibinfo{title}{Astroquery: {{An Astronomical Web}}-querying
-  {{Package}} in {{Python}}}.
-\newblock \emph{\bibinfo{journal}{The Astronomical Journal}}
-  \textbf{\bibinfo{volume}{157}}, \bibinfo{pages}{98} (\bibinfo{year}{2019}).
-
-\bibitem{lightkurvecollaboration+2018}
-\bibinfo{author}{{Lightkurve Collaboration}} \emph{et~al.}
-\newblock \bibinfo{title}{Lightkurve: {{Kepler}} and {{TESS}} time series
-  analysis in {{Python}}}.
-\newblock \emph{\bibinfo{journal}{Astrophysics Source Code Library}}
-  \bibinfo{pages}{ascl:1812.013} (\bibinfo{year}{2018}).
-
-\bibitem{foreman-mackey2016}
-\bibinfo{author}{{Foreman-Mackey}, D.}
-\newblock \bibinfo{title}{Corner.py: {{Scatterplot}} matrices in {{Python}}}.
-\newblock \emph{\bibinfo{journal}{The Journal of Open Source Software}}
-  \textbf{\bibinfo{volume}{1}} (\bibinfo{year}{2016}).
-
-\bibitem{foreman-mackey+2013}
-\bibinfo{author}{{Foreman-Mackey}, D.}, \bibinfo{author}{Hogg, D.~W.},
-  \bibinfo{author}{Lang, D.} \& \bibinfo{author}{Goodman, J.}
-\newblock \bibinfo{title}{Emcee: {{The MCMC Hammer}}}.
-\newblock \emph{\bibinfo{journal}{Publications of the Astronomical Society of
-  the Pacific}} \textbf{\bibinfo{volume}{125}}, \bibinfo{pages}{306--312}
-  (\bibinfo{year}{2013}).
-\newblock \eprint{1202.3665}.
-
-\bibitem{carpenter+2017}
-\bibinfo{author}{Carpenter, B.} \emph{et~al.}
-\newblock \bibinfo{title}{Stan: {{A Probabilistic Programming Language}}}.
-\newblock \emph{\bibinfo{journal}{Journal of Statistical Software}}
-  \textbf{\bibinfo{volume}{76}}, \bibinfo{pages}{1--32} (\bibinfo{year}{2017}).
-
-\bibitem{vanhoey+2013}
-\bibinfo{author}{Van~Hoey, S.}, \bibinfo{author}{{van der Kwast}, J.},
-  \bibinfo{author}{Nopens, I.} \& \bibinfo{author}{Seuntjens, P.}
-\newblock \bibinfo{title}{Python package for model {{STructure ANalysis}}
-  ({{pySTAN}})}.
-\newblock \emph{\bibinfo{journal}{EGU General Assembly Conference Abstracts}}
-  \textbf{\bibinfo{volume}{15}}, \bibinfo{pages}{EGU2013--10059}
-  (\bibinfo{year}{2013}).
-
-\bibitem{perez+granger2007}
-\bibinfo{author}{Perez, F.} \& \bibinfo{author}{Granger, B.~E.}
-\newblock \bibinfo{title}{{{IPython}}: {{A System}} for {{Interactive
-  Scientific Computing}}}.
-\newblock \emph{\bibinfo{journal}{Computing in Science and Engineering}}
-  \textbf{\bibinfo{volume}{9}}, \bibinfo{pages}{21--29} (\bibinfo{year}{2007}).
-
-\bibitem{kluyver+2016}
-\bibinfo{author}{Kluyver, T.} \emph{et~al.}
-\newblock \bibinfo{title}{Jupyter {{Notebooks}} \textendash{} a publishing
-  format for reproducible computational workflows}.
-\newblock In \bibinfo{editor}{Loizides, F.} \& \bibinfo{editor}{Scmidt, B.}
-  (eds.) \emph{\bibinfo{booktitle}{Positioning and {{Power}} in {{Academic
-  Publishing}}: {{Players}}, {{Agents}} and {{Agendas}}}},
-  \bibinfo{pages}{87--90} (\bibinfo{publisher}{{IOS Press}},
-  \bibinfo{year}{2016}).
-
-\bibitem{vanderwalt+2011}
-\bibinfo{author}{{van der Walt}, S.}, \bibinfo{author}{Colbert, S.~C.} \&
-  \bibinfo{author}{Varoquaux, G.}
-\newblock \bibinfo{title}{The {{NumPy Array}}: {{A Structure}} for {{Efficient
-  Numerical Computation}}}.
-\newblock \emph{\bibinfo{journal}{Computing in Science and Engineering}}
-  \textbf{\bibinfo{volume}{13}}, \bibinfo{pages}{22--30}
-  (\bibinfo{year}{2011}).
-
-\bibitem{mckinney2010}
-\bibinfo{author}{McKinney, W.}
-\newblock \bibinfo{title}{Data {{Structures}} for {{Statistical Computing}} in
-  {{Python}}}.
-\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 9th {{Python}} in
-  {{Science Conference}}}}, \bibinfo{pages}{51--56} (\bibinfo{year}{2010}).
-
-\bibitem{hunter2007}
-\bibinfo{author}{Hunter, J.~D.}
-\newblock \bibinfo{title}{Matplotlib: {{A 2D Graphics Environment}}}.
-\newblock \emph{\bibinfo{journal}{Computing in Science and Engineering}}
-  \textbf{\bibinfo{volume}{9}}, \bibinfo{pages}{90--95} (\bibinfo{year}{2007}).
-
-\bibitem{waskom+2018}
-\bibinfo{author}{Waskom, M.} \emph{et~al.}
-\newblock \bibinfo{title}{Mwaskom/seaborn: V0.9.0 ({{July}} 2018)}.
-\newblock \bibinfo{howpublished}{Zenodo} (\bibinfo{year}{2018}).
-
-\bibitem{seabold+perktold2010}
-\bibinfo{author}{Seabold, S.} \& \bibinfo{author}{Perktold, J.}
-\newblock \bibinfo{title}{Statsmodels: {{Econometric}} and {{Statistical
-  Modeling}} with {{Python}}} \bibinfo{pages}{5} (\bibinfo{year}{2010}).
-
-\bibitem{thetheanodevelopmentteam+2016}
-\bibinfo{author}{{The Theano Development Team}} \emph{et~al.}
-\newblock \bibinfo{title}{Theano: {{A Python}} framework for fast computation
-  of mathematical expressions}.
-\newblock \emph{\bibinfo{journal}{arXiv:1605.02688 [cs]}}
-  (\bibinfo{year}{2016}).
-\newblock \eprint{1605.02688}.
 
 \bibitem{handberg+lund2014}
 \bibinfo{author}{Handberg, R.} \& \bibinfo{author}{Lund, M.~N.}
@@ -493,27 +408,33 @@
 \newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
   \textbf{\bibinfo{volume}{808}}, \bibinfo{pages}{187} (\bibinfo{year}{2015}).
 
-\bibitem{girardi+2015}
-\bibinfo{author}{Girardi, L.} \emph{et~al.}
-\newblock \bibinfo{title}{The {{Expected Stellar Populations}} in the
-  {{Kepler}} and {{CoRoT Fields}}} \textbf{\bibinfo{volume}{39}},
-  \bibinfo{pages}{125} (\bibinfo{year}{2015}).
+\bibitem{astropycollaboration+2013}
+\bibinfo{author}{{Astropy Collaboration}} \emph{et~al.}
+\newblock \bibinfo{title}{Astropy: {{A}} community {{Python}} package for
+  astronomy}.
+\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
+  \textbf{\bibinfo{volume}{558}}, \bibinfo{pages}{A33} (\bibinfo{year}{2013}).
 
-\bibitem{mathur+2017}
-\bibinfo{author}{Mathur, S.} \emph{et~al.}
-\newblock \bibinfo{title}{Revised {{Stellar Properties}} of {{Kepler Targets}}
-  for the {{Q1}}-17 ({{DR25}}) {{Transit Detection Run}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal Supplement Series}}
-  \textbf{\bibinfo{volume}{229}}, \bibinfo{pages}{30} (\bibinfo{year}{2017}).
+\bibitem{astropycollaboration+2018}
+\bibinfo{author}{{Astropy Collaboration}} \emph{et~al.}
+\newblock \bibinfo{title}{The {{Astropy Project}}: {{Building}} an
+  {{Open}}-science {{Project}} and {{Status}} of the v2.0 {{Core Package}}}.
+\newblock \emph{\bibinfo{journal}{The Astronomical Journal}}
+  \textbf{\bibinfo{volume}{156}}, \bibinfo{pages}{123} (\bibinfo{year}{2018}).
 
-\bibitem{berger+2020}
-\bibinfo{author}{Berger, T.~A.} \emph{et~al.}
-\newblock \bibinfo{title}{The \${{Gaia}}\$-\${{Kepler}}\$ {{Stellar Properties
-  Catalog I}}: {{Homogeneous Fundamental Properties}} for 186,000
-  \${{Kepler}}\$ {{Stars}}}.
-\newblock \emph{\bibinfo{journal}{arXiv:2001.07737 [astro-ph]}}
-  (\bibinfo{year}{2020}).
-\newblock \eprint{2001.07737}.
+\bibitem{ginsburg+2019}
+\bibinfo{author}{Ginsburg, A.} \emph{et~al.}
+\newblock \bibinfo{title}{Astroquery: {{An Astronomical Web}}-querying
+  {{Package}} in {{Python}}}.
+\newblock \emph{\bibinfo{journal}{The Astronomical Journal}}
+  \textbf{\bibinfo{volume}{157}}, \bibinfo{pages}{98} (\bibinfo{year}{2019}).
+
+\bibitem{mckinney2010}
+\bibinfo{author}{McKinney, W.}
+\newblock \bibinfo{title}{Data {{Structures}} for {{Statistical Computing}} in
+  {{Python}}}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 9th {{Python}} in
+  {{Science Conference}}}}, \bibinfo{pages}{51--56} (\bibinfo{year}{2010}).
 
 \bibitem{gaiacollaboration+2018}
 \bibinfo{author}{{Gaia Collaboration}} \emph{et~al.}
@@ -537,6 +458,11 @@
 \newblock \emph{\bibinfo{journal}{Science}} \textbf{\bibinfo{volume}{332}},
   \bibinfo{pages}{213} (\bibinfo{year}{2011}).
 
+\bibitem{seabold+perktold2010}
+\bibinfo{author}{Seabold, S.} \& \bibinfo{author}{Perktold, J.}
+\newblock \bibinfo{title}{Statsmodels: {{Econometric}} and {{Statistical
+  Modeling}} with {{Python}}} \bibinfo{pages}{5} (\bibinfo{year}{2010}).
+
 \bibitem{betancourt+girolami2013}
 \bibinfo{author}{Betancourt, M.~J.} \& \bibinfo{author}{Girolami, M.}
 \newblock \bibinfo{title}{Hamiltonian {{Monte Carlo}} for {{Hierarchical
@@ -545,12 +471,20 @@
   (\bibinfo{year}{2013}).
 \newblock \eprint{1312.0906}.
 
-\bibitem{benomar+2018}
-\bibinfo{author}{Benomar, O.} \emph{et~al.}
-\newblock \bibinfo{title}{Asteroseismic detection of latitudinal differential
-  rotation in 13 {{Sun}}-like stars}.
-\newblock \emph{\bibinfo{journal}{Science}} \textbf{\bibinfo{volume}{361}},
-  \bibinfo{pages}{1231} (\bibinfo{year}{2018}).
+\bibitem{foreman-mackey+2013}
+\bibinfo{author}{{Foreman-Mackey}, D.}, \bibinfo{author}{Hogg, D.~W.},
+  \bibinfo{author}{Lang, D.} \& \bibinfo{author}{Goodman, J.}
+\newblock \bibinfo{title}{Emcee: {{The MCMC Hammer}}}.
+\newblock \emph{\bibinfo{journal}{Publications of the Astronomical Society of
+  the Pacific}} \textbf{\bibinfo{volume}{125}}, \bibinfo{pages}{306--312}
+  (\bibinfo{year}{2013}).
+\newblock \eprint{1202.3665}.
+
+\bibitem{foreman-mackey2016}
+\bibinfo{author}{{Foreman-Mackey}, D.}
+\newblock \bibinfo{title}{Corner.py: {{Scatterplot}} matrices in {{Python}}}.
+\newblock \emph{\bibinfo{journal}{The Journal of Open Source Software}}
+  \textbf{\bibinfo{volume}{1}} (\bibinfo{year}{2016}).
 
 \bibitem{beck2000}
 \bibinfo{author}{Beck, J.~G.}
@@ -577,6 +511,14 @@
   {{Post}}-main-sequence}.
 \newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
   \textbf{\bibinfo{volume}{807}}, \bibinfo{pages}{82} (\bibinfo{year}{2015}).
+
+\bibitem{schofield+2019}
+\bibinfo{author}{Schofield, M.} \emph{et~al.}
+\newblock \bibinfo{title}{The {{Asteroseismic Target List}} for {{Solar}}-like
+  {{Oscillators Observed}} in 2 minute {{Cadence}} with the {{Transiting
+  Exoplanet Survey Satellite}}}.
+\newblock \emph{\bibinfo{journal}{The Astrophysical Journal Supplement Series}}
+  \textbf{\bibinfo{volume}{241}}, \bibinfo{pages}{12} (\bibinfo{year}{2019}).
 
 \bibitem{amard+matt2020}
 \bibinfo{author}{Amard, L.} \& \bibinfo{author}{Matt, S.~P.}
@@ -733,6 +675,15 @@
 \newblock \bibinfo{title}{Modeling of {{Solar Oscillation Power Spectra}}}.
 \newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
   \textbf{\bibinfo{volume}{364}}, \bibinfo{pages}{699} (\bibinfo{year}{1990}).
+
+\bibitem{vanhoey+2013}
+\bibinfo{author}{Van~Hoey, S.}, \bibinfo{author}{{van der Kwast}, J.},
+  \bibinfo{author}{Nopens, I.} \& \bibinfo{author}{Seuntjens, P.}
+\newblock \bibinfo{title}{Python package for model {{STructure ANalysis}}
+  ({{pySTAN}})}.
+\newblock \emph{\bibinfo{journal}{EGU General Assembly Conference Abstracts}}
+  \textbf{\bibinfo{volume}{15}}, \bibinfo{pages}{EGU2013--10059}
+  (\bibinfo{year}{2013}).
 
 \bibitem{ballot+2006}
 \bibinfo{author}{Ballot, J.}, \bibinfo{author}{Garcia, R.~A.} \&
