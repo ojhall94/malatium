@@ -436,6 +436,75 @@
 \newblock In \emph{\bibinfo{booktitle}{Proceedings of the 9th {{Python}} in
   {{Science Conference}}}}, \bibinfo{pages}{51--56} (\bibinfo{year}{2010}).
 
+\bibitem{harvey1985}
+\bibinfo{author}{Harvey, J.}
+\newblock \bibinfo{title}{High-{{Resolution Helioseismology}}}.
+\newblock \emph{\bibinfo{journal}{Future Missions in Solar, Heliospheric \&
+  Space Plasma Physics}} \textbf{\bibinfo{volume}{235}}, \bibinfo{pages}{199}
+  (\bibinfo{year}{1985}).
+
+\bibitem{tassoul1980}
+\bibinfo{author}{Tassoul, M.}
+\newblock \bibinfo{title}{Asymptotic approximations for stellar nonradial
+  pulsations}.
+\newblock \emph{\bibinfo{journal}{The Astrophysical Journal Supplement Series}}
+  \textbf{\bibinfo{volume}{43}}, \bibinfo{pages}{469} (\bibinfo{year}{1980}).
+
+\bibitem{vrard+2016}
+\bibinfo{author}{Vrard, M.}, \bibinfo{author}{Mosser, B.} \&
+  \bibinfo{author}{Samadi, R.}
+\newblock \bibinfo{title}{Period spacings in red giants. {{II}}. {{Automated}}
+  measurement}.
+\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
+  \textbf{\bibinfo{volume}{588}}, \bibinfo{pages}{A87} (\bibinfo{year}{2016}).
+
+\bibitem{mazumdar+2014}
+\bibinfo{author}{Mazumdar, A.} \emph{et~al.}
+\newblock \bibinfo{title}{Measurement of acoustic glitches in solar-type stars
+  from oscillation frequencies observed by {{Kepler}}}.
+\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+  \textbf{\bibinfo{volume}{782}}, \bibinfo{pages}{18} (\bibinfo{year}{2014}).
+\newblock \eprint{1312.4907}.
+
+\bibitem{chaplin+basu2017}
+\bibinfo{author}{Chaplin, W.~J.} \& \bibinfo{author}{Basu}.
+\newblock \emph{\bibinfo{title}{Asteroseismic {{Data Analysis}}:
+  {{Foundations}} and {{Techniques}}}} (\bibinfo{publisher}{{Princeton
+  University Press}}, \bibinfo{address}{{Princeton, New Jersey}},
+  \bibinfo{year}{2017}), \bibinfo{edition}{1st} edn.
+
+\bibitem{vanhoey+2013}
+\bibinfo{author}{Van~Hoey, S.}, \bibinfo{author}{{van der Kwast}, J.},
+  \bibinfo{author}{Nopens, I.} \& \bibinfo{author}{Seuntjens, P.}
+\newblock \bibinfo{title}{Python package for model {{STructure ANalysis}}
+  ({{pySTAN}})}.
+\newblock \emph{\bibinfo{journal}{EGU General Assembly Conference Abstracts}}
+  \textbf{\bibinfo{volume}{15}}, \bibinfo{pages}{EGU2013--10059}
+  (\bibinfo{year}{2013}).
+
+\bibitem{carpenter+2017}
+\bibinfo{author}{Carpenter, B.} \emph{et~al.}
+\newblock \bibinfo{title}{Stan: {{A Probabilistic Programming Language}}}.
+\newblock \emph{\bibinfo{journal}{Journal of Statistical Software}}
+  \textbf{\bibinfo{volume}{76}}, \bibinfo{pages}{1--32} (\bibinfo{year}{2017}).
+
+\bibitem{vanderwalt+2011}
+\bibinfo{author}{{van der Walt}, S.}, \bibinfo{author}{Colbert, S.~C.} \&
+  \bibinfo{author}{Varoquaux, G.}
+\newblock \bibinfo{title}{The {{NumPy Array}}: {{A Structure}} for {{Efficient
+  Numerical Computation}}}.
+\newblock \emph{\bibinfo{journal}{Computing in Science and Engineering}}
+  \textbf{\bibinfo{volume}{13}}, \bibinfo{pages}{22--30}
+  (\bibinfo{year}{2011}).
+
+\bibitem{thetheanodevelopmentteam+2016}
+\bibinfo{author}{{The Theano Development Team}} \emph{et~al.}
+\newblock \bibinfo{title}{Theano: {{A Python}} framework for fast computation
+  of mathematical expressions}.
+\newblock \emph{\bibinfo{journal}{arXiv:1605.02688 [cs]}}
+  (\bibinfo{year}{2016}).
+\newblock \eprint{1605.02688}.
+
 \bibitem{gaiacollaboration+2018}
 \bibinfo{author}{{Gaia Collaboration}} \emph{et~al.}
 \newblock \bibinfo{title}{Gaia {{Data Release}} 2. {{Summary}} of the contents
@@ -571,35 +640,6 @@
   Society}} \textbf{\bibinfo{volume}{456}}, \bibinfo{pages}{119--125}
   (\bibinfo{year}{2016}).
 
-\bibitem{harvey1985}
-\bibinfo{author}{Harvey, J.}
-\newblock \bibinfo{title}{High-{{Resolution Helioseismology}}}.
-\newblock \emph{\bibinfo{journal}{Future Missions in Solar, Heliospheric \&
-  Space Plasma Physics}} \textbf{\bibinfo{volume}{235}}, \bibinfo{pages}{199}
-  (\bibinfo{year}{1985}).
-
-\bibitem{chaplin+basu2017}
-\bibinfo{author}{Chaplin, W.~J.} \& \bibinfo{author}{Basu}.
-\newblock \emph{\bibinfo{title}{Asteroseismic {{Data Analysis}}:
-  {{Foundations}} and {{Techniques}}}} (\bibinfo{publisher}{{Princeton
-  University Press}}, \bibinfo{address}{{Princeton, New Jersey}},
-  \bibinfo{year}{2017}), \bibinfo{edition}{1st} edn.
-
-\bibitem{tassoul1980}
-\bibinfo{author}{Tassoul, M.}
-\newblock \bibinfo{title}{Asymptotic approximations for stellar nonradial
-  pulsations}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal Supplement Series}}
-  \textbf{\bibinfo{volume}{43}}, \bibinfo{pages}{469} (\bibinfo{year}{1980}).
-
-\bibitem{vrard+2016}
-\bibinfo{author}{Vrard, M.}, \bibinfo{author}{Mosser, B.} \&
-  \bibinfo{author}{Samadi, R.}
-\newblock \bibinfo{title}{Period spacings in red giants. {{II}}. {{Automated}}
-  measurement}.
-\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
-  \textbf{\bibinfo{volume}{588}}, \bibinfo{pages}{A87} (\bibinfo{year}{2016}).
-
 \bibitem{hogg2012}
 \bibinfo{author}{Hogg, D.~W.}
 \newblock \bibinfo{title}{Data analysis recipes: {{Probability}} calculus for
@@ -615,14 +655,6 @@
   Society}} \textbf{\bibinfo{volume}{486}}, \bibinfo{pages}{3569--3585}
   (\bibinfo{year}{2019}).
 \newblock \eprint{1904.07919}.
-
-\bibitem{mazumdar+2014}
-\bibinfo{author}{Mazumdar, A.} \emph{et~al.}
-\newblock \bibinfo{title}{Measurement of acoustic glitches in solar-type stars
-  from oscillation frequencies observed by {{Kepler}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
-  \textbf{\bibinfo{volume}{782}}, \bibinfo{pages}{18} (\bibinfo{year}{2014}).
-\newblock \eprint{1312.4907}.
 
 \bibitem{davies+2014}
 \bibinfo{author}{Davies, G.~R.}, \bibinfo{author}{Chaplin, W.~J.},
@@ -675,15 +707,6 @@
 \newblock \bibinfo{title}{Modeling of {{Solar Oscillation Power Spectra}}}.
 \newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
   \textbf{\bibinfo{volume}{364}}, \bibinfo{pages}{699} (\bibinfo{year}{1990}).
-
-\bibitem{vanhoey+2013}
-\bibinfo{author}{Van~Hoey, S.}, \bibinfo{author}{{van der Kwast}, J.},
-  \bibinfo{author}{Nopens, I.} \& \bibinfo{author}{Seuntjens, P.}
-\newblock \bibinfo{title}{Python package for model {{STructure ANalysis}}
-  ({{pySTAN}})}.
-\newblock \emph{\bibinfo{journal}{EGU General Assembly Conference Abstracts}}
-  \textbf{\bibinfo{volume}{15}}, \bibinfo{pages}{EGU2013--10059}
-  (\bibinfo{year}{2013}).
 
 \bibitem{ballot+2006}
 \bibinfo{author}{Ballot, J.}, \bibinfo{author}{Garcia, R.~A.} \&

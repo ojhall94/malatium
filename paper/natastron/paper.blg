@@ -8,45 +8,45 @@ Warning--I didn't find a database entry for "["
 Warning--empty journal in dejong+2014
 Warning--empty journal in dalton+2014
 Warning--empty journal in seabold+perktold2010
-You've used 90 entries,
+You've used 93 entries,
             2348 wiz_defined-function locations,
-            1478 strings with 41424 characters,
-and the built_in function-call counts, 34378 in all, are:
-= -- 2376
-> -- 840
+            1493 strings with 44440 characters,
+and the built_in function-call counts, 35464 in all, are:
+= -- 2453
+> -- 868
 < -- 0
-+ -- 420
-- -- 210
-* -- 4216
-:= -- 3826
-add.period$ -- 280
-call.type$ -- 90
-change.case$ -- 91
++ -- 434
+- -- 217
+* -- 4350
+:= -- 3951
+add.period$ -- 290
+call.type$ -- 93
+change.case$ -- 94
 chr.to.int$ -- 0
-cite$ -- 93
-duplicate$ -- 3291
-empty$ -- 3174
-format.name$ -- 286
-if$ -- 6917
+cite$ -- 96
+duplicate$ -- 3395
+empty$ -- 3273
+format.name$ -- 296
+if$ -- 7130
 int.to.chr$ -- 0
-int.to.str$ -- 90
-missing$ -- 736
-newline$ -- 468
-num.names$ -- 90
-pop$ -- 496
+int.to.str$ -- 93
+missing$ -- 759
+newline$ -- 484
+num.names$ -- 93
+pop$ -- 513
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 640
+skip$ -- 656
 stack$ -- 0
-substring$ -- 1200
-swap$ -- 3251
+substring$ -- 1235
+swap$ -- 3350
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 3
-while$ -- 190
-width$ -- 92
-write$ -- 1011
+while$ -- 197
+width$ -- 95
+write$ -- 1045
 (There were 5 warnings)
