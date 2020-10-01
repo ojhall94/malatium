@@ -1,7 +1,44 @@
-\clearpage
-\section*{Supplementary Information}
+\documentclass[12pt]{article}
+\setlength{\textwidth}{167mm}
+\setlength{\headsep}{0mm}
+\setlength{\headheight}{0mm}
+\setlength{\textheight}{230mm}
+\setlength{\oddsidemargin}{1.6mm}
+\setlength{\evensidemargin}{1.6mm}
+\setlength{\topmargin}{4.6mm}
 
-\section*{Asteroseismic Model}\label{s:seismo}
+\usepackage{chngcntr}
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage{amsmath}	% Advanced maths commands
+\usepackage{amssymb}	% Extra maths symbols
+\usepackage[ ]{hyperref}
+\graphicspath{{Images/}}
+%\usepackage[symbol]{footmisc}
+
+
+% Astronomical abbreviations (thanks to Dan Huber)
+\newcommand{\numax}{\mbox{$\nu_{\rm max}$}\xspace}
+\newcommand{\dnu}{\mbox{$\Delta \nu$}\xspace}
+\newcommand{\muHz}{\mbox{$\mu$Hz}\xspace}
+\newcommand{\teff}{\mbox{$T_{\rm eff}$}\xspace}
+\newcommand{\logg}{\mbox{$\log(g)$}\xspace}
+\newcommand{\feh}{\mbox{$\rm{[Fe/H]}$}\xspace}
+\newcommand{\msun}{\mbox{$\mathrm{M}_{\odot}$}\xspace}
+\newcommand{\lsun}{\mbox{$\mathrm{L}_{\odot}$}\xspace}
+\newcommand{\mearth}{\mbox{$\mathrm{M}_{\oplus}$}\xspace}
+\newcommand{\rsun}{\mbox{$\mathrm{R}_{\odot}$}\xspace}
+\newcommand{\kepler}{\emph{Kepler}\xspace}
+\newcommand{\tess}{\emph{TESS}\xspace}
+\newcommand{\ktwo}{K2\xspace}
+\newcommand{\gaia}{\emph{Gaia}\xspace}
+
+\begin{document}
+
+\section*{\underline{Supplementary Information}}
+\tableofcontents
+
+\section{Asteroseismic Model}\label{s:seismo}
 In order to extract signatures of stellar rotation from the asteroseismic p mode frequencies, we built a model that simultaneously treats the convective background ($B(\nu)$), the oscillations ($O(\nu)$), and the white noise ($W$), where $\nu$ is frequency \cite{davies+2015}. Our data, observed with \kepler, are also subject to the apodization (attenuation) of signals in the frequency-domain, where we fit our model \cite{chaplin+2011}. The apodization in power is given by
 
 \begin{equation}\label{eq:apodization}
@@ -13,7 +50,7 @@ where $\nu_{\rm nyq}$ is the Nyquist frequency for the \kepler short cadence, wh
 	M(\nu) = W + \eta^2(\nu)[O(\nu) + B(\nu)]\, .
 \end{equation}
 
-\subsection*{Convective Background ($B(\nu)$)}
+\subsection{Convective Background ($B(\nu)$)}
 To model the convective background we used three Harvey components \cite{harvey1985}, which express the background in power as Lorentzian-like functions centered on zero frequency. The Harvey components take the form 
 
 \begin{equation}
@@ -28,7 +65,7 @@ To model the convective background we used three Harvey components \cite{harvey1
 
 \noindent where we have labeled parameters for the separate components. The $x = 2$ term here contributes to the background at high frequencies, whereas the $x=4$ terms contribute the background at low frequencies.
 
-\subsection*{Modes of Oscillation ($O(\nu)$)}
+\subsection{Modes of Oscillation ($O(\nu)$)}
 Modes of oscillation appear in the power spectrum as Lorentzian peaks \cite{chaplin+basu2017}. These peaks can be described by three values: the radial order ($n$, the overtone number of the oscillation), the angular degree ($\ell$) and the azimuthal order ($m$). Due to stellar rotation, each mode with an angular degree of $\ell > 0$ is split into its $(2\ell +1)$ Lorentzian components, labeled by $m$. For all $\ell=(0,1,2)$ modes identified for our targets in the  `Kages'  and LEGACY studies \cite{davies+2016,lund+2017} we add a (set of) Lorentzian(s) to our model, building a composite model representing all visible modes. The construction of our oscillation model takes the form
 
 \begin{equation}
@@ -37,7 +74,7 @@ Modes of oscillation appear in the power spectrum as Lorentzian peaks \cite{chap
 
 \noindent where $H_{n,\ell,m}$ is the height of the mode, $\Gamma_{n,\ell}$ is the linewidth of the mode (approximated to be equal for all split azimuthal orders at a single $n$ and $\ell$) and $\nu_{n, \ell, m}$ is the frequency of the mode. The range of $n$ differs per star depending on how many radial orders were reported in LEGACY or Kages, and the range of $\ell$ depends on how many angular degrees were reported for the corresponding radial order.
 
-\subsubsection*{Mode Frequencies and Rotational Splitting ($\nu_{n,\ell,m}$)}\label{ssec:frequencies}
+\subsubsection{Mode Frequencies and Rotational Splitting ($\nu_{n,\ell,m}$)}\label{ssec:frequencies}
 The mode frequencies of main sequence stars are described by the asymptotic expression \cite{tassoul1980, vrard+2016}. The asymptotic expression defines the locations of the modes as regularly spaced, with structured deviation around \numax, the frequency of maximum oscillation amplitude. The expression takes the form
 
 \begin{equation}\label{eq:asymptotic}
@@ -58,7 +95,7 @@ The mode frequency latent parameters were drawn from a normal distribution using
 
 \noindent where the expression $\nu_{n, \ell, m}$ on the right hand side represents the contents of Equation \ref{eq:asymptotic}, and $\mathcal{N}$ represents a normal distribution with a mean equal to $\nu_{n, \ell, m}$ and a standard deviation equal to $\sigma_{\ell}$. The symbol `$\sim$' indicates that the parameters on the left hand side of the equation are drawn from the probability distribution on the right hand side. This notation will be used throughout this work.
 
-\subsubsection*{Mode Linewidth ($\Gamma_{n,\ell}$)}
+\subsubsection{Mode Linewidth ($\Gamma_{n,\ell}$)}
 The linewidths of asteroseismic p modes vary roughly as a function of mode frequency, and do so slowly relative to \dnu. This can be expressed as an empirical relation \cite{davies+2014, appourchaux+2016, lund+2017}. However, this relation has six free parameters, none of which are directly relevant to this work. Instead of fitting this relation, we chose to employ a more flexible Gaussian Process \cite[GP]{rasmussen+williams2006} to act as a prior on the linewidths. This can be considered as us modelling the linewidths as correlated measurements, effectively loosely constraining how linewidth varies with frequency.
 
 A GP is defined by a covariance kernel (describing the degree of correlation between linewidths) and a mean function (describing a global trend with frequency). As this approach describes the mode linewidths relative to one another in frequency, the radial orders of each target $n$ were rescaled to be between 0 (for the lowest $n$) and 1 (for the highest $n$)\footnote{The radial orders of $\ell = 2$ modes were increased by $1$ to ensure this approximation applied to all modes.}. This approximation was used to describe the change in linewidth as a function of frequency without depending on the exact frequencies of the modes, which themselves were free parameters (see above). Given this, we defined our GP covariance kernel as a Squared Exponential Kernel to capture the slight periodicity of linewidth with frequency, as
@@ -82,7 +119,7 @@ where $m$ and $c$ are the slope and intercept of the line. The linewidth latent 
 
 \noindent where $\Gamma$ represents the linewidths of all the modes in the model. The parameters $m$, $c$ and $\rho$ were marginalised over, whereas $L$ was fixed to a pre-determined value.
 
-\subsubsection*{Mode Heights and Angle of Inclination ($H_{n,\ell,m}$)}
+\subsubsection{Mode Heights and Angle of Inclination ($H_{n,\ell,m}$)}
 The height in power of each mode, $H_{n, \ell, m}$, varies not only as a function of distance in frequency from \numax, but also due to observation conditions, such as inclination angle and passband. In our model, we treated $H_{n, \ell, m}$ as a deterministic parameter, as
 
 \begin{equation}\label{eq:height}
@@ -127,7 +164,7 @@ The angle of inclination of a star with respect to Earth changes the net perturb
 
 \noindent where the sum of available components for a single $\ell$ are normalized to one.
 
-\subsection*{Likelihood Function for $M(\nu)$}\label{sec:like}
+\subsection{Likelihood Function for $M(\nu)$}\label{sec:like}
 If data have Gaussian noise in the time domain, they will appear in the frequency domain with noise following a $\chi^2$ distribution with two degrees of freedom \cite[$\chi^2_2$ hereafter]{woodard1984}. The noise properties of $\chi^2_2$ distributed data are multiplicative, and require a specific treatment when fitting a model. As our frequency bins can be approximated to be independent, we used the likelihood function \cite{anderson+1990},
 
 \begin{equation}
@@ -136,8 +173,8 @@ If data have Gaussian noise in the time domain, they will appear in the frequenc
 
 \noindent where $\mathcal{P}$ is the power spectral density (and thus our data), and $M(\nu)$ represents our model. The subscript $j$ denotes an individual datum, for a total of $N$ data. We have omitted the dependence of the model $M(\nu)$ on its parameters, for clarity. This equation is functionally equivalent to the evaluation of a gamma distribution of the form $\gamma(\mathcal{P} | 1, \beta)$, where $\beta = 1/M(\nu)$, which is the implementation we used in the sampling process.
 
-\subsection*{Model preparation and hyperparameter priors}
-\subsubsection*{Fitting the convective background}\label{sec:background}
+\subsection{Model preparation and hyperparameter priors}
+\subsubsection{Fitting the convective background}\label{sec:background}
 Fitting the convective background, apodization and white noise component must be done for the full range of the power spectrum in order to be accurately constrained. However, fitting a single model to the full range of frequencies is computationally inefficient when we are interested in the modes of oscillation, as these occupy a relatively small range of frequencies.
 
 In order to speed up this process, the background was first fit independently to a subset of our data for each star. This subset was created by removing all frequencies within a range $0.1 \times \dnu$ below and above the minimum and maximum mode frequencies reported in LEGACY and Kages. For KIC 3427720 we also removed frequencies in the range $90\, \mu\rm{Hz} < \nu < 400\, \mu{\rm{Hz}}$, where there were large peaks not of asteroseismic origin, skewing the background fit.
@@ -150,7 +187,7 @@ For each star the model function (see Eq. \ref{eq:model}) was fit, as
 
 \noindent where $B(\nu)$ is the background model described in Equation \ref{eq:background}. The parameter components of our background fit are then $\phi_B = \{\log(a), \log(b), \log(c), \log(d), \log(j), \log(k), W, \nu_{\rm nyq}\}$, where the parameters of the Harvey components were sampled in log space. The model was fit to the background data using \texttt{PyStan} \cite{vanhoey+2013}, run for 10,000 iterations on each star. 
 
-\subsubsection*{Obtaining First Guesses and Prior Values}
+\subsubsection{Obtaining First Guesses and Prior Values}
 In order to utilise some of the prior measurements of our targets without using them as hard constraints on our parameters, some of our model equations were fit to LEGACY and `Kages' data to obtain first guesses and mean values on hyperparameter priors.
 
 For first guesses for parameters in the asymptotic expression, we fit Equation \ref{eq:asymptotic}, \textit{not} including the rotational component $m\nu_s$, to the $\ell = (0, 1, 2)$ mode frequencies reported in LEGACY and `Kages' for each star, using their reported uncertainties. This yielded estimates of $\hat{\epsilon}$, $\widehat{\delta\nu}_{01}$, $\widehat{\delta\nu}_{02}$ and $\hat{\alpha}$, where the hat symbol `\, $\widehat{}$\, ' indicates a prior value (e.g. $\hat{\nu}_{\rm max}$ is taken from LEGACY or `Kages'). While not precise, as we did not mitigate any perturbations due to acoustic glitches, these rough results act as functional first guesses and prior mean values. The relation was fit to each star using PyMC3 \cite{salvatier+2016} using 5000 iterations on 4 chains.
@@ -167,7 +204,7 @@ Finally, we obtained prior values for the Gaussian function describing the distr
 
 \noindent For the mode visibilities, we used $\hat{V}_1 = 1.2$ and $\hat{V}_2 = 0.7$, which reflect the results for these parameters reported in the LEGACY catalogue.
 
-\subsubsection*{Priors on our Hyperparameters}
+\subsubsection{Priors on our Hyperparameters}
 Given our first guesses and measured prior values, we can define the prior probabilities of the hyperparameters on which our model depends. For the mode frequency hyperparameters (Eq. \ref{eq:asymptotic}), these are
 
 \begin{equation}
@@ -228,7 +265,15 @@ Finally, we defined the priors on the rotational parameters: the mode splitting 
 \end{equation}
 which is equivalent to stating that probability to observe an inclination angle $i$ is equal to $\sin(i)$. Here, the $\mathcal{U}(0,1)$ indicates a uniform prior between 0 and 1. Using a uniform prior on $\cos(i)$ allowed us to account for the geometric effect that stars with a large inclination angle with respect to us are more common \cite{chaplin+basu2017}.
 
-\subsection*{Fitting procedure}
+ \begin{figure*}
+	\centering
+	\includegraphics[width=.99\textwidth]{Images/modelfit.pdf}
+	\caption{A power spectrum constructed from four years of \kepler observations of 16 Cyg A (KIC 12069424). Plotted over the top is the model resulting from the fit to the data described in this work. The model implements both the mode frequencies, seen on the right hand side of the plot, and the convective background, the effects of which are seen on the left. Low frequencies have been cropped out for clarity. \textit{Inset}: A zoom in on a radial (right) and quadrupole (left) ($\ell = 0, 2$) pair of modes. The quadrupole mode is split into five components by the star's rotation. Due to the star's inclination angle with respect to us, two out of five peaks are more distinct. The height and spacing of the mode components is a function of the star's rotational splitting ($0.56\, \mu\rm{Hz}$, equivalent to $P = 20.5\, \rm{days}$) and angle of inclination ($45^\circ$).}
+	\label{fig:modelfit}
+\end{figure*}
+
+
+\subsection{Fitting procedure}
 Using our prior information and model described above, we fit Equation \ref{eq:model} to our data $\mathcal{P}$, using the likelihood function described in Section \ref{sec:like}.
 
 In order to speed up the fitting process, we only applied our model to the region of the power spectrum that contains visible modes of oscillation. We created this subset by removing all frequencies outside a range $0.25 \times \Delta\nu$ below and above the minimum and maximum mode frequencies reported in LEGACY and Kages. This region overlaps minimally with the data used to fit for our prior information of the convective background (see Section \ref{sec:background}), so that both model fits are independent.
@@ -237,9 +282,8 @@ To improve computational efficiency, we reduced the number of oscillation modes 
 
 We fit our model to our power spectrum data with \texttt{PyMC3}, using 2500 iterations each on 4 chains. An example of our model fit to an asteroseismic power spectrum of 16 Cyg A is shown in Figure \ref{fig:modelfit}.
 
- \begin{figure*}
-	\centering
-	\includegraphics[width=.99\textwidth]{Images/modelfit.pdf}
-	\caption{A power spectrum constructed from four years of \kepler observations of 16 Cyg A (KIC 12069424). Plotted over the top is the model resulting from the fit to the data described in this work. The model implements both the mode frequencies, seen on the right hand side of the plot, and the convective background, the effects of which are seen on the left. Low frequencies have been cropped out for clarity. \textit{Inset}: A zoom in on a radial (right) and quadrupole (left) ($\ell = 0, 2$) pair of modes. The quadrupole mode is split into five components by the star's rotation. Due to the star's inclination angle with respect to us, two out of five peaks are more distinct. The height and spacing of the mode components is a function of the star's rotational splitting ($0.56\, \mu\rm{Hz}$, equivalent to $P = 20.5\, \rm{days}$) and angle of inclination ($45^\circ$).}
-	\label{fig:modelfit}
-\end{figure*}
+
+\bibliographystyle{naturemag}
+\bibliography{library.bib} %
+
+\end{document}

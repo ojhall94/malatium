@@ -14,7 +14,7 @@
 \usepackage{amssymb}	% Extra maths symbols
 \usepackage[ ]{hyperref}
 \graphicspath{{Images/}}
-\usepackage[symbol]{footmisc}
+%\usepackage[symbol]{footmisc}
 
 
 % Astronomical abbreviations (thanks to Dan Huber)
@@ -88,7 +88,7 @@ The mechanism by which weakened magnetic braking occurs has since been the subje
 
 Determining whether weakened magnetic braking is a true phenomenon or a bias in star-spot observations requires new data, which can be provided by asteroseismology. A star's rotation causes modes of oscillation to split into multiplets, making it possible to obtain an independent rate of rotation by measuring the splitting between oscillation frequencies \cite{ledoux1951}. Asteroseismic rotation is more difficult to obtain than spot rotation, but does not require spots to be visible, meaning that we can measure rotation for older, quiescent stars that would not have been present in existing rotation catalogues. This makes asteroseismic rotation rates the perfect avenue to explore whether weakened magnetic braking truly takes place on the main sequence. Here, we measured asteroseismic rotation rates of 91 main sequence stars across a broad range of  ages, and evaluated this new ensemble to determine whether it agrees more closely with a classical rotational evolution scenario, or one where weakened magnetic braking takes place.\\
 
-\textbf{Asteroseismic main sequence targets:} In order to obtain robust asteroseismic rotation rates, we required detections of multiples of both dipole (denoted as $\ell = 1$) and quadrupole ($\ell = 2$) oscillations for each star, of which the latter have significantly lower signal-to noise. Radial oscillations ($\ell = 0$), which are also visible, do not split. In this work, we studied a sample of 95 of the highest signal-to-noise targets observed by \textit{Kepler}, combining the `Kages' \cite{silvaaguirre+2015,davies+2016} and LEGACY \cite{lund+2017, silvaaguirre+2017} catalogues\footnote{For these catalogues the mode extraction through frequency fitting \cite{davies+2016, lund+2017} and modelling using mode frequencies to obtain stellar parameters \cite{silvaaguirre+2015, silvaaguirre+2017} are covered in separate papers.}. Further details on these data can be found in \textbf{Methods}. 
+\textbf{Asteroseismic main sequence targets:} In order to obtain robust asteroseismic rotation rates, we required detections of multiples of both dipole (denoted as $\ell = 1$) and quadrupole ($\ell = 2$) p mode\footnote{\textit{Pressure} modes, the visible type of oscillation in main sequence stars} oscillations for each star, of which the latter have significantly lower signal-to noise. Radial oscillations ($\ell = 0$), which are also visible, do not split. In this work, we studied a sample of 95 of the highest signal-to-noise targets observed by \textit{Kepler}, combining the `Kages' \cite{silvaaguirre+2015,davies+2016} and LEGACY \cite{lund+2017, silvaaguirre+2017} catalogues\footnote{For these catalogues the mode extraction through frequency fitting \cite{davies+2016, lund+2017} and modelling using mode frequencies to obtain stellar parameters \cite{silvaaguirre+2015, silvaaguirre+2017} are covered in separate papers.}. Further details on these data can be found in \textbf{Methods}. 
 
 We separated our sample into three categories \cite{garcia+2014}: 64 main sequence stars (MS, $\rm{log(g)} > 4.0\, \rm dex$, $T_{\rm eff} < 6250\, \rm K$); 4 potential sub-giant stars (SG, $\rm{log(g)} < 4.0\, \rm dex$, $T_{\rm eff} < 6250\, \rm K$), which may have begun to evolve off the main sequence, complicating their rotational history\footnote{It should be noted that none of these stars have identified mixed dipole modes, which indicate an evolved structure (see \cite{bedding+2010}).}; and 24 `hot' stars (H, $T_{\rm eff} > 6250\, \rm K$), which lie above the Kraft break, the point at which convective envelopes are tenuous, and angular momentum loss through magnetic winds becomes inefficient \cite{kraft1967}. Our conclusions are largely insensitive to these categorical assignments, and they are intended solely to help explore results category-by-category. The sample, which can be seen in Figure \ref{fig:sample}, spans surface gravities of $3.8\, \rm{dex} < \rm{log(g)} < 4.6\, \rm{dex}$, temperatures of $5000\, \textrm{K} < T_{\rm eff} <  6700\, \rm{K}$, and ages from $1$ to $\sim 13\, \rm{Gyr}$.\\
 
@@ -198,12 +198,12 @@ This paper includes data collected by the Kepler mission and obtained from the M
 
 \input{methods.tex}
 
-\input{si.tex}
+\bibliographystyle{naturemag}
+\bibliography{library.bib} %
+
 
 \input{ed.tex}
 
-\bibliographystyle{naturemag}
-\bibliography{library.bib} %
 
 
 \end{document}
