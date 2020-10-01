@@ -13,14 +13,3 @@
 \contentsline {subsection}{\numberline {4.1}Limits of our stellar models}{21}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Systematic uncertainties from asteroseismology}{22}{subsection.4.2}%
 \contentsline {subsection}{\numberline {4.3}Binaries and Planet Hosts}{22}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Asteroseismic Model}{23}{subsection.4.4}%
-\contentsline {subsubsection}{\numberline {4.4.1}Convective Background}{23}{subsubsection.4.4.1}%
-\contentsline {subsubsection}{\numberline {4.4.2}Modes of Oscillation}{23}{subsubsection.4.4.2}%
-\contentsline {subsubsection}{\numberline {4.4.3}Mode Frequencies and Rotational Splitting}{24}{subsubsection.4.4.3}%
-\contentsline {subsubsection}{\numberline {4.4.4}Mode Linewidth}{25}{subsubsection.4.4.4}%
-\contentsline {subsubsection}{\numberline {4.4.5}Mode Heights and Angle of Inclination}{25}{subsubsection.4.4.5}%
-\contentsline {subsubsection}{\numberline {4.4.6}Likelihood Function}{26}{subsubsection.4.4.6}%
-\contentsline {subsubsection}{\numberline {4.4.7}Fitting the convective background}{27}{subsubsection.4.4.7}%
-\contentsline {subsubsection}{\numberline {4.4.8}Obtaining First Guesses and Prior Values}{27}{subsubsection.4.4.8}%
-\contentsline {subsubsection}{\numberline {4.4.9}Priors on our Hyperparameters}{28}{subsubsection.4.4.9}%
-\contentsline {subsubsection}{\numberline {4.4.10}Fitting procedure}{29}{subsubsection.4.4.10}%

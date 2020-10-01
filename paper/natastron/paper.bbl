@@ -458,6 +458,22 @@
 \newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
   \textbf{\bibinfo{volume}{588}}, \bibinfo{pages}{A87} (\bibinfo{year}{2016}).
 
+\bibitem{hogg+2010}
+\bibinfo{author}{Hogg, D.~W.}, \bibinfo{author}{Bovy, J.} \&
+  \bibinfo{author}{Lang, D.}
+\newblock \bibinfo{title}{Data analysis recipes: {{Fitting}} a model to data}.
+\newblock \emph{\bibinfo{journal}{ArXiv e-prints}}
+  \bibinfo{pages}{arXiv:1008.4686} (\bibinfo{year}{2010}).
+
+\bibitem{hall+2019}
+\bibinfo{author}{Hall, O.~J.} \emph{et~al.}
+\newblock \bibinfo{title}{Testing asteroseismology with {{Gaia DR2}}:
+  {{Hierarchical}} models of the {{Red Clump}}}.
+\newblock \emph{\bibinfo{journal}{Monthly Notices of the Royal Astronomical
+  Society}} \textbf{\bibinfo{volume}{486}}, \bibinfo{pages}{3569--3585}
+  (\bibinfo{year}{2019}).
+\newblock \eprint{1904.07919}.
+
 \bibitem{mazumdar+2014}
 \bibinfo{author}{Mazumdar, A.} \emph{et~al.}
 \newblock \bibinfo{title}{Measurement of acoustic glitches in solar-type stars
@@ -647,15 +663,6 @@
 \newblock \emph{\bibinfo{journal}{arXiv e-prints}}
   \bibinfo{pages}{arXiv:1205.4446} (\bibinfo{year}{2012}).
 
-\bibitem{hall+2019}
-\bibinfo{author}{Hall, O.~J.} \emph{et~al.}
-\newblock \bibinfo{title}{Testing asteroseismology with {{Gaia DR2}}:
-  {{Hierarchical}} models of the {{Red Clump}}}.
-\newblock \emph{\bibinfo{journal}{Monthly Notices of the Royal Astronomical
-  Society}} \textbf{\bibinfo{volume}{486}}, \bibinfo{pages}{3569--3585}
-  (\bibinfo{year}{2019}).
-\newblock \eprint{1904.07919}.
-
 \bibitem{davies+2014}
 \bibinfo{author}{Davies, G.~R.}, \bibinfo{author}{Chaplin, W.~J.},
   \bibinfo{author}{Elsworth, Y.} \& \bibinfo{author}{Hale, S.~J.}
@@ -701,12 +708,26 @@
 \newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
   \textbf{\bibinfo{volume}{527}}, \bibinfo{pages}{A56} (\bibinfo{year}{2011}).
 
+\bibitem{woodard1984}
+\bibinfo{author}{Woodard, M.~F.}
+\newblock \emph{\bibinfo{title}{Short-{{Period Oscillations}} in the {{Total
+  Solar Irradiance}}.}}
+\newblock Ph.D. thesis (\bibinfo{year}{1984}).
+
 \bibitem{anderson+1990}
 \bibinfo{author}{Anderson, E.~R.}, \bibinfo{author}{Duvall, T.~L.} \&
   \bibinfo{author}{Jefferies, S.~M.}
 \newblock \bibinfo{title}{Modeling of {{Solar Oscillation Power Spectra}}}.
 \newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
   \textbf{\bibinfo{volume}{364}}, \bibinfo{pages}{699} (\bibinfo{year}{1990}).
+
+\bibitem{gelman2006}
+\bibinfo{author}{Gelman, A.}
+\newblock \bibinfo{title}{Prior distributions for variance parameters in
+  hierarchical models (comment on article by {{Browne}} and {{Draper}})}.
+\newblock \emph{\bibinfo{journal}{Bayesian Analysis}}
+  \textbf{\bibinfo{volume}{1}}, \bibinfo{pages}{515--534}
+  (\bibinfo{year}{2006}).
 
 \bibitem{ballot+2006}
 \bibinfo{author}{Ballot, J.}, \bibinfo{author}{Garcia, R.~A.} \&

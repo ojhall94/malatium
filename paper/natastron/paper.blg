@@ -4,49 +4,49 @@ The top-level auxiliary file: paper.aux
 The style file: naturemag.bst
 Database file #1: library.bib
 Warning--I didn't find a database entry for "mathur+2019"
-Warning--I didn't find a database entry for "["
 Warning--empty journal in dejong+2014
 Warning--empty journal in dalton+2014
 Warning--empty journal in seabold+perktold2010
-You've used 93 entries,
+Warning--missing school in woodard1984
+You've used 96 entries,
             2348 wiz_defined-function locations,
-            1493 strings with 44440 characters,
-and the built_in function-call counts, 35464 in all, are:
-= -- 2453
-> -- 868
+            1508 strings with 44883 characters,
+and the built_in function-call counts, 36688 in all, are:
+= -- 2561
+> -- 888
 < -- 0
-+ -- 434
-- -- 217
-* -- 4350
-:= -- 3951
-add.period$ -- 290
-call.type$ -- 93
-change.case$ -- 94
++ -- 444
+- -- 222
+* -- 4452
+:= -- 4075
+add.period$ -- 299
+call.type$ -- 96
+change.case$ -- 96
 chr.to.int$ -- 0
-cite$ -- 96
-duplicate$ -- 3395
-empty$ -- 3273
-format.name$ -- 296
-if$ -- 7130
+cite$ -- 100
+duplicate$ -- 3518
+empty$ -- 3376
+format.name$ -- 302
+if$ -- 7404
 int.to.chr$ -- 0
-int.to.str$ -- 93
-missing$ -- 759
-newline$ -- 484
-num.names$ -- 93
-pop$ -- 513
+int.to.str$ -- 96
+missing$ -- 779
+newline$ -- 499
+num.names$ -- 96
+pop$ -- 536
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 656
+skip$ -- 714
 stack$ -- 0
-substring$ -- 1235
-swap$ -- 3350
+substring$ -- 1290
+swap$ -- 3462
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 3
-while$ -- 197
-width$ -- 95
-write$ -- 1045
+warning$ -- 4
+while$ -- 203
+width$ -- 98
+write$ -- 1077
 (There were 5 warnings)
