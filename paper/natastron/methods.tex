@@ -1,0 +1,209 @@
+%\documentclass[12pt]{article}
+%\setlength{\textwidth}{167mm}
+%\setlength{\headsep}{0mm}
+%\setlength{\headheight}{0mm}
+%\setlength{\textheight}{230mm}
+%\setlength{\oddsidemargin}{1.6mm}
+%\setlength{\evensidemargin}{1.6mm}
+%\setlength{\topmargin}{4.6mm}
+%
+%\usepackage{chngcntr}
+%\usepackage{xspace}
+%\usepackage{graphicx}
+%\usepackage{amsmath}	% Advanced maths commands
+%\usepackage{amssymb}	% Extra maths symbols
+%\usepackage[ ]{hyperref}
+%\graphicspath{{Images/}}
+%%\usepackage[symbol]{footmisc}
+%
+%
+%% Astronomical abbreviations (thanks to Dan Huber)
+%\newcommand{\numax}{\mbox{$\nu_{\rm max}$}\xspace}
+%\newcommand{\dnu}{\mbox{$\Delta \nu$}\xspace}
+%\newcommand{\muHz}{\mbox{$\mu$Hz}\xspace}
+%\newcommand{\teff}{\mbox{$T_{\rm eff}$}\xspace}
+%\newcommand{\logg}{\mbox{$\log(g)$}\xspace}
+%\newcommand{\feh}{\mbox{$\rm{[Fe/H]}$}\xspace}
+%\newcommand{\msun}{\mbox{$\mathrm{M}_{\odot}$}\xspace}
+%\newcommand{\lsun}{\mbox{$\mathrm{L}_{\odot}$}\xspace}
+%\newcommand{\mearth}{\mbox{$\mathrm{M}_{\oplus}$}\xspace}
+%\newcommand{\rsun}{\mbox{$\mathrm{R}_{\odot}$}\xspace}
+%\newcommand{\kepler}{\emph{Kepler}\xspace}
+%\newcommand{\tess}{\emph{TESS}\xspace}
+%\newcommand{\ktwo}{K2\xspace}
+%\newcommand{\gaia}{\emph{Gaia}\xspace}
+%
+%\begin{document}
+
+\section*{\underline{Methods}}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\section{Asteroseismic Methods}
+\subsection{Asteroseismic Data}
+For our asteroseismic power spectrum data we used the unweighted power spectra from the KASOC pipeline \cite{m_handberg+lund2014}\footnote{Obtainable from the \href{http://kasoc.phys.au.dk/}{KASOC} webpage.}. We did not apply any additional treatment to these data. For 16 Cyg A \& B (KIC 12069424 and KIC 12069449) we used the KEPSEISMIC lightcurves \cite{m_garcia+2011}\footnote{Obtainable from \href{https://archive.
+		stsci.edu/prepds/kepseismic/}{MAST}.}, which have significantly better signal-to-noise for these two stars.
+
+For our asteroseismic ages, we used the ages obtained by \texttt{BASTA} \cite[BAyesian STellar Algorithm]{m_silvaaguirre+2015} in the `Kages' and LEGACY catalogues. These ages have been obtained by comparisons of measured oscillation properties to stellar models, accounting for an expanded range of metallicities. \texttt{BASTA} is thoroughly compared to four other seismic modelling techniques in \cite{m_silvaaguirre+2017}. While uncertainties found through \texttt{BASTA} are typically higher than for other techniques, only \texttt{BASTA} and \texttt{ASTFIT} \cite[Aarhus STellar Evolution Code]{m_christensen-dalsgaard2008} recover the radius, mass and age of the Sun, when applied to solar data. Although the uncertainties on \texttt{ASTFIT} ages are overall lower, they are not published for the `Kages' sample. In order to maintain an internally consistent stellar age sample, we used age results from \texttt{BASTA} for both the `Kages' and LEGACY samples.
+
+For our stellar masses we used asteroseismic model masses obtained by \texttt{BASTA} reported in `Kages' and LEGACY, in order to maintain internal consistency with the age measurements. We note that age and mass posteriors from \texttt{BASTA} are correlated, but chose not to account for the unpublished correlations in this work.
+
+As described in the catalogue papers, for `Kages' stars atmospheric properties (\teff and \feh) were measured through high-resolution spectroscopy \cite{m_huber+2013a}. For LEGACY stars, atmospheric properties were similarly taken from one study \cite{m_buchhave+latham2015} for most stars in the catalogue, and complemented by other values from the literature for the remaining stars \cite[see Table 3]{m_silvaaguirre+2017}.
+
+Other asteroseismic properties used in this study, such as those used as first guesses on the free parameters in our asteroseismic model, were taken from the `Kages' and LEGACY catalogues \cite{m_astropycollaboration+2013, m_astropycollaboration+2018, m_ginsburg+2019}. In cases where both catalogues contained the same target, we used the stellar parameters reported in LEGACY \cite{m_mckinney2010}. This is also the case for the masses and ages described above.
+
+\subsection{Mode Frequency Fitting}
+
+In order to extract signatures of stellar rotation from the asteroseismic mode frequencies, we built a model that simultaneously treats the convective background, modes of oscillation, and white noise, while accounting for rotational splitting. The foundations of this approach follows best-practices in asteroseismology \cite{m_davies+2015}, fitting Harvey profiles for the background \cite{m_harvey1985}, and expressing the frequencies of the modes using an asymptotic expression \cite{m_tassoul1980, m_vrard+2016}.
+
+The first core improvement in this work come in the form of the use of hierarchical latent variable models \cite{m_hogg+2010, m_hall+2019}, which account for small-scale deviations in mode frequencies due to effects not explicitly accounted for in our model (such as acoustic glitches \cite{m_mazumdar+2014}). By improving the inference of mode frequencies in this way, we also improve the ability to resolve the rotational splitting. The second improvement comes in the form of priors on our parameters, and in particular the rotational inclination, which more accurately reflects the true distribution of angles than previous techniques \cite{m_chaplin+basu2017}. A step-by-step breakdown of the model and all priors can be found in \textbf{Supplementary Materials}.\\
+
+We separated our model fitting into two parts. First, we fit a model for the convective background and white noise only, to the region of the power spectra that did not contain modes of oscillation. This was done using \texttt{PyStan} \cite{m_vanhoey+2013, m_carpenter+2017}, for 10,000 iterations on each star\footnote{These \texttt{PyStan} runs were initiated with a random seed of 11, as were all other random processes in this work}. Second, we fit our full model (including the convective background) to the region containing the modes of oscillation. The results of the first fit to the convective background were used as extremely informative priors on the background parameters in this second fit. This was done using \texttt{PyMC3} \cite{m_vanderwalt+2011,m_salvatier+2016, m_thetheanodevelopmentteam+2016} for 2500 iterations each on 4 chains.
+
+From this asteroseismic analysis, we report inclination angle ($i$), rotational splitting ($\nu_{\rm s}$), and rotation period ($P$) in \textbf{Extended Data} Table \ref{tab:results}. The summary statistics on these parameters were taken as the median of the posterior distribution, with uncertainties being the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles. For inclination angle ($i = \arccos(\cos(i))$) and rotation ($P = 1/\nu_{\rm s}$), the full posterior samples were transformed before taking the summary statistics, as our model sampled in $\cos(i)$ and $\nu_{\rm s}$.
+
+We flagged any sub-optimal conditions of the final fit. Of 94 stars, we flagged 5 for which the Gelman-Rubin convergence metric, $\hat{R}$, was greater than 1.01 and 2 stars for which it was greater than 1.1 on inclination angle or rotation, where a $\hat{R} = 1$ indicates a converged result \cite{m_gelman+rubin1992}. We also performed visual checks of the sampled chains on all hyperparameters and of the best-fit model compared to both the raw and smoothed asteroseismic data. We found no issues in the visual investigation of the 94 stars. KIC 8478994 was excluded due to both a poor fit as well as high $\hat{R}$ on rotational parameters. KICs 6603624, 8760414 and 8938364 are reported in \textbf{Extended Data} Table \ref{tab:results}, but were excluded from the gyrochronology analysis due to strong disagreement with multiple studies in the literature (see main body of paper). Finally, we flagged any stars with fewer than 1000 effective samples ($n_{\rm eff}$) of $\nu_s$.
+
+
+\section{Gyrochronology Methods}\label{s:gyro}
+\subsection{Stellar Models}\label{ssec:models}
+The braking models used in this work have several parameters that inform the rotational evolution. These are: a normalization factor to reproduce the solar rotation ($f_k$); a disk locking timescale ($T_{\rm disk}$) and period ($P_{\rm disk}$) which together regulate the stellar angular velocity during the pre-main sequence; the critical angular velocity that marks the transition from saturated (rapidly rotating) to unsaturated (slowly rotating) regimes ($\omega_{\rm crit}$), and the critical Rossby number, above which stars conserve angular momentum ($Ro_{\rm crit}$), mentioned above. $T_{\rm disk}$, $P_{\rm disk}$ and $\omega_{\rm crit}$ are calibrated to match the behavior in young open clusters, but have little impact on the rotational evolution beyond $\approx 1\, \rm{Gyr}$ in solar-mass stars. Both $f_k$ and $Ro_{\rm crit}$ affect the late-time evolution. Both models adopt $\omega_{\rm crit} = 3.4  \times 10^{-5}\, \rm{s}^{-1}$, $P_{\rm disk} = 8.1$, $T_{\rm disk} = 0.28$ and $f_k = 6.6$. In the weakened magnetic braking model, $Ro_{\rm crit} = 1.97$. For further details, see \cite{m_vansaders+pinsonneault2013} and \cite{m_vansaders+2016, m_vansaders+2019} for the standard and weakened magnetic braking cases respectively.
+
+To construct a synthetic population of rotating stars, we expanded upon previous forward-models of the \textit{Kepler} field with the purpose of studying weakened magnetic braking \cite{m_vansaders+2019}, with some important improvements. We started with a TRILEGAL \cite{m_girardi+2012} Milky-Way simulation of the \kepler field, using the simulation's standard population values intended for this purpose. In order to replicate the \kepler selection effect, the TRILEGAL simulation was matched to the largest current catalogue of temperatures, luminosities and 2MASS $K$-band magnitudes of stars in the \kepler field \cite{m_berger+2020}. This was done using a nearest-neighbours approach, based on the density of stars on the HR diagram. This ensured that the TRILEGAL population matched the density of stars actually observed by \kepler, replicating its selection effects, and improved upon previous efforts \cite{m_vansaders+2019} by incorporating contemporary \textit{Gaia} mission data \cite{m_gaiacollaboration+2018}.
+
+We made further changes to account for possible binarity in the the matching sample \cite{m_berger+2020}. If the first step is performed blindly, blended binaries in the sample cause an overestimation of the number of old stars. In order to overcome this, we:
+
+\begin{enumerate}
+	\item blended the TRILEGAL stars with binary companions drawn from a flat mass-ratio distribution, using a known binary fraction \cite{m_raghavan+2010},
+	\item recalculated the `observed' luminosities and magnitudes assuming that each binary pair was blended, and
+	\item shifted these stars' temperatures following a $g$-$K$ magnitude relation \cite{m_berger+2020}.
+\end{enumerate}
+
+This new distribution was used for the nearest-neighbour matching. Once drawn we dropped the binary companion and used the true TRILEGAL properties of those stars. For stars where the mass of the companion was $M < 0.4\, M_\odot$, binary contributions were ignored. Every binary was assumed to result in a blend, regardless of separation. This results in slightly more young stars than reality, because young, blended binary systems contaminate regions of the HR diagram where one expects to find old stars, and the number of blends is overestimated by assuming every binary system is a blend.
+
+Our asteroseismic sample of stars with short cadence observations are subject to additional selection functions not included in the creation of the model populations above. We did \textit{not} explicitly account for these asteroseismic selection functions in our model, by design. Both the standard and WMB models contain stars with the same fundamental parameters (mass, radius, effective temperature, metallicity) but a different period based on the choice of rotational evolution prescription. Applying an asteroseismic selection function that depends on these fundamental parameters would apply an identical prior to both models, therefore providing no net effect on our posterior distribution \cite{m_chaplin+2011}.  Additionally, we expected any seismic selection function to be relatively flat (and therefore uninformative) on a star-by-star scale, on which we run our model analysis. 
+
+\subsection{Bayesian Mixture Model}
+In order to determine whether weakened magnetic braking occurs on the main sequence, we compared our sample of seismic age and rotation, along with temperature, metallicity and mass, to the two stellar population models of the \kepler field \cite{m_vansaders+2019}, discussed above. Both stellar models were evaluated in a Bayesian framework, with the rationale of determining which of the two models (standard or WMB) is most likely to reproduce our observed data. Each model sample contained temperature (\teff), mass ($M$), age ($t$), metallicity ($\rm{[Fe/H]}$) and rotation ($P$) information.
+
+In order to draw probabilistic inference about the models, we built a five-dimensional Kernel Density Estimate (KDE) of both model populations using the \texttt{statsmodels} package \cite{m_seabold+perktold2010}. We used a band-width (setting the resolution of the KDE) of $0.02\, M_\odot$ in mass, $10\, \rm K$ in \teff, $0.01\, \rm{dex}$ in $\ln(t)$, $0.01\, \rm{dex}$ in $\rm{[Fe/H]}$ and $0.01\, \rm{dex}$ in $\ln(P)$. Note that age and rotation were treated in log space, where the posterior estimates from asteroseismology more closely resemble normal distributions. This approach translates the population models to a probability distribution we can use in a Bayesian framework.
+
+We evaluated our data against both models simultaneously by treating the data as being drawn from a mixture of both model KDEs. In this mixture model structure, the two KDEs were modulated by a weighting factor, $P_{\rm s}$. In the limit $P_{\rm s} \rightarrow 1$, the data are most likely drawn from the standard model. In the limit $P_{\rm s} \rightarrow 0$, the data are most likely drawn from the WMB model.
+
+The posterior probability of obtaining $P_{\rm s}$ and additional parameters $\theta$ given our data $\mathcal{D}$ is $p(P_{\rm{s}}, \theta | \mathcal{D})$. Using Bayes equation, we can express this as:
+
+\begin{equation}\label{eq:modelll}
+	p(P_{\rm{s}}, \theta | \mathcal{D}) \propto p(\mathcal{D} | \theta)\ p(\theta | P_{\rm{s}}, \kappa_{\rm{s}}, \kappa_{\rm{WMB}})\ p(P_{\rm{s}})\, ,
+\end{equation}
+
+\noindent where $\kappa_{\rm{s}}$ and $\kappa_{\rm{WMB}}$ are the KDE functions for the standard and WMB models respectively, and $\theta$ here are parameters, $\theta = \{M, \teff, \ln(t), \feh, \ln(P)\}$. As done above for the asteroseismic model, the parameters $\theta$ may be referred to as latent parameters, as they form a step between the parameter we want to infer ($P_{\rm{s}}$) and our data. Using this approach allowed our model to properly take into account the observational uncertainties on the data.
+
+The second component on the right hand side of Equation \ref{eq:modelll} describes the probability of obtaining our latent parameters $\theta$ given our KDEs and the mixture model weighting parameter $P_{\rm s}$, and is described by the mixture model
+
+\begin{equation}\label{eq:mixturell}
+	p(\theta | P_{\rm{s}}, \kappa_{\rm{s}}, \kappa_{\rm{WMB}}) = P_{\rm s} \times \kappa_{\rm s}(\theta) + (1 - P_{\rm s}) \times \kappa_{\rm WMB}(\theta)\, ,
+\end{equation}
+
+\noindent where all parameters are as described above. This probability function describes a distribution that is a mixture of both KDEs. While the KDEs are constant, $P_{\rm s}$ is a free parameter, and so the shape of this distribution can vary. The latent parameters $\theta$ are drawn from this distribution, and therefore from some combination of the two stellar models.
+
+The first component in Equation \ref{eq:modelll} describes the likelihood of obtaining the parameters $\theta$ given our data and their observational uncertainty. It takes the form
+
+\begin{equation}
+	p(\mathcal{D} | \theta) = \mathcal{N}(\mathcal{D} | \theta, \sigma_{\mathcal{D}})\, ,
+\end{equation}
+
+\noindent a normal distribution evaluating the latent parameters $\theta$ against the observations, with observational uncertainty $\sigma_{\mathcal{D}}$. This approach means that in each parameter space (such as age), the age drawn from the stellar model mixture is entered into the likelihood equation with our static observations. The value of this equation (and thus the likelihood) will increase if $\theta$ is closer to the observations, and the mixture model will be modulated in a manner that maximises this probability, inferring whether one stellar model is more likely to produce our data than the other.
+
+The final term, $p(P_{\rm s})$, represents the prior on the mixture model weight, which is uniform between 0 and 1. A visual representation of our model is shown in \textbf{Extended Data} Figure \ref{fig:pgm}.
+
+Typically, this model would evaluate all stars in our sample against the stellar models simultaneously for a single posterior estimate of $P_{\rm s}$. At 95 stars, in 5 parameter spaces, this totals 476 free parameters to marginalise over. This is not an issue for Hamiltonian Monte Carlo \cite[HMC]{m_betancourt+girolami2013}, however the use of KDE functions, over which a probabilistic gradient can not be measured, reduces HMCs effectiveness. Alternative Markov Chain Monte Carlo techniques \cite[MCMC]{m_foreman-mackey+2013} can more efficiently sample the KDE functions, but can not treat the large number of hierarchical parameters. To overcome this, we fit our model to each star to obtain an independent individual posterior distribution for $P_{\rm s}$, and multiplied these post hoc to obtain a combined posterior. This comes with the benefit of easily allowing us to calculate the combined posterior for different stellar classifications, at the expense of the ability to marginalise for a single value of $P_{\rm s}$ directly.\\
+
+The parameter space of the stellar models populations were reduced before calculating the KDEs. These cuts were made in $M$, $\teff$, $\ln(t)$ and \feh, removing any stars in the models that fell more than $3 \times \sigma_{\mathcal{D}}$ outside the observations. Our observables $M$, $t$ and $P$ have asymmetric uncertainties from the Bayesian asteroseismic analysis. We used the larger of the reported uncertainties on each parameter as $\sigma_{\mathcal{D}}$ in each parameter space. 
+
+KIC 6278762 was excluded from this stellar model analysis, because its age fell more than $3\sigma$ outside of the highest age in the stellar models\footnote{This is a metallicity issue, as the oldest stars have metallicities outside the range of the rotational model grids.}, and KICs 7106245 and 8760414 were excluded for the same reason due to low metallicities outside the functional range of the stellar models (-0.99 and -0.92 respectively). We also excluded any stars with $n_{\rm eff} < 1000$ for rotational splitting, and those with $\hat{R} > 1.1$. The remaining sample of 73 stars contained 4 sub-giants, 22 `hot' stars, and 47 main sequence stars.
+
+We fit our model Equation \ref{eq:modelll} using \texttt{emcee} \cite{m_foreman-mackey+2013, m_foreman-mackey2016}, using 32 walkers for a total of 7500 samples per walker, of which the first 2500 were discarded as a burn-in.
+
+After fitting, we took a normalised histogram of the posterior estimate of $P_{\rm s}$ for each star, using 100 bins. In this histogram, each bin approximated the value of the posterior function for $P_{\rm s}$. The array of 100 bins for all stars were multiplied, resulting in an approximation of the joint posterior probability function for $P_{\rm s}$ given all stars in the ensemble.
+
+\section{Verifying asteroseismic results}
+\subsection{Priors on rotational parameters}
+In our Bayesian analysis, we have placed weakly informative priors on our sampled rotational parameters, $\nu_{\rm s}\sin(i)$ and $\cos(i)$. The prior is especially important for the angle of inclination, which is hardest to infer from the data. We are able to validate the robustness of our asteroseismic results by confirming that their posterior distributions are data-dominated, and not prior-dominated. We can do so by comparing the $68\%$ credible regions of the posterior estimates of $\nu_{\rm s}\sin(i)$ and $i$ against the $68\%$ credible regions of their priors.
+
+A comparison between prior and posterior is shown for 94 stars in $\nu_{\rm s}\sin(i)$, $i$ and $P_{\rm rot}$ in \textbf{Extended Data} Figure \ref{fig:priors}, arranged by age. In the Figure, results with means and error bars that closely resemble the prior distribution can be interpreted as prior-dominated (i.e. poorly informed by the data). The projected splitting, $\nu_{\rm s}\sin(i)$, is overall well constrained, with only one star appearing prior dominated. This is expected, as the projected splitting is what we observe on the star before decoupling inclination and rotation. The angle of inclination $i$, sampled as $\cos(i)$, more closely follows the prior distribution in most cases. Combining the two, the rotation period $P_{\rm rot}$ has no stars directly corresponding to the effective prior on period, and globally follows a trend with increasing age. The three outliers with fast rotation at late ages (KICs 6603624, 8760414 and 8938364) are discussed in more detail in below.
+
+The rotation rates as presented in this work are a product of our Bayesian sampling of both projected splitting and angle of inclination. As seen in the Figure there are instances where $i$ or $\nu_{\rm s}\sin(i)$ closely resemble the prior (and are therefore prior-dominated). There are no cases of this when looking at the resulting period measurements, as they will have been informed by at least one strongly data-driven parameter (judging from the Figure, commonly $\nu_{\rm s}\sin(i)$). From this, we conclude that our ensemble of asteroseismic rotation is not strongly dominated by the priors imposed on projected splitting and inclination in our Bayesian analysis.
+
+\subsection{Comparisons to previous studies}\label{ssec:litcomp}
+In order to validate our results, we compared our rotational parameters to those obtained in the literature, as well as those resulting from the work presented in LEGACY and Kages, which were unreported and received through private communication by the authors of the catalogue papers.
+
+Comparisons with LEGACY and `Kages' are shown in \textbf{Extended Data} Figure \ref{fig:legacykages} for projected splitting, inclination angle, and rotation period. In all three cases we show the fractional difference between the values obtained in this work and those from LEGACY and Kages. On the right of the Figure, we show the distribution of the fractional differences for the three parameters.
+The projected splitting is in good agreement with both studies, however LEGACY finds slightly lower $\nu_{\rm s}\sin(i)$ for the faster rotators, deviating from our work by over $1\sigma$. Neither LEGACY nor `Kages' used a spatially isotropic prior for the inclination angle in their analyses, instead opting for a uniform prior. As posterior estimates of inclination angle are only loosely data-driven, the introduction of an isotropic prior should result in our analysis reporting globally higher inclination angles. This effect is seen in the comparisons of both inclination angles and rotation rates for the LEGACY stars, where we find overall lower rotation rates compared to LEGACY for stars at very similar $\nu_{\rm s}\sin(i)$.
+
+A number of stars are excluded from \textbf{Extended Data} Figure \ref{fig:legacykages} and compared individually as extreme outliers: KICs 5094751, 6196457, 8349582, 8494142, 8554498, 105114430 and 11133306 all have fast rotation rates ($<5\, \rm days$) in Kages, but are found to have a broader spread of rotation rates in this work. At similar values for $\nu_{\rm s}\sin(i)$, `Kages' found much lower inclination angles with highly asymmetrical uncertainties. Based on a comparison between the summary statistics of these stars, we conclude that the results found in this work have better marginalised over inclination angle, improving our measure of rotation.
+
+Conversely, KICs 6603624, 8760414 and 8938364 have extremely slow rotation periods in LEGACY, but extremely \textit{fast} ($<3\, \rm {days}$) in this work. KICs 8760414 and 8938364 are excluded from the gyrochronology analysis below based on checks for $\hat{R}$ and the number of effective samples. Both stars have ages greater than $10\, \rm Gyr$, making their fast rotation rates highly unlikely under any model of rotational evolution. The posterior estimate of $P$ for KIC 6603624 is well-defined in our analysis, but with an age of $7.8\, \rm Gyr$, its measured rotation of $1.2\, \rm days$ is also highly unlikely under any model of rotational evolution. The LEGACY estimate of rotation is similarly extreme at $378\, \rm days$. These three stars have the lowest inclination angles in our sample ($< 10^\circ$), at which point the power in the split components of the seismic modes is so low that it becomes difficult to probe the measure of splitting. The split components for these stars will have a height roughly 3\% of the central mode. For comparison, for the next lowest inclined star at $17^\circ$, this rises to $10\%$. In cases such as these with lower signal-to-noise, spurious peaks may be interpreted as split components.\\
+
+We also compared our asteroseismic estimates of stellar rotation with similar studies in the literature, shown in \textbf{Extended Data} Figure \ref{fig:literaturecomp}. These included: a study of the binary solar analogues 16 Cyg A \& B \cite{m_davies+2015}, ; a study of surface and seismic rotation which our catalogue shares 5 stars with \cite{m_nielsen+2015}, ; and an asteroseismic study of differential rotation with which our catalogue shares 40 targets \cite{m_benomar+2018}. For the latter, we used their reported splitting value $a_1$, which is equivalent to $\nu_{\rm s}$. 
+
+Overall,  \textbf{Extended Data} Figure \ref{fig:literaturecomp} shows no strong disagreements between our asteroseismic measurements for stellar rotation and those from the literature. The scatter of the fractional differences lies cleanly around the zero line, with a mean and spread of $0.0_{-15.6}^{+16.4}\, \%$. The increase in uncertainty with period is due to more slowly rotating stars being more difficult to constrain using asteroseismology.
+
+It is of note that 16 Cyg A was found to be rotating slightly faster in our analysis compared to the literature \cite{m_davies+2015} (deviating within $2\sigma$), despite the fit being performed on the same data. We found an inclination angle that is slightly lower for 16 Cyg A but at a similar projected splitting, which would explain finding a lower value of rotation.
+
+There are three outliers at low period in  \textbf{Extended Data} Figure \ref{fig:literaturecomp}: KICs 6603624, 8760414 and 8938364. These are the same targets found to be outliers in a comparison to the LEGACY and `Kages' measurements (see above), with anomalously fast rotation rates and low inclination angles. As these stars represent the lowest inclination angles in our sample, and were found to disagree with two independent studies, we opted to exclude them from the gyrochronology analysis, and to flag the rotation measurements for these three stars presented in this work.
+
+\subsection{Seismic vs spectroscopic rotation}
+A distinct difference between rotation rates obtained through different techniques may hold information about differential rotation (both latitudinal and radial) of near-surface layers, such as those we observe in the Sun \cite{m_beck2000}.  A previous comparison of spectroscopic and seismic rotation rates, performed on a sample of 22 stars, found no significant radial differential rotation \cite{m_benomar+2018}. In this work they not only considered rotation rates from spots, but also spectroscopic measures of the projected surface rotation $\textrm{v}\sin(i)$, which they found to be more reliable.
+
+With our expanded sample of asteroseismic rotation we can perform a similar analysis, to both validate our sample and probe radial differential rotation.  \textbf{Extended Data} Figure \ref{fig:vsinilit} shows a comparison between spectroscopic $\textrm{v}\sin(i)$ measurements as listed in LEGACY and `Kages' (left) and Benomar et al. (2015) \cite{m_benomar+2015} (right). In these cases the asteroseismic $\textrm{v}\sin(i)$ has been calculated using our measure of asteroseismic $\nu_s\sin(i)$ and the known asteroseismic radii. Three stars (KICs 6603624, 8760414 and 8938364) have been excluded from this figure due to strong disagreements of measured rotation rates with the literature (see above).
+
+For the LEGACY and `Kages' sample, we find no strong deviation from the 1:1 line except at very low velocities, which is likely due to biases inherent to spectroscopic line broadening measurements \cite{m_doyle+2014, m_tayar+2015}. For the Benomar et al. (2015) sample stars lie a lot closer to the 1:1 line.
+
+Overall, there appears to be a global offset where spectroscopic measurements of projected rotation appear faster than asteroseismic measures. Based on the LEGACY and `Kages' $v\sin(i)$ values, this offset is roughly $18\%$ (i.e. spectroscopic projected rotation rates are faster than asteroseismic rates). This offset is much smaller ($\sim5\%$) for the \cite{m_benomar+2015} sample, albeit for far fewer stars. These offsets are within the typical disagreement between spectroscopic methods, based on comparisons of projected rotation measurements for red giant stars \cite[see Figure 2]{m_tayar+2015}, especially at $< 5\, \rm{km\,s^{-1}}$.
+
+It is worth addressing the impact this comparison would have on our conclusions for gyrochronology, were we to take the spectroscopic rotation rates as if they were the truth, even at velocities of $< 5\, \rm{km\,s^{-1}}$. For the majority of cases, the seismic velocities are slower than the spectroscopic velocities, which would bias our ensemble towards favouring a standard evolution over a weakened magnetic braking scenario (as stars would overall appear to be rotating slower at late ages). Based on the comparison to spot rotation presented in the main body of this paper, and given known issues comparing seismic and spectroscopic rotation at low velocities, we conclude that the divergence seen in  \textbf{Extended Data} Figure \ref{fig:vsinilit} does not undermine our results.
+
+\subsection{Asteroseismic detection biases}
+
+Stars that are rotating very slowly will show small rotational splittings, which may be indistinguishable from a non-rotating case, wheras stars that are spinning very fast may find that their splitting is so wide that they cross over with split modes at different radial orders ($n$). Asteroseismic selection techniques may also introduce additional biases on a population level. We consider the limitations this places on our asteroseismic method.
+
+\begin{itemize}
+	\item \textit{Fast rotating stars:} In prinicple, a star could rotate fast enough that the highest-frequency peak in a split dipole ($\ell = 2$) mode would overlap with the radial ($\ell = 0$) mode. This would occur if $2\nu_{\rm s} > \delta\nu_{02}$, the small separation. For the star in our sample with the smallest $\delta\nu_{02}$ (so the highest risk of this happening), this would occur at a rotation of 8.8 days or faster. For the star with the largest $\delta\nu_{02}$, this limit was roughly 2 days.
+	
+	In practice, the model would still properly fit a spectrum where this kind of mode-overlapping occurred, as the $\ell = 0$ modes don't split, meaning that there are no degenerate solutions in this regime. A more serious issue may be when the $\ell = 1$ mode at lower frequencies overlapped with the $\ell = 2$ mode as well, which would only occur at a rotation rate of 2 days or faster for the star with the smallest $\delta\nu_{01}$.
+	
+	\item \textit{Slow rotating stars:} Except for the most fast rotating cases, asteroseismic mode splitting is detected by a broadening of the mode frequencies as the split components begin to separate from the central mode. If there is to be hard limit at which this measurement is not possible, it should be in the case that $\nu_{\rm s} < 2/T$, where $T$ is the observation time, and $1/T$ is the frequency bin width. For the star in our sample with the shortest observing time, this limit would be $\sim 89$ days, which quickly rises for longer observing baselines. While this constitutes a hard limit, slower rotation rates will become harder and harder to constrain as the rate of splitting becomes smaller. A benefit of the Bayesian approach used in this paper is that it should accurately reflect the increased uncertainty associated with the small rotational splitting.
+\end{itemize}
+
+While these two limits cause concern when studying the most extreme rotators, the results presented in this work are driven by stars with rotation rates in the regime of 10 to 40 days, and so we do not expect these limits to bias our conclusions.
+
+Finally, we also consider bias in asteroseismic detections. The probability of an asteroseismic detection with \kepler scales with temperature and radius (i.e. scales inversely with \logg, and therefore main sequence age) \cite{m_chaplin+2011, m_schofield+2019}. More active, magnetic stars may also suppress their oscillation modes, making it more likely to detect seismic oscillations in older stars \cite{m_mathur+2019}. Through these two effects, asteroseismology is biased towards detecting older over younger stars. As it is older stars, undergoing magnetic braking, that are required to drive the distinction between stellar models, we do not expect this observing bias to effect our conclusions.
+
+\section{Verifying consequences for gyrochronology}
+\subsection{Limits of our stellar models}\label{ssec:limits}
+The rotational stellar models used in this work \cite{m_vansaders+2019} are constructed for metallicities of $-0.4 < \rm{[Fe/H]} < 0.4\, \rm{dex}$, in steps of $0.1\, \rm {dex}$. Our sample of 91 stars contained 4 stars with metallicities below $-0.4\, \rm{dex}$, which are shown as shaded symbols in Figure \ref{fig:fullsample}. Of these, 3 were included in our final sample of 73 stars used to evaluate our stellar models: KICs 7970740, 8684723 and KIC 9965715. All three are classed as MS stars, with metallicities of $-0.54 \pm 0.10$, $-0.42 \pm 0.10$ and $-0.44 \pm 0.18\, \rm {dex}$ respectively, placing them within $3\sigma$ of the metallicity limits of our stellar models. KICs 8684723 and 9965715 strongly agree with the WMB model, whereas KIC 7970740 weakly prefers the standard model. Excluding these stars was not found to significantly alter the joint posterior distribution shown in Figure \ref{fig:gyroresults}.
+
+A recent study \cite{m_amard+matt2020} compared different rotational evolution models \cite[of which we use the former in this work]{m_vansaders+pinsonneault2013,m_matt+2015} while studying the effect metallicity has on rotation. They found that metal-rich stars spin down significantly more effectively than metal poor stars. The population of 73 stars used in our stellar model comparisons is roughly centered on a $\rm{[Fe/H]}$ of 0 $\rm dex$, with a spread of $~0.16\, \rm dex$, with no stars significantly above or below $\pm 0.4\, \rm dex$ (as discussed above). While differences in stellar rotational evolution as a function of metallicity in this region are still somewhat pronounced, they are much less so than for more metal-rich or poor stars \cite[see Figure 2]{m_amard+matt2020}. However, for stars with $\feh < 0$, the alternative model prescription \cite{m_matt+2015} sees stars spin down more slowly than the models used in this work (i.e. they will rotate faster at later ages). This work only explores the presence of weakened magnetic braking for a single braking law, and a comparison to alternative braking model will be explored in a future paper.
+
+When constructing KDEs from our stellar model samples (see Section \ref{s:gyro}), we selected fixed resolutions (or band-widths) for the KDEs. In mass, the band-width of $0.02\, M_\odot$, was larger than the uncertainties of 24 of 73 stars used to construct our joint posterior. For the stars with the smallest uncertainties, this significantly limits the size of the KDE being evaluated (as subsections of the full stellar models are used to evaluate individual stars, for computational efficiency). In order to confirm that these stars do not significantly affect the ensemble's preference towards the WMB model, we recalculated the joint posterior distribution for $P_{\rm s}$, excluding stars with an uncertainty on mass smaller than the KDE band-width. While the 24 stars with small uncertainties do favour the WMB model, they do so very weakly, whereas the remaining 49 stars with larger uncertainties strongly favour the WMB model. Their removal from the total joint posterior probability does not significantly alter it from the distribution shown in Figure \ref{fig:gyroresults}.
+
+\subsection{Systematic uncertainties from asteroseismology}
+In our model analysis, we used asteroseismic mass and age obtained using \texttt{BASTA}, as reported in LEGACY and Kages. Asteroseismic properties obtained through stellar models can be subject to systematic errors arising from differences in input physics and choice of stellar models not included in the reported statistical uncertainties. A quantification of these different systematic effects can be found in the `Kages' catalogue paper \cite{m_silvaaguirre+2015}. Combining their reported median systematic uncertainties due to input physics results in median uncertainties of $20\%$ (up from $14\%)$ on age and $5\%$ (up from $3\%$) on mass for the `Kages' sample. For LEGACY, the median uncertainties are $18\%$ (up from $10\%)$ and $5.6\%$ (up from $4\%$) for age and mass respectively.
+
+We re-ran our model analysis after inflating uncertainties on mass and age. We increased uncertainties by the fractional difference between the \texttt{BASTA} statistical uncertainties and the median full statistical and systematic uncertainties described above. For example, a LEGACY star with a mass of $2.0 \pm 0.5\, M_\odot$ would have its uncertainty inflated by $1.6\%$ of its mass, to $0.53\, M_\odot$. 
+
+To further test the limits of this analysis, we also reran our mixture model fit, this time only shifting the asteroseismic ages younger by the systematic uncertainty, and retaining the statistical uncertainty (i.e. the ages of LEGACY and `Kages' stars were reduced by $8\%$ and $6\%$ respectively). In this scenario where all asteroseismic ages are overestimated, `true' fast rotators at young ages would have been mistaken for fast rotators at old ages, suggesting the presence of weakened magnetic braking where none existed. 
+
+The results of these tests are discussed further in the main body of the paper.
+
+\subsection{Binaries and Planet Hosts}
+For stars to be good probes of existing gyrochronology relations, their rotational evolution must occur in isolation. If a star interacts with a close binary companion (through tides, or a merger) the natural angular momentum loss can be disturbed, causing gyrochronology to mispredict ages \cite{m_leiner+2019, m_fleming+2019}. Between LEGACY and Kages, we have 8 known binaries. 
+
+First, KIC 8379927, KIC 7510397, KIC 10454113 and KIC 9025370 are spectroscopic binaries. This does not affect the asteroseismic analysis, but may affect their rotational evolution. Of these, KICs 8379927, 7510397 and 9025370 were included in the gyrochronology analysis. None of them preferred one model strongly over the other, with all three finding flat posteriors for $P_{\rm s}$.
+
+Second, the binary pairs of KIC 9139151 \& 9139163 and 16 Cyg A \& B are individually observed binary components with wide orbital separations, so we do not expect their binarity to have affected their rotational evolution. 
+
+While we chose not to account for star-planet tidal interactions in this work, we note that this may also disturb the natural stellar rotational evolution when tidal forces are at play \cite{m_maxted+2015,m_gallet+delorme2019, m_benbakoura+2019}, although this has been disputed by observations of asteroseismic planet hosts \cite{m_ceillier+2016}.\\
+
+\input{bblmethods.tex}
+
+%\end{document}

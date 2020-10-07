@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2020)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: si.aux
+The style file: naturemag.bst
+Database file #1: library.bib
+Warning--missing school in woodard1984
+You've used 25 entries,
+            2348 wiz_defined-function locations,
+            1131 strings with 15497 characters,
+and the built_in function-call counts, 9586 in all, are:
+= -- 677
+> -- 220
+< -- 0
++ -- 110
+- -- 55
+* -- 1173
+:= -- 1060
+add.period$ -- 77
+call.type$ -- 25
+change.case$ -- 23
+chr.to.int$ -- 0
+cite$ -- 26
+duplicate$ -- 895
+empty$ -- 894
+format.name$ -- 75
+if$ -- 1934
+int.to.chr$ -- 0
+int.to.str$ -- 25
+missing$ -- 203
+newline$ -- 135
+num.names$ -- 25
+pop$ -- 139
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 174
+stack$ -- 0
+substring$ -- 382
+swap$ -- 892
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 54
+width$ -- 27
+write$ -- 284
+(There was 1 warning)
