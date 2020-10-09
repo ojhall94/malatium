@@ -53,7 +53,7 @@ Other asteroseismic properties used in this study, such as those used as first g
 
 \subsection{Mode Frequency Fitting}
 
-In order to extract signatures of stellar rotation from the asteroseismic mode frequencies, we built a model that simultaneously treats the convective background, modes of oscillation, and white noise, while accounting for rotational splitting. The foundations of this approach follows best-practices in asteroseismology \cite{m_davies+2015}, fitting Harvey profiles for the background \cite{m_harvey1985}, and expressing the frequencies of the modes using an asymptotic expression \cite{m_tassoul1980, m_vrard+2016}.
+In order to extract signatures of stellar rotation from the asteroseismic mode frequencies, we built a model that simultaneously treats the convective background, modes of oscillation, and white noise, while accounting for rotational splitting. The foundations of this approach follows best-practices in asteroseismology \cite{m_davies+2015}, fitting Harvey profiles for the background \cite{m_harvey1985} and expressing the frequencies of the modes using an asymptotic expression \cite{m_tassoul1980, m_vrard+2016}.
 
 The first core improvement in this work is the use of hierarchical latent variable models \cite{m_hogg+2010, m_hall+2019}, which account for small-scale deviations in mode frequencies due to effects not explicitly accounted for in our model (such as acoustic glitches \cite{m_mazumdar+2014}). By improving the inference of mode frequencies in this way, we also improve the ability to resolve the rotational splitting. The second improvement comes in the form of priors on our parameters, and in particular the rotational inclination, which more accurately reflects the true distribution of angles than previous techniques \cite{m_chaplin+basu2017}. A step-by-step breakdown of the model and all priors can be found in \textbf{Supplementary Materials}.\\
 
@@ -169,7 +169,7 @@ Stars that are rotating very slowly will show small rotational splittings, which
 \begin{itemize}
 	\item \textit{Fast rotating stars:} In prinicple, a star could rotate fast enough that the highest-frequency peak in a split dipole ($\ell = 2$) mode would overlap with the radial ($\ell = 0$) mode. This would occur if $2\nu_{\rm s} > \delta\nu_{02}$, the small separation. For the star in our sample with the smallest $\delta\nu_{02}$ (so the highest risk of this happening), this would occur at a rotation of 8.8 days or faster. For the star with the largest $\delta\nu_{02}$, this limit was roughly 2 days.
 	
-	In practice, the model would still properly fit a spectrum where this kind of mode-overlapping occurred, as the $\ell = 0$ modes don't split, meaning that there are no degenerate solutions in this regime. A more serious issue may be when the $\ell = 1$ mode at lower frequencies overlapped with the $\ell = 2$ mode as well, which would only occur at a rotation rate of 2 days or faster for the star with the smallest $\delta\nu_{01}$.
+	In practice, the model still properly fits a spectrum where this kind of mode-overlapping occurred, as the $\ell = 0$ modes don't split, meaning that there are no degenerate solutions in this regime, and further constraints can be obtained from the other modes and split components in the spectrum. A more serious issue may be when the $\ell = 1$ mode at lower frequencies overlapped with the $\ell = 2$ mode as well, which would only occur at a rotation rate of 2 days or faster for the star with the smallest $\delta\nu_{01}$.
 	
 	\item \textit{Slow rotating stars:} Except for the most rapidly rotating cases, asteroseismic mode splitting is detected by a change in the distribution of the power of mode frequencies as the split components begin to separate from the central mode. If there is to be hard limit at which this measurement is not possible, it should be in the case that $\nu_{\rm s} < 2/T$, where $T$ is the observation time, and $1/T$ is the frequency bin width. For the star in our sample with the shortest observing time, this limit would be $\sim 89$ days, which quickly rises for longer observing baselines. While this constitutes a hard limit, slower rotation rates will become harder and harder to constrain as the rate of splitting becomes smaller. A benefit of the Bayesian approach used in this paper is that it should accurately reflect the increased uncertainty associated with the small rotational splitting.
 \end{itemize}
@@ -200,21 +200,20 @@ For stars to be good probes of existing gyrochronology relations, their rotation
 
 First, KIC 8379927, KIC 7510397, KIC 10454113 and KIC 9025370 are spectroscopic binaries. This does not affect the asteroseismic analysis, but may affect their rotational evolution. Of these, KICs 8379927, 7510397 and 9025370 were included in the gyrochronology analysis. None of them preferred one model strongly over the other, with all three finding flat posteriors for $P_{\rm s}$.
 
-Second, the binary pairs of KIC 9139151 \& 9139163 and 16 Cyg A \& B are individually observed binary components with wide orbital separations, so we do not expect their binarity to have affected their rotational evolution. 
+Second, the binary pairs of KIC 9139151 \& 9139163 and 16 Cyg A \& B are individually observed binary components with wide orbital separations, so we do not expect their binarity to have affected their rotational evolution \cite{m_halbwachs1986, m_white+2013}. 
 
 While we chose not to account for star-planet tidal interactions in this work, we note that this may disturb the natural stellar rotational evolution when tidal forces are at play \cite{m_maxted+2015,m_gallet+delorme2019, m_benbakoura+2019}, although this has been disputed by observations of asteroseismic planet hosts \cite{m_ceillier+2016}.\\
 
 \textbf{Data availability statement:} The core input data and results are summarised in \textbf{Extended Data} Table \ref{tab:results}, which is published with this article, and is also available on Vizier. Larger data files, such as stellar model populations and individual posterior distribution chains from the asteroseismic and gyrochronology model fitting are fully available on request.
 
 This work made use of publicly available data described in the text, and reiterated here. \kepler power spectral density  were obtained from the \href{http://kasoc.phys.au.dk/}{KASOC} webpages for the majority of stars, and from the \href{https://archive.
-		stsci.edu/prepds/kepseismic/}{MAST} for 16 Cyg A and B. This work used asteroseismic data from Silva Aguirre et al. (2015, 2017), Davies et al. (2016) and Lund et al. (2017) \cite{silvaaguirre+2015, davies+2016, lund+2017, silvaaguirre+2017 }. Parameter distributions of the \kepler field used to alter our stellar population models were taken from Berger et al. (2020) \cite{berger+2020}.\\
+		stsci.edu/prepds/kepseismic/}{MAST} for 16 Cyg A and B. This work used asteroseismic data from Silva Aguirre et al. (2015, 2017), Davies et al. (2016) and Lund et al. (2017) \cite{m_silvaaguirre+2015, m_silvaaguirre+2017,m_davies+2016, m_lund+2017}. Parameter distributions of the \kepler field used to alter our stellar population models were taken from Berger et al. (2020) \cite{m_berger+2020}.\\
 	
 \textbf{Code availability statement:} The code required to replicate our results has been placed in a curated online repository found here: \url{www.github.com/ojhall94/halletal2020}. 
 
 All code written in the duration of this project, along with a full commit history, can be found in an un-curated online repository here: \url{www.github.com/ojhall94/malatium}. 
 
 The code used to construct the stellar population models used in this work is available upon request.
-
 
 \input{bblmethods.tex}
 
