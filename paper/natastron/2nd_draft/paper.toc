@@ -8,7 +8,7 @@
 \contentsline {subsection}{\numberline {3.1}Priors on rotational parameters}{21}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Comparisons to previous studies}{22}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}\textcolor {red}{{Seismic vs Surface rotation}}}{23}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Seismic vs spectroscopic rotation}{23}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.4}Seismic vs spectroscopic rotation}{24}{subsection.3.4}%
 \contentsline {subsection}{\numberline {3.5}Asteroseismic detection biases}{24}{subsection.3.5}%
 \contentsline {section}{\numberline {4}Verifying consequences for gyrochronology}{25}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Limits of our stellar models}{25}{subsection.4.1}%
