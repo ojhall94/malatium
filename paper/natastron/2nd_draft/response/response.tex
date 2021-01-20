@@ -1,139 +1,138 @@
 \documentclass[11pt]{article}
 \usepackage[left=1in, right=1in, bottom=0.5in, top=0.5in]{geometry}
 \usepackage{graphicx}
+\usepackage{amsmath}	% Advanced maths commands
+\usepackage{amssymb}	% Extra maths symbols
 \begin{document}
 	
 \section*{Response to the Referee}
 
-First we would like to thank the referee for their comments, which have helped us improve this manuscript. The paper has now been re-written to fit the Nature format, and therefore some of the content has changed or moved. The main body of the paper is mostly new or adapted writing, and the \textbf{Methods} and \textbf{Supplementary Information} contains details on data, methods, and discussion. At the end of this document we’ve listed any major changes made.
+First we would like to thank the referee for their comments (and their quick turnaround in these busy times). They have helped us improve this manuscript, and made us really think about potential pitfalls. Major changes to the paper are shown in red. no changes have been made to the Supplementary Information.
 
-Our responses are below. We’d like to address the bias comment first, as it is the most significant one, and shows up a couple of times in the reviewer’s report. \\
+First and foremost, we should highlight a major change to the presentation of our results. Following the referee’s comments, we now use $Q_{\rm WMB}$ to describe the mixture model weighting factor, where $Q_{\rm WMB} = 1 - P_{\rm s}$. This places the preference for weakened magnetic braking as the subject of our model analyses, making Figure 4 more readable, and hopefully our results more accessible. We have made sure to reverse any mentions of this parameter (e.g. ‘below $P_{\rm s} = 0.5$’ is now ‘above $Q_{\rm WMB} = 0.5$’).
 
-\noindent \textbf{With photometry, rotation is much easier to measure for the stars that are active and faster rotating. Is there a similar bias in the case of seismology? }
+\section*{Major comments:}
 
-In short, yes, there are biases at play, but these do not affect our results. We’ve discussed them below, and have included a version of this discussion in the \textbf{Methods} section of the new draft.
+\noindent\noindent\textbf{ 1 - My main concern is that from the authors’ study one could only robustly conclude that Gyrochronology needs to be revisited or recalibrated, which we knew already. One could also conclude that WMB (or a mixture between the ‘standard’ and WMB models) offers a better description of the data than the ‘standard’ Gyrochronology model alone. However, comparing a single model to one that we know doesn’t work very well, is not enough to claim strong agreement of the data with WMB. From Fig 4, for example, it is clear that the cumulative probability Ps remains doesn’t change after Ps =0.5 for MS st	ars, which means that a mixture of ‘standard’ and WMB in equal proportions describes the data as well as the WMB alone. Surprisingly to me, the SG and Hot do show a steady increment all the way to Ps=1, which doesn’t seem to support the idea that WMB describes better MS stars.}\\
 
-\textit{Bias in rotation detection:} stars that are rotating very slowly will show very small splittings, which may be indistinguishable from a non-rotating case, whereas stars that are spinning very fast may find that their splitting is so wide that they cross over with split modes at different radial orders. We’ve done some calculations to show that this doesn’t affect the region of rotation we’re interested in.
-\begin{enumerate}
-\item \textit{Fast rotating stars}: in principle, a star could rotate fast enough that the highest-frequency peak in a split dipole ($\ell=2$) mode would overlap with the radial ($\ell=0$) mode. This would occur if $2\nu_{\rm{s}} > \delta\nu_{02}$. For the star in our sample with the smallest $\delta\nu_{02}$ (so the highest risk of this happening), this limit is at 8.8 days. However for the star with the largest $\delta\nu_{02}$, this lies at $\sim 2$ days. 
+The novelty of this work is the use of new asteroseismic rotation rates, which probe a parameter space for which the concept of weakened magnetic braking had not yet been tested. This conclusively shows that (some form of) weakened braking is a true physical phenomenon, not something that is just suggested by biases in previous measurement techniques. We have gone through the paper again to try and make the language used reflect this, and have changed our title from “strong agreement with” to “strong preference for”.
 
-In practice, the mode frequency model would still properly fit a spectrum where this kind of mode-overlapping was happening. The $\ell=0$ modes don’t split, and so if a $\ell=2$ mode were split so far that overlap was occurring, the power distribution of the $\ell=0$ mode would change, which is not degenerate with any other model states. There would also still be a constraint on the splitting from the lower-frequency split components of the $\ell=2$ mode, as well as constraints on the exact mode frequencies and linewidths from fits to other modes in the spectrum. We can envision there being an issue if an $\ell=2$ mode is overlapping with an $\ell=1$ mode at lower frequencies as well, however this would only occur at a rotation rate of 2 days or faster for the star with the smallest $\delta\nu_{01}$.
- 
-In our sample, there are 9 stars for which we measured splittings greater than the limit of $2\nu_s > \delta\nu_{02}$. All these stars showed good agreement with previous work, and were well converged, which implies that asteroseismic models such as ours can handle such mode overlap. As far as our conclusions are concerned, all 9 are either Hot or Subgiant stars, which we show don’t impact our conclusions either way in the paper.
+To address the referee’s other concerns in this paragraph: stars which have not undergone weakened magnetic braking yet will by design have equal preference for both models, as the models are identical until Ro = 1.97. This also explains why the Hot and SG stars show a steady increment in cumulative probability-- they hold no diagnostic information in preference of one model over the other. We compare the stars to the models on an individual basis before multiplying the posteriors, and so stars that have not undergone braking just won’t have anything interesting to say. Conversely, any single star alone past the critical Rossby number will be able to differentiate between the standard or WMB models.
 
-\item \textit{Slow rotating stars:} Below, the reviewer raises concerns that for a limit of $\nu_s < 2\Gamma$ (when the splitting is smaller than the double the linewidth), splitting may not be accurately constrained. This is not the fundamental limit on this measurement, and is instead a very soft limit (making detection more difficult in stars low-signal-to-noise). Asteroseismic splitting causes a change in the power distribution in frequency of the modes. Detection of this change makes it possible to measure seismic rotation even when the split components are not fully separated.  It is also worth noting that the non-split radial ($\ell=0$) modes provide strong constraints on the variation of linewidth with frequency, further constraining the change due to splitting.
+We would also like to clarify that in the mixture model, it will only be the cases with the most precise constraints on mass, age, rotation, temperature and metallicity that see an extremely strong result for $Q_{WMB}$. We are comparing two population distributions after all, which cover much of the same parameter space (with different densities). A star that prefers the WMB model will still be consistent with the standard model but with a much smaller probability. The mixture model is really showing which population the star is more likely to come from, not advocating for some model description that incorporates the physics of both.\\
 
- If there is to be a hard limit at which the the effects of splitting can not be measured, it is where $\nu_s < 2/T$, two times the frequency bin width. The bin width is set by observing time, so to make an conservative estimate, we can take our star with the shortest observing time  (0.49 years). For this star, the limit on measuring rotation would be ~89 days (and increasing for longer observing baselines). As discussed below, as you get to slower rotation rates it becomes harder to constrain the small rate of mode splitting and so the uncertainty will increase. This is dealt with appropriately in our model comparison through the use of hierarchical models.
-\end{enumerate}
+\noindent\textbf{About the calibration of the rotation evolution model: the standard and WMB models are both calibrated on young clusters and to match the solar rotation at 4.6Gyr. The comparison of models is then one of "extrapolated solar braking" and "weaker than extrapolated solar braking", and is not really as definitive as WMB vs standard. If there is some stochasticity in rotation evolution toward older, slower rotators, the Sun might present a biased calibration point. I would suggest the authors note that their study is strictly only supporting this conclusion that some stars have weaker than solar and extrapolated solar rotation braking (and only then if selection bias missing more active stars is not significant).}\\
 
-Hopefully with this discussion we’ve shown that both the slow (hard limit) and fast (soft limit) limits on measuring rotation with asteroseismology do not affect the analysis driving our conclusions, which is done by stars between 10 and 40 days. We’ve added a plot below which should help illustrate our arguments. The circles represent stars in our sample, coloured by their seismic rotation.\\
+We have added the following to the first point in our conclusions: “Stars in our ensemble overall show a weaker rate of braking than one would expect from solar (and extrapolated solar) braking rates.”
 
-\begin{figure}[h!]
-\includegraphics[width=\textwidth]{image1.png}
-\caption{Representation of the limits on fast and slow rotation rates. The blue line represents how this limit changes with the small separation (for the fast limit) and the observation baseline (slow limit). The circles represent where stars in our sample fall on these diagrams, and are coloured by their rotation rate.}
-\end{figure}
+We have no reason to suspect that seismic detection biases cause us to not measure active stars to the degree where it affects our results. Spot detection becomes extremely difficult for inactive stars, but asteroseismic detection biases are not the inverse of this. It is worth noting that over half our sample is active enough to have existing spot rotation measurements.
 
-\textit{Bias in stellar populations:} The reviewer/reader might be concerned there is a second potential observational bias in that asteroseismology does not detect stars in the 6200-5800 Kelvin range in the latter half of their main sequence lifetime, and is therefore only detecting younger, faster rotators. This concern is more easily alleviated. The probability of an asteroseismic detection scales with temperature and radius (i.e. scales inversely with log g, and therefore age on the main sequence). More active, magnetic stars may also suppress their oscillation modes, meaning that it is more likely to detect seismic oscillations in older stars.  Because of both these effects asteroseismic detection probabilities are slightly biased towards older stars on the main sequence, not younger. See e.g. Chaplin et al. (2011), Schofield et al. (2019) for Kepler and TESS respectively, and Mathur et al. (2019) for the magnetic suppression.
+To respond to the risk of stochasticity in rotational evolution affecting our results: we don’t believe that there is enough support for this at late ages, especially in the space $> 6$ Gyr where most of our sample resides. The rotation rates at 2.5 Gyr in Meibom et al. (2015) have an exceptionally low scatter, and there is no mechanism in the standard spin-down model to introduce scatter after that point.\\
 
-Between these two statements -- that our method measures accurate rotation in the regions that matter, and that asteroseismology is biased towards older, not younger, stars -- we are confident that observing biases do not affect our conclusions. We’ve included a paraphrased version of the discussion as above in the paper \textbf{Methods} Section 3.4. \\
+\noindent\noindent\textbf{ 2 - Another big concern is that the critical Rossby number is fixed from previous studies in which the rotation periods came from star-spots observations. The authors admit those are biased and one of the motivations of this study is to test if that bias explains the observed deviation of post-MS stellar rotation periods from those predicted by Gyrochronology.}\\
 
-\noindent\textbf{The significance of the results, would be much stronger if:
+The use of Rocrit = 1.97, based on the van Saders et al. (2019) fit to the star-spot observations is chosen as the current best estimate of the critical Rossby number. We are not attempting to make any statements about the value of Rocrit in this work. However with our method, if the true Rocrit were to be much higher or lower than 1.97, this would water down our posterior probability for $Q_{WMB}$ (either towards the standard model if higher, or towards no preference for either if lower). The fact that this Rocrit is based on spot rotation rates, which are biased against inactive stars, is essentially unimportant for this comparison, as the stellar model populations we compare against are complete. However, that the WMB model is favoured when using independent asteroseismic rotation is important, of course.\\
+
+
+\noindent\noindent\textbf{ 3 - I am also concerned about the selection bias:}
+
+\noindent\textbf{Methods, top p25}
+
+\textit{"More active, magnetic stars may also suppress their oscillation modes, making it more likely to detect seismic oscillations in older stars [45]. Through these two effects, asteroseismology is biased towards detecting older over younger stars. As it is older stars, undergoing magnetic braking, that are required to drive the distinction between stellar models, we do not expect this observing bias to effect our conclusions."}
+
+\noindent\textbf{This does not address the selection bias problem inherent in the study.  Yes, the slower rotators are needed to find any WMB effects, but the synthetic populations do not include this selection bias and at face value will be lacking the more active stars that will favor the standard model, not WMB. The comparison is then inherently biased toward WMB.}\\
+
+We think the referee is misinterpreting the asteroseismic selection effects. Spot rotation rates have a dearth of measurements for old, inactive stars. The seismic selection effect is not the opposite of this. Our sample includes both active and inactive stars (in fact, over half our sample has existing surface rotation measurements). The asteroseismic selection effect only excludes very young and very active stars ($\lesssim 2$ Gyr, Salabert+16 and Mathur+19), which would not inform $Q_{WMB}$ strongly. For the purposes of this comparison, the asteroseismic selection is essentially complete. Page 25 is intended to inform the reader of asteroseismic selection biases for completeness, and we have now changed it to make sure it clarifies that this is not an issue for this study. The paragraph now reads as follows:
+
+“Finally, we also consider bias in asteroseismic detections. The probability of an asteroseismic detection with \textit{Kepler} scales with temperature and radius (i.e. scales inversely with $\log$g, and therefore main sequence age), and detections are unlikely below roughly $5200\, K$. Very young ($\lesssim 2$ Gyr), very magnetically active stars may also suppress their oscillation modes. Though these two effects impose a bias on asteroseismic populations, they do so outside the parameter range on which our comparison takes place. As it is older stars, undergoing magnetic braking, that are required to drive the distinction between stellar models, we conclude that our seismic sample can be assumed to be complete for the purposes of this work.”
+
+The referee also mentions that the synthetic populations are lacking more active stars, so we would like to reiterate that we have no reason to believe the stellar models are not complete. The standard and WMB model populations are built using the same synthetic stellar sample evolved under angular momentum evolution prescriptions which are identical until the critical Rossby number.\\
+
+\noindent\textbf{The only proper way to compare the TRILEGAL synthetic populations is with stellar samples that are not detection biased in a different way.  In this regard, it would also seem that a more complete sample could be constructed by including stars with spot-derived rotation period measurements to combine with the oscillations sample.}\\
+
+The TRILEGAL sample is not detection biased, just calibrated to a particular critical Rossby number, which naturally includes the spot-derived rotation periods. The models describe what the Kepler field looks like in the cases with and without weakened braking at Rocrit = 1.97. Our analysis simply tells us which of these two cases our stars are in better agreement with. There is no reason to believe these model populations are incomplete.
+
+We should also note that any individual star will be able to tell the difference between the standard and WMB models (provided it is evolved past the point where the two models diverge). These individual star-by-star posteriors are combined to give us a single combined posterior that describes whether the ensemble as a whole prefers the WMB model, which drives our conclusions. We have tried to emphasise the fact that the model comparison is done star-by-star more in the text.
+
+The unique selection biases that asteroseismology is subject to do not need to be reflected in the stellar models for the purposes of our analysis, for two reasons:
 \begin{itemize}
-\item it could be shown that there is no observational bias
-associated with the seismic data and 
-\item if a range of rotation evolution models were considered, not just one model with and without weakened breaking.
-\end{itemize}
-}
-With regards to the observational bias, see above.
-
-With regards to the rotation models: It is our opinion that performing this comparison in a separate work would be more appropriate. Most rotation models without weakened magnetic braking will have similar predictions in this regime our sample occupies, as they are all calibrated to reproduce the Sun (and at younger ages, clusters), and so the largest difference between models will come from the inclusion of a change in the braking law. It’s not that we think that such a comparison isn’t important -- on the contrary -- but it should be explored in a separate paper with more of a focus on the differences in theoretical models, and including a much broader range of models both with- and without changes to the braking.\\
-
-\noindent\textbf{One may fear that seismology works only for $\nu_s / \Gamma$ large (ratio of rotational splitting to mode line width, not provided). 
-\begin{itemize}
-\item How many stars have $\nu_s /  \Gamma < 2$ here (the problematic cases)?
-\item How many of these are slow rotators? 
-\end{itemize}
-}
-
-That seismic rotation can only be probed in cases where split components are fully separated from one another, as the reviewer is suggesting, is a common misconception. Asteroseismic splitting is rarely larger than double the linewidth (in our sample this is only the case for a handful of the fastest rotators). Instead, rotational splitting changes the distribution of a mode's power with frequency, in a way that can be disentangled. This takes a specific form depending on the angular degree of the mode and the inclination angle of the star. This is why marginalising over inclination angle is important, because only by constructing a model that accounts for inclination angle and rotation together can you accurately represent how rotation affects the modes.
-
-It is also worth noting that our fitting method marginalises over inclination angle, rotational splitting and linewidth, and so the final rotational period measurements have uncertainties that accurately reflect the uncertainty associated with the slow rotation only having a small effect on the power distribution of the modes of oscillation. To be clear, there is no boundary beyond which this methodology of measuring asteroseismic rotation no longer works, until you start pushing up against the frequency resolution of the power spectrum (as discussed above).
-
-As discussed at the top of this response, the reviewer may be concerned that Figure 3 (Figure 5 in the old draft) shows  a number of slow rotators that were not included in the model comparison, because they had poor convergence metrics. It is indeed harder to measure rotation in slow rotators (as mentioned above), and so fewer of these stars were able to converge within the computational time we had available. When we repeated the rotational model comparison analysis while still including these stars, our conclusions did not change, a statement which we have now included in the paper.\\
-
-\noindent\textbf{Does the seismic catalog contain enough accurate measurements for the slow rotating stars?}
-
-We are confident that the accuracy of the measurements for the slow rotating stars is sufficient, in this case referring to those with periods of roughly 20 days and up. \textbf{Extended Data} Figures 3 and 4 (Figures 7 and 8 in the old draft) show that stars in this regime are consistent with with previous measurements of asteroseismic rotation where those are available.\\
-
-\noindent\textbf{Is the apparent deficit of slow rotators in the catalog due to weakened magnetic braking or to observational biases? Figure 9 [\textbf{Extended Data} Figure 5 in the new draft] left is not reassuring.}
-
-As discussed above, we believe there is sufficient ground to claim that our deficit of slow rotators is due to weakened magnetic braking and not observational biases in seismology. With regards to \textbf{Extended Data} Figure 5 (Figure 9 in the old draft), as discussed in the text, the disagreements below $5\,  \rm{kms}^{-1}$ are within the expected deviation between seismic and spectroscopic comparisons in this region (Tayar et al. 2015). We’ve added a line to indicate the border of this region. In addition, the majority of slowly rotating stars in the Figure lie above the 1:1 line, implying that if spectroscopic values were the truth, seismology would find rotation rates that are \textit{slower} than the truth, which would bias our results towards a standard model, and not towards weakened magnetic braking.
-
-The spectroscopy comparison is there for completeness, but in our opinion the more important test is the comparison to surface rotation rates (Figure 2 in the new draft), which shows good agreement. A paraphrased version of this answer is now included in the text in \textbf{Methods} Section 3.3.\\
-
-\noindent \textbf{The stellar inclination angle i is clearly not measured, as shown in figure 6-middle [\textbf{Extended Data} Figure 2 in the new draft]. Therefore the stellar rotation rate itself is not determined for individual stars. Is this not a problem for the interpretation of the data in terms of rotation evolution models, esp. toward the slow-rotator end of the distribution?}
-
-The purpose of \textbf{Extended Data} Figure 2 (Figure 6 in the old draft) is to check whether our inclination angle returns the prior. In the majority of cases the spread of the posterior distribution is smaller than the prior, indicating that our measurement of $i$ is driven by the data. Even in the cases where it does closely resemble the prior, our Bayesian approach will ensure that this is properly reflected in the results for the rotation period. In our analysis, rotational splitting ($\nu_{s}\sin(i)$), inclination ($i$) and rotation ($P$) are all marginalised over, and so the uncertainties reflect the posterior probability distribution these values can take given the data. Because of this, the uncertainties on rotation visible in the Figure have already accurately incorporated the uncertainty in the inclination angle. We have added extra description to the figure caption that clarifies this. The stellar rotation rate is well determined for individual stars in spite of the difficulties with constraining inclination angle, because it has been fully marginalised over in our Bayesian analysis.
-
-If we are interpreting the reviewer’s report correctly, we understand that they are concerned that there are fewer slowly rotating stars, and that those that are slowly rotating appear to have large uncertainties. There are relatively few stars in this slowly rotating regime, either due to weakened magnetic braking or observational bias, and we address this in the comments about observational bias above. The latent variable model we use to compare the two rotational evolution models allowed us to incorporate the uncertainties appropriately, and bear in mind that it’s not just rotation space where the models are compared, but mass, metallicity, temperature, and age as well.\\
-
-\noindent\textbf{ Two rotation evolution models are tested against each other. One model is favoured (more likely than the other). However, it is not clear how good is this model, i.e. whether it fits the data. In particular, it is not clear whether the data really favour a transition model and not another spin-down model (e.g., Matt et al. 2015).}
-
-Our model is based on the Matt formalism, although our choices of scalings for stellar angular momentum loss and magnetism are different (see van Saders et al. 2019), and so our models are more similar to the Matt models than other models available in the literature (see Fig 1 in Matt et al. 2015) 
-
-The Matt et al. (2015) model and associated paper puzzled over the fact that the apparent edge of the period distribution in the McQuillan sample was at roughly the solar age in their model (see Fig 3 in Matt 2015), and wondered whether it meant the age distribution in the \textit{Kepler} field was very different (younger) than expected. Their 4 Gyr model is already at the McQuillan period distribution edge. Their model would have predicted the same long rotation periods as our standard model, with differences in detail because of the different braking law scalings. In other words: a 8-9 Gyr star in the Matt model would not be sitting on the edge of the McQuillan sample, it would be above it.
-
-Of course, there are still other models of rotational evolution worth comparing to. Comparing our seismic rotation sample to different models (both with- and without magnetic braking present) is an important next step for this research, but not one we feel belongs in this paper. With this study, we’re really focused on repeating the research that first proposed weakened magnetic braking (van Saders et al. 2016) with the improved seismic sample that includes rotation.\\
-
-\noindent\textbf{The authors may consider making a plot like Figure 2 from van Saders et al. 2016, i.e. ratio of $P_{\rm obs}/P_{\rm predicted}$ versus age. The advantage for plotting the ratio is that it is easier to see whether there is a transition in the data (less impact from the systematic biases in the models).}
-
-We considered including such a plot in our paper, but omitted it because such a plot would not provide any new information beyond what is already included in the paper. The core of this paper is the use of a probabilistic analysis of a full ensemble of stars to distinguish between two competing models. A plot that shows that \textit{individual} stars are in \textit{disagreement} with a standard evolution doesn’t add any new information, especially when the format requires conciseness (and the discrepancy already been demonstrated in previous work for many stars in this sample). We think it is more important to tread new ground with a Bayesian method that accounts for multiple parameter spaces (metallicity being the most important one), to drive our conclusions.
-
-A $P_{\rm obs}/P_{\rm predicted}$  plot would also require us to either model the rotation of individual stars, or delve into empirical gyrochronology, both of which are outside the scope of this paper in its current form, and are better explored in separate work.\\
-
-\noindent\textbf{ Does TRILEGAL correctly synthesize the stellar population? Any free parameters?}
-
-To the best of our knowledge the TRILEGAL simulation is appropriate for this purpose, and any issues that may arise through the use of TRILEGAL are also mitigated by our treatment in the paper--- drawing from TRILEGAL simulated stars until they match the distributions seen by Berger et al. (2020) in the Kepler field. As for the parameters, our TRILEGAL simulation is the same as that used for van Saders et al. (2019), and is using the standard values from Girardi et al. (2005), as described in both those papers (this was wrongly cited as Girardi et al. 2015 in the first draft, and has since been corrected). \\
-
-\noindent\textbf{ Should the paper be published, I would suggest to move most of the asteroseismology details to an appendix at the end of the paper (the asteroseismic analysis is mostly standard). Even though these details are important, the reader should not be diverted from the main topic of the paper, ie the discussion about the rotation evolution models.
-Some sections, for example 3.1.4, contain a lot of jargon and are hard to follow even for a specialist. }
-
-There’s been quite a bit of a reshuffle between drafts here to match the Nature Astronomy style. Section 3.1 (the asteroseismic methods) is now in \textbf{Supplementary Information}, which has improved the flow a lot. The Gyrochronology methods and the majority of the discussion are now in \textbf{Methods}, so the core body of the paper is a lot more streamlined.
-
-When transferring the methods to the Supplementary Information, we have tried to improve the explanations of the more complicated terms (such as Gaussian Processes).
-
-\clearpage
-\section*{Changes to the manuscript}
-\subsection*{Structural Changes}
-There has been a major structural overhaul of the manuscript to help it comply with the Nature Astronomy guidelines.
-
-\begin{itemize}
-	\item The detailed sections of Section 2: Data have been moved to \textbf{Methods}.
-	\item Section 3.1: Asteroseismic Model has been moved to \textbf{Supplementary Data}.
-	\item Section 3.2: Distinguishing between Gyrochronology Models has been moved to \textbf{Methods}
-	\item Portions of the \textit{Fitting Procedure} components of both Model sections are now included in the \textbf{Methods} section.
-	\item The detailed sections of Section 4: Results have been moved to \textbf{Methods}.
-	\item Table 1 is has been moved to \textbf{Extended Data}.
-	\item Sections 5.1.1., 5.1.2., and the spectroscopy half of 5.1.3. have all been moved to \textbf{Methods}. Their conclusions are mentioned in the main text.
-	\item Sections 5.2.2, 5.2.3. and 5.2.4. have all been moved to \textbf{Methods.} Their conclusions are mentioned in the main text.
-	\item Figures 3, 6, 7, 8 and 9 have been moved to \textbf{Extended Data} and are referenced from \textbf{Methods}.
-	\item Figure 2 has been moved to \textbf{Supplementary Information}.
+\item On a star-by-star basis, the effects of a seismic selection effect are slowly changing (there are no sharp cut-offs except at the extremes of the parameter space, which are not relevant to our sample), so we would not expect a selection effect to alter our posterior probability.
+\item The selection effects would be applied to both models identically. Because we are comparing the two models in a mixture model, applying the selection effect would yield a net zero effect on the posterior probability, so there is no need to include it.\\
 \end{itemize}
 
-\subsection*{Content Changes}
-The main body of the text (pages 2 through 10) is either new or paraphrased from sections of the previous manuscript. We have tried to retain the same contents and citations as in the previous manuscript, to avoid the need for in-depth review of this section of the paper.
+\noindent\textbf{This also raises the question of why not simply compute individual rotation models for all the parameters of the stars in the sample and compare directly synthetic to observed stars? At least as an additional test, it would seem the most obvious approach that should be much more amenable to simple statistical comparison.}\\
 
-Other changes include:
-\begin{itemize}
-	\item Figure captions have been updated with extra descriptions to match the Nature Astronomy requirements.
-	\item \textbf{Methods} Section 1.2 is a new section that briefly describes the mode frequency fitting process without much detail (which is available in the \textbf{Supplementary Information})
-	\item Added a paragraph to \textbf{Methods} Section 3.3. (spectroscopic rotation comparison) going into a little more depth about what the discrepancy between these methods means for our conclusions.
-	\item Added a line indicating the 5 km/s boundary to \textbf{Extended Data} Figure 5.
-	\item Added \textbf{Methods} Section 3.4, which covers asteroseismic detection biases.
-	\item Refactored the headings describing the asteroseismic method in \textbf{Supplementary Information} to make the flow clearer.
-	\item Expanded the explanation of Gaussian Processes in \textbf{Supplementary Information} Section 1.2.2.
-\end{itemize}
+This is functionally what we have already done in our work. We have modeled rotation rates generated for each star in a simulation of the Kepler field. We then compare our observation to the distribution of these models in five parameter spaces simultaneously, and obtain a posterior distribution describing which angular momentum evolution prescription the observation more closely agrees with.\\
 
+\section*{Minor comments:}
+\noindent\textbf{TRILEGAL rotation model simulations:
+I would like to see a little bit more detail here on how the rotation models are computed.  Eg. solid body rotation assumed? Definition of Rossby number in the code and how/where convective turnover time is computed? etc.  While these might be described in detail in the primary references, the model ingredients are crucial for the study and it helps the reader to have a more complete summary so as not to have to hunt for this in another paper.}\\
 
+We’ve added an explanation of how the Rossby number and the convective turnover timescale are defined in the model, and mentioned our solid body rotation assumption.\\
+
+\noindent\textbf{Page 2 - Asteroseismic main sequence targets: I find this sentence not too clear: “A star’s rotation causes modes of oscillation to split into multiplets, enabling measurement of independent rotation rates by measuring the rate of splitting [22]”
+This will not be very helpful for anyone with no prior knowledge of asteroseismology, and will be obvious for anyone in that field.}\\
+
+We’ve changed this to: “Rotation causes certain modes of oscillation -- which lie at the same frequency in a non-rotating case -- to shift to higher or lower frequencies. The size of this `splitting' provides a means of independently measuring the rotation of the star”.
+To accommodate the extra words in the introduction, we removed “This makes asteroseismic rotation rates a perfect test of weakened magnetic braking on the main sequence” from the following paragraph.\\
+
+\noindent\textbf{Page 4 - Seismic versus surface rotation rates: “How do the authors use the uncertainties to fit the line?
+“We fit a line of the form Psurf = m x Pseis, using the larger of the asymmetrical uncertainties on asteroseismic rotation, and excluding stars above the 1.8:1 line to avoid likely multiples of the true rotation rate acting as outliers (transparent in the Figure).”}\\
+
+This was an oversight, and we’ve now included a more detailed explanation in Methods, in its own section, including an extra test of the Psurf = m x Pseis fit using only stars that preferred the WMB model.\\
+
+\noindent\textbf{Fig 3 would benefit from a more explicit explanation of the color code, which seems to be the number of stars predicted by each of the models. Also, the Caption overlaps with page number}\\
 	
+Added the sentence “The z-axis colour scale indicates the density of stars in $P$-$T_{\rm eff}$ space for the models.”, and reduced the image size.\\
+
+\noindent\textbf{$P_s$ is a mixing parameter and not a rotation period. I find the choice of name confusing in this context.}\\
+
+Good call. We’ve changed $P_s$ to $Q_{WMB}$ everywhere, which is more in line with other papers that use mixture models. $Q_{WMB}$ = 1 - $P_s$, and we think this helps communicate the main conclusion more clearly (and improves the readability of Figure 4).  While we’re at it, we made sure to use $P$ instead of $P_{rot}$ consistently for rotation.\\
+
+\noindent\textbf{Page 6 - Results of Comparing Models:
+- “In order to assess the posterior probability for the full sample, we multiplied the individual posterior probabilities for Ps.” Do the authors mean “multiplied the individual posterior probabilities by Ps”?}\\
+
+We think the referee may misunderstand what is being described here. We have probability distributions for $Q_{\rm WMB}$ (=1-Ps) based on each individual star. By multiplying those distributions, we obtain a probability distribution that describes $Q_{\rm WMB}$ based on an ensemble of stars. We’ve added a sentence that clarifies this a little more here: “This joint posterior then describes the probability distribution of $Q_{\rm WMB}$ given multiple stars.” \\
+
+\noindent\textbf{- ”Both hot and sub-giant stars do not strongly prefer one model over the other (with both
+cumulative probabilities crossing the Ps = 0.5 line at roughly 45\%) […] When performing
+this analysis on all 89 stars for which seismic rotation was measured (excluding the
+two stars with low metallicity), the total probability below Ps = 0.5 is 96.6%.”
+I think it is not fair to mix populations with such different probabilities and then compute an overall probability and assume it represents anything.}\\
+
+All stars provide meaningful information, and the multiplication of individual posterior probability distributions to create a joint posterior probability distribution is a valid way of studying the ensemble as a whole. We feel that, for completeness sake, it’s important to report the results given our full ensemble, even though subgiant and ‘hot’ stars in our sample don’t appear to have undergone weakened braking yet.\\
+
+\noindent\textbf{Did the authors try a smaller Rossby number to see if the method works? If it also resulted in statistical agreement with a model of weakened magnetic braking at critical Ro 1 for example, one could argue there is an issue.}\\
+
+We already know how different critical Rossby numbers affect the distribution of stars undergoing weakened magnetic braking (see van Saders et al. 2016). The further our models critical Rossby number deviates from the truth, the more watered down our distribution of $Q_{WMB}$ will become, as stars will divert to favouring the standard model (in the case of a high Rocrit) or the standard and WMB models will become essentially the same (low Rocrit).
+
+In this manuscript we are not making claims about statistical agreement between models and data, but relative statements about which models are preferred--- we’re not trying to report on any value of Ro in particular.\\
+
+\noindent\textbf{How do authors rule out that the issue is just a Gyrochronology calibration issue? Or two branches of rotators that, on average, favor a WMB model? That could be explored by separating the samples in faster vs slower rotators.}\\
+
+We’re assuming that the referee is referring to the Barnes et al. model of gyrochronology that has a fast and slow rotating branch. Even if that model is assumed to be correct, it is applicable at young ages, and based on observations at 2.5 Gyr (Meibom et al. 2015) we do not expect this potential dispersion to hold any weight at the late ages (> 6 Gyr) where most of our main sequence stars reside (i.e., any dispersion present would be far smaller than the uncertainties on rotation). Following the same line of thought, a fast and slow rotation branch at low ages would not average to form a distribution resembling the WMB model, as the WMB model has zero angular momentum loss past the critical Rossby number. Truncated braking may be a better name for the model, in retrospect.
+
+We don’t think separating our sample by rotation rate is worthwhile, as we expect faster rotating stars to drive the distinction between the standard and WMB scenarios (rotating fast at late ages). For our distribution of $Q_{WMB}$ to be due to two separate streams of rotational evolution the dispersion between these two streams would have to be very dramatic, which isn’t supported by what we see in Meibom et al. (2015).\\
+
+\subsection*{Methods:}
+\noindent\textbf{Authors claim they use new measurements of rotation periods that do not suffer from the star-spots observational biased by which slower rotators will not be detected. However, they use a fixed critical Rossby number (Ro = 1.97) that comes from van Saders et al. 1013, 1016, and 1019, and was derived from rotation periods measured from starspots, which do include that bias that is consistent with that Rossby number.}\\
+
+This is a good observation, however we don’t think these two things are mutually exclusive. The seismic observations are independent to surface rotation measurements, and are subject to entirely separate biases, as discussed in the text. The WMB model we compare to uses Ro = 1.97 based on the van Saders et al. (2019) paper, as the reviewer mentions. The population generated from this model looks similar to the distribution of rotation rates seen in McQuillan et al. (2014), prompting the question whether it is a spot rotation bias causing this trend (as mentioned in the text and by the reviewer). By showing that our seismic rotation rates, which are not subject to the same biases as spot rotation, agree with the WMB model, we can conclude that this signature of weakened magnetic braking is not just a population bias effect.
+
+Bear in mind also that we are comparing to a model, and not population measurements. The exact value of the Rossby number itself matters little, as a population drawn from any WMB model will look sufficiently different to the standard scenario past the critical Rossby number. We would also like to reiterate that we believe that both the model and observed populations are, for the purposes of this comparison, complete.\\
+
+\noindent\textbf{What is the probability of Ps $<$0.4, and Ps$<$0.3? This tells you more about WMB really being favored, rather than something in between.}\\
+
+We’ve added the following: “The total posterior probability for all stars above $0.6$ and $0.7$ is $93.3\%$ and $78.2\%$  respectively. This does not necessarily mean that a mixture of the two models is preferred, as stars that have not yet undergone weakened braking, or which are near the transition period, will have a flat posterior distribution with no strong preference for either model.”\\
+
+\noindent\textbf{I am not sure how the authors reach the conclusion that their posterior estimates on rotational parameters are data and not prior-dominated. Just by looking at Fig 2 by eye?}\\
+
+The analysis by-eye just reflects a comparison of the summary statistics of the posterior distribution vs the prior. We’ve changed the language so this is better reflected in the text:
+
+“In the Figure, results with means (symbols) and 68\% credible regions (error bars) that are close to those same values for the prior distribution (where the horizontal line is the mean, and the shaded area is the credible region) can be interpreted as prior-dominated (i.e. poorly informed by the data). Cases where the means differ or the credible regions are smaller than the prior distribution are data-dominated.”
+
+
+
+
+
 \end{document}
