@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Asteroseismic Methods}{16}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Asteroseismic Data}{16}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Mode Frequency Fitting}{17}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Gyrochronology Methods}{18}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Stellar Models}{18}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Bayesian Mixture Model}{19}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Verifying asteroseismic results}{21}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Priors on rotational parameters}{21}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Comparisons to previous studies}{22}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}{Seismic vs Surface rotation}}{23}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Seismic vs spectroscopic rotation}{24}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Asteroseismic detection biases}{24}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Verifying consequences for gyrochronology}{25}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Limits of our stellar models}{25}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Systematic uncertainties from asteroseismology}{26}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Binaries and Planet Hosts}{27}{subsection.4.3}%

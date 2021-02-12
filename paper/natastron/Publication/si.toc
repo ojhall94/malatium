@@ -1,0 +1,13 @@
+\contentsline {section}{\numberline {1}Asteroseismic Model}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Convective Background ($B(\nu )$)}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Modes of Oscillation ($O(\nu )$)}{2}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Mode Frequencies and Rotational Splitting ($\nu _{n,\ell ,m}$)}{2}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Mode Linewidth ($\Gamma _{n,\ell }$)}{3}{subsubsection.1.2.2}%
+\contentsline {subsubsection}{\numberline {1.2.3}Mode Heights and Angle of Inclination ($H_{n,\ell ,m}$)}{4}{subsubsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.3}Likelihood Function for $M(\nu )$}{5}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Model preparation and hyperparameter priors}{5}{subsection.1.4}%
+\contentsline {subsubsection}{\numberline {1.4.1}Fitting the convective background}{5}{subsubsection.1.4.1}%
+\contentsline {subsubsection}{\numberline {1.4.2}Obtaining First Guesses and Prior Values}{6}{subsubsection.1.4.2}%
+\contentsline {subsubsection}{\numberline {1.4.3}Priors on our Hyperparameters}{6}{subsubsection.1.4.3}%
+\contentsline {subsection}{\numberline {1.5}Fitting procedure}{9}{subsection.1.5}%
+\contentsline {section}{\numberline {2}Supplementary Table}{9}{section.2}%
