@@ -9,7 +9,7 @@
 \bibinfo{author}{Barnes, S.~A.}
 \newblock \bibinfo{title}{Ages for {{Illustrative Field Stars Using
   Gyrochronology}}: {{Viability}}, {{Limitations}}, and {{Errors}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{669}}, \bibinfo{pages}{1167} (\bibinfo{year}{2007}).
 
 \bibitem{meibom+2015}
@@ -26,15 +26,16 @@
 \newblock \bibinfo{title}{Blue {{Lurkers}}: {{Hidden Blue Stragglers}} on the
   {{M67 Main Sequence Identified}} from {{Their Kepler}}/{{K2 Rotation
   Periods}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{881}}, \bibinfo{pages}{47} (\bibinfo{year}{2019}).
 
 \bibitem{claytor+2019}
-\bibinfo{author}{Claytor, Z.~R.} \emph{et~al.}
-\newblock \bibinfo{title}{Chemical {{Evolution}} in the {{Milky Way}}:
-  {{Rotation}}-based ages for {{APOGEE}}-{{Kepler}} cool dwarf stars}.
-\newblock \emph{\bibinfo{journal}{arXiv e-prints}}
-  \bibinfo{pages}{arXiv:1911.04518} (\bibinfo{year}{2019}).
+\bibinfo{author}{{Claytor}, Z.~R.} \emph{et~al.}
+\newblock \bibinfo{title}{{Chemical Evolution in the Milky Way: Rotation-based
+  Ages for APOGEE-Kepler Cool Dwarf Stars}}.
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+  \textbf{\bibinfo{volume}{888}}, \bibinfo{pages}{43} (\bibinfo{year}{2020}).
+\newblock \eprint{1911.04518}.
 
 \bibitem{barnes+2016}
 \bibinfo{author}{Barnes, S.~A.}, \bibinfo{author}{Weingrill, J.},
@@ -43,7 +44,7 @@
 \newblock \bibinfo{title}{Rotation {{Periods}} for {{Cool Stars}} in the 4
   {{Gyr}} old {{Open Cluster M67}}, {{The Solar}}-{{Stellar Connection}}, and
   the {{Applicability}} of {{Gyrochronology}} to at least {{Solar Age}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{823}}, \bibinfo{pages}{16} (\bibinfo{year}{2016}).
 
 \bibitem{borucki+2010}
@@ -59,34 +60,31 @@
 \bibinfo{author}{Silva~Aguirre, V.} \emph{et~al.}
 \newblock \bibinfo{title}{Ages and fundamental properties of {{Kepler}}
   exoplanet host stars from asteroseismology}.
-\newblock \emph{\bibinfo{journal}{Monthly Notices of the Royal Astronomical
-  Society}} \textbf{\bibinfo{volume}{452}}, \bibinfo{pages}{2127}
-  (\bibinfo{year}{2015}).
+\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+  \textbf{\bibinfo{volume}{452}}, \bibinfo{pages}{2127} (\bibinfo{year}{2015}).
 
 \bibitem{angus+2015}
 \bibinfo{author}{Angus, R.}, \bibinfo{author}{Aigrain, S.},
   \bibinfo{author}{{Foreman-Mackey}, D.} \& \bibinfo{author}{McQuillan, A.}
 \newblock \bibinfo{title}{Calibrating gyrochronology using {{Kepler}}
   asteroseismic targets}.
-\newblock \emph{\bibinfo{journal}{Monthly Notices of the Royal Astronomical
-  Society}} \textbf{\bibinfo{volume}{450}}, \bibinfo{pages}{1787}
-  (\bibinfo{year}{2015}).
+\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+  \textbf{\bibinfo{volume}{450}}, \bibinfo{pages}{1787} (\bibinfo{year}{2015}).
 
 \bibitem{nielsen+2015}
 \bibinfo{author}{Nielsen, M.~B.}, \bibinfo{author}{Schunker, H.},
   \bibinfo{author}{Gizon, L.} \& \bibinfo{author}{Ball, W.~H.}
 \newblock \bibinfo{title}{Constraining differential rotation of {{Sun}}-like
   stars from asteroseismic and starspot rotation periods}.
-\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
+\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
   \textbf{\bibinfo{volume}{582}}, \bibinfo{pages}{A10} (\bibinfo{year}{2015}).
 
 \bibitem{davies+2015}
 \bibinfo{author}{Davies, G.~R.} \emph{et~al.}
 \newblock \bibinfo{title}{Asteroseismic inference on rotation, gyrochronology
   and planetary system dynamics of 16 {{Cygni}}}.
-\newblock \emph{\bibinfo{journal}{Monthly Notices of the Royal Astronomical
-  Society}} \textbf{\bibinfo{volume}{446}}, \bibinfo{pages}{2959}
-  (\bibinfo{year}{2015}).
+\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+  \textbf{\bibinfo{volume}{446}}, \bibinfo{pages}{2959} (\bibinfo{year}{2015}).
 
 \bibitem{vansaders+2016}
 \bibinfo{author}{{van Saders}, J.~L.} \emph{et~al.}
@@ -96,12 +94,12 @@
   \bibinfo{pages}{181} (\bibinfo{year}{2016}).
 
 \bibitem{reville+2015}
-\bibinfo{author}{R{\'e}ville, V.}, \bibinfo{author}{Brun, A.~S.},
-  \bibinfo{author}{Matt, S.}, \bibinfo{author}{Strugarek, A.} \&
-  \bibinfo{author}{Pinto, R.}
-\newblock \bibinfo{title}{The effect of magnetic topology on thermally-driven
-  winds: Towards a general formulation of the braking law}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\bibinfo{author}{{R{\'e}ville}, V.}, \bibinfo{author}{{Brun}, A.~S.},
+  \bibinfo{author}{{Matt}, S.~P.}, \bibinfo{author}{{Strugarek}, A.} \&
+  \bibinfo{author}{{Pinto}, R.~F.}
+\newblock \bibinfo{title}{{The Effect of Magnetic Topology on Thermally Driven
+  Wind: Toward a General Formulation of the Braking Law}}.
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{798}}, \bibinfo{pages}{116} (\bibinfo{year}{2015}).
 \newblock \eprint{1410.8746}.
 
@@ -119,22 +117,22 @@
   \bibinfo{author}{{van Saders}, J.}
 \newblock \bibinfo{title}{Stellar {{Evidence That}} the {{Solar Dynamo May Be}}
   in {{Transition}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal Letters}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J. Letters}}
   \textbf{\bibinfo{volume}{826}}, \bibinfo{pages}{L2} (\bibinfo{year}{2016}).
 
 \bibitem{metcalfe+2019}
-\bibinfo{author}{Metcalfe, T.~S.} \emph{et~al.}
-\newblock \bibinfo{title}{{{LBT}}/{{PEPSI Spectropolarimetry}} of a {{Magnetic
-  Morphology Shift}} in {{Old Solar}}-type {{Stars}}}.
-\newblock \emph{\bibinfo{journal}{arXiv:1912.01186 [astro-ph]}}
-  (\bibinfo{year}{2019}).
+\bibinfo{author}{{Metcalfe}, T.~S.} \emph{et~al.}
+\newblock \bibinfo{title}{{LBT/PEPSI Spectropolarimetry of a Magnetic
+  Morphology Shift in Old Solar-type Stars}}.
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+  \textbf{\bibinfo{volume}{887}}, \bibinfo{pages}{L38} (\bibinfo{year}{2019}).
 \newblock \eprint{1912.01186}.
 
 \bibitem{see+2019}
 \bibinfo{author}{See, V.} \emph{et~al.}
 \newblock \bibinfo{title}{Do {{Non}}-dipolar {{Magnetic Fields Contribute}} to
   {{Spin}}-down {{Torques}}?}
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{886}}, \bibinfo{pages}{120} (\bibinfo{year}{2019}).
 
 \bibitem{mcquillan+2014}
@@ -142,7 +140,7 @@
   \bibinfo{author}{Aigrain, S.}
 \newblock \bibinfo{title}{Rotation {{Periods}} of 34,030 {{Kepler
   Main}}-{{Sequence Stars}}: {{The Full Autocorrelation Sample}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal Supplement Series}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J. Supplement Series}}
   \textbf{\bibinfo{volume}{211}}, \bibinfo{pages}{24} (\bibinfo{year}{2014}).
 \newblock \eprint{1402.5694}.
 
@@ -152,7 +150,7 @@
   \bibinfo{author}{Chabrier, G.}
 \newblock \bibinfo{title}{The {{Mass}}-dependence of {{Angular Momentum
   Evolution}} in {{Sun}}-like {{Stars}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{799}}, \bibinfo{pages}{L23} (\bibinfo{year}{2015}).
 
 \bibitem{reinhold+2020}
@@ -169,30 +167,29 @@
 \newblock \bibinfo{title}{Forward {{Modeling}} of the {{Kepler Stellar Rotation
   Period Distribution}}: {{Interpreting Periods}} from {{Mixed}} and {{Biased
   Stellar Populations}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{872}}, \bibinfo{pages}{128} (\bibinfo{year}{2019}).
 
 \bibitem{ledoux1951}
 \bibinfo{author}{Ledoux, P.}
 \newblock \bibinfo{title}{The {{Nonradial Oscillations}} of {{Gaseous Stars}}
   and the {{Problem}} of {{Beta Canis Majoris}}.}
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{114}}, \bibinfo{pages}{373} (\bibinfo{year}{1951}).
 
 \bibitem{davies+2016}
 \bibinfo{author}{Davies, G.~R.} \emph{et~al.}
 \newblock \bibinfo{title}{Oscillation frequencies for 35 {{Kepler}} solar-type
   planet-hosting stars using {{Bayesian}} techniques and machine learning}.
-\newblock \emph{\bibinfo{journal}{Monthly Notices of the Royal Astronomical
-  Society}} \textbf{\bibinfo{volume}{456}}, \bibinfo{pages}{2183}
-  (\bibinfo{year}{2016}).
+\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+  \textbf{\bibinfo{volume}{456}}, \bibinfo{pages}{2183} (\bibinfo{year}{2016}).
 
 \bibitem{lund+2017}
 \bibinfo{author}{Lund, M.~N.} \emph{et~al.}
 \newblock \bibinfo{title}{Standing on the {{Shoulders}} of {{Dwarfs}}: The
   {{Kepler Asteroseismic LEGACY Sample}}. {{I}}. {{Oscillation Mode
   Parameters}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{835}}, \bibinfo{pages}{172} (\bibinfo{year}{2017}).
 
 \bibitem{silvaaguirre+2017}
@@ -200,7 +197,7 @@
 \newblock \bibinfo{title}{Standing on the {{Shoulders}} of {{Dwarfs}}: The
   {{Kepler Asteroseismic LEGACY Sample}}. {{II}}.{{Radii}}, {{Masses}}, and
   {{Ages}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{835}}, \bibinfo{pages}{173} (\bibinfo{year}{2017}).
 
 \bibitem{garcia+2014}
@@ -208,21 +205,21 @@
 \newblock \bibinfo{title}{Rotation and magnetism of {{Kepler}} pulsating
   solar-like stars. {{Towards}} asteroseismically calibrated age-rotation
   relations}.
-\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
+\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
   \textbf{\bibinfo{volume}{572}}, \bibinfo{pages}{A34} (\bibinfo{year}{2014}).
 
 \bibitem{kraft1967}
 \bibinfo{author}{Kraft, R.~P.}
 \newblock \bibinfo{title}{Studies of {{Stellar Rotation}}. {{V}}. {{The
   Dependence}} of {{Rotation}} on {{Age}} among {{Solar}}-{{Type Stars}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{150}}, \bibinfo{pages}{551} (\bibinfo{year}{1967}).
 
 \bibitem{bedding+2010}
 \bibinfo{author}{Bedding, T.~R.} \emph{et~al.}
 \newblock \bibinfo{title}{Solar-like {{Oscillations}} in {{Low}}-luminosity
   {{Red Giants}}: {{First Results}} from {{Kepler}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal Letters}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J. Letters}}
   \textbf{\bibinfo{volume}{713}}, \bibinfo{pages}{L176--L181}
   (\bibinfo{year}{2010}).
 
@@ -230,16 +227,16 @@
 \bibinfo{author}{Bonanno, A.} \& \bibinfo{author}{Fr{\"o}hlich, H.-E.}
 \newblock \bibinfo{title}{A {{Bayesian}} estimation of the helioseismic solar
   age}.
-\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
+\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
   \textbf{\bibinfo{volume}{580}}, \bibinfo{pages}{A130} (\bibinfo{year}{2015}).
 
 \bibitem{paxton+2017}
-\bibinfo{author}{Paxton, B.} \emph{et~al.}
-\newblock \bibinfo{title}{Modules for {{Experiments}} in {{Stellar
-  Astrophysics}} ({{MESA}}): {{Convective Boundaries}}, {{Element Diffusion}},
-  and {{Massive Star Explosions}}}.
-\newblock \emph{\bibinfo{journal}{arXiv:1710.08424 [astro-ph]}}
-  (\bibinfo{year}{2017}).
+\bibinfo{author}{{Paxton}, B.} \emph{et~al.}
+\newblock \bibinfo{title}{{Modules for Experiments in Stellar Astrophysics
+  (MESA): Convective Boundaries, Element Diffusion, and Massive Star
+  Explosions}}.
+\newblock \emph{\bibinfo{journal}{Astrophys. J. Supplement Series}}
+  \textbf{\bibinfo{volume}{234}}, \bibinfo{pages}{34} (\bibinfo{year}{2018}).
 \newblock \eprint{1710.08424}.
 
 \bibitem{hunter2007}
@@ -260,7 +257,7 @@
   \bibinfo{author}{{Christensen-Dalsgaard}, J.}
 \newblock \bibinfo{title}{Differential rotation in main-sequence solar-like
   stars: {{Qualitative}} inference from asteroseismic data}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{790}}, \bibinfo{pages}{121} (\bibinfo{year}{2014}).
 \newblock \eprint{1406.7873}.
 
@@ -271,8 +268,8 @@
 \newblock \bibinfo{title}{Nearly uniform internal rotation of solar-like
   main-sequence stars revealed by space-based asteroseismology and
   spectroscopic measurements}.
-\newblock \emph{\bibinfo{journal}{Monthly Notices of the Royal Astronomical
-  Society}} \textbf{\bibinfo{volume}{452}}, \bibinfo{pages}{2654--2674}
+\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+  \textbf{\bibinfo{volume}{452}}, \bibinfo{pages}{2654--2674}
   (\bibinfo{year}{2015}).
 
 \bibitem{gizon+2013}
@@ -287,7 +284,7 @@
 \bibinfo{author}{Chaplin, W.~J.} \emph{et~al.}
 \newblock \bibinfo{title}{Asteroseismic {{Determination}} of {{Obliquities}} of
   the {{Exoplanet Systems Kepler}}-50 and {{Kepler}}-65}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{766}}, \bibinfo{pages}{101} (\bibinfo{year}{2013}).
 
 \bibitem{nielsen+2013}
@@ -296,20 +293,20 @@
 \newblock \bibinfo{title}{Rotation periods of 12 000 main-sequence {{Kepler}}
   stars: {{Dependence}} on stellar spectral type and comparison with v sin i
   observations}.
-\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
+\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
   \textbf{\bibinfo{volume}{557}}, \bibinfo{pages}{L10} (\bibinfo{year}{2013}).
 
 \bibitem{skumanich1972}
-\bibinfo{author}{Skumanich, A.}
-\newblock \bibinfo{title}{{{TIME SCALES FOR Ca}} n {{EMISSION DECAY}},
-  {{ROTATIONAL BRAKING}}, {{AND LITHIUM DEPLETION}}}.
-\newblock \emph{\bibinfo{journal}{ApJ. . .}} \bibinfo{pages}{4}
-  (\bibinfo{year}{1972}).
+\bibinfo{author}{{Skumanich}, A.}
+\newblock \bibinfo{title}{{Time Scales for Ca II Emission Decay, Rotational
+  Braking, and Lithium Depletion}}.
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+  \textbf{\bibinfo{volume}{171}}, \bibinfo{pages}{565} (\bibinfo{year}{1972}).
 
 \bibitem{kawaler1988}
 \bibinfo{author}{Kawaler, S.~D.}
 \newblock \bibinfo{title}{Angular momentum loss in low-mass stars}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{333}}, \bibinfo{pages}{236} (\bibinfo{year}{1988}).
 
 \bibitem{girardi+2012}
@@ -320,13 +317,14 @@
   \textbf{\bibinfo{volume}{26}}, \bibinfo{pages}{165} (\bibinfo{year}{2012}).
 
 \bibitem{berger+2020}
-\bibinfo{author}{Berger, T.~A.} \emph{et~al.}
-\newblock \bibinfo{title}{The \${{Gaia}}\$-\${{Kepler}}\$ {{Stellar Properties
-  Catalog I}}: {{Homogeneous Fundamental Properties}} for 186,000
-  \${{Kepler}}\$ {{Stars}}}.
-\newblock \emph{\bibinfo{journal}{arXiv:2001.07737 [astro-ph]}}
-  (\bibinfo{year}{2020}).
-\newblock \eprint{2001.07737}.
+\bibinfo{author}{{Berger}, T.~A.}, \bibinfo{author}{{Huber}, D.},
+  \bibinfo{author}{{Gaidos}, E.}, \bibinfo{author}{{van Saders}, J.~L.} \&
+  \bibinfo{author}{{Weiss}, L.~M.}
+\newblock \bibinfo{title}{{The Gaia-Kepler Stellar Properties Catalog. II.
+  Planet Radius Demographics as a Function of Stellar Mass and Age}}.
+\newblock \emph{\bibinfo{journal}{Astron. J.}} \textbf{\bibinfo{volume}{160}},
+  \bibinfo{pages}{108} (\bibinfo{year}{2020}).
+\newblock \eprint{2005.14671}.
 
 \bibitem{gelman+rubin1992}
 \bibinfo{author}{Gelman, A.} \& \bibinfo{author}{Rubin, D.~B.}
@@ -348,7 +346,7 @@
 \bibinfo{author}{Metcalfe, T.~S.} \& \bibinfo{author}{Egeland, R.}
 \newblock \bibinfo{title}{Understanding the {{Limitations}} of
   {{Gyrochronology}} for {{Old Field Stars}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{871}}, \bibinfo{pages}{39} (\bibinfo{year}{2019}).
 \newblock \eprint{1811.11905}.
 
@@ -356,16 +354,15 @@
 \bibinfo{author}{{Lorenzo-Oliveira}, D.} \emph{et~al.}
 \newblock \bibinfo{title}{Constraining the evolution of stellar rotation using
   solar twins}.
-\newblock \emph{\bibinfo{journal}{Monthly Notices of the Royal Astronomical
-  Society}} \textbf{\bibinfo{volume}{485}}, \bibinfo{pages}{L68}
-  (\bibinfo{year}{2019}).
+\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+  \textbf{\bibinfo{volume}{485}}, \bibinfo{pages}{L68} (\bibinfo{year}{2019}).
 
 \bibitem{vansaders+pinsonneault2013}
 \bibinfo{author}{{van Saders}, J.~L.} \& \bibinfo{author}{Pinsonneault, M.~H.}
 \newblock \bibinfo{title}{Fast {{Star}}, {{Slow Star}}; {{Old Star}}, {{Young
   Star}}: {{Subgiant Rotation}} as a {{Population}} and {{Stellar Physics
   Diagnostic}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{776}}, \bibinfo{pages}{67} (\bibinfo{year}{2013}).
 
 \bibitem{barnes2010}
@@ -373,60 +370,76 @@
 \newblock \bibinfo{title}{A {{Simple Nonlinear Model}} for the {{Rotation}} of
   {{Main}}-sequence {{Cool Stars}}. {{I}}. {{Introduction}}, {{Implications}}
   for {{Gyrochronology}}, and {{Color}}-{{Period Diagrams}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{722}}, \bibinfo{pages}{222} (\bibinfo{year}{2010}).
 
 \bibitem{deng+2012}
 \bibinfo{author}{Deng, L.-C.} \emph{et~al.}
 \newblock \bibinfo{title}{{{LAMOST Experiment}} for {{Galactic Understanding}}
   and {{Exploration}} ({{LEGUE}}) \textemdash{} {{The}} survey's science plan}.
-\newblock \emph{\bibinfo{journal}{Research in Astronomy and Astrophysics}}
+\newblock \emph{\bibinfo{journal}{Research in Astron. Astrophys.}}
   \textbf{\bibinfo{volume}{12}}, \bibinfo{pages}{735--754}
   (\bibinfo{year}{2012}).
 
 \bibitem{dejong+2014}
 \bibinfo{author}{{de Jong}, R.~S.} \emph{et~al.}
-\newblock \bibinfo{title}{{{4MOST}}: 4-metre {{Multi}}-{{Object Spectroscopic
-  Telescope}}} \textbf{\bibinfo{volume}{9147}}, \bibinfo{pages}{91470M}
-  (\bibinfo{year}{2014}).
+\newblock \bibinfo{title}{{4MOST: 4-metre Multi-Object Spectroscopic
+  Telescope}}.
+\newblock In \bibinfo{editor}{{Ramsay}, S.~K.}, \bibinfo{editor}{{McLean},
+  I.~S.} \& \bibinfo{editor}{{Takami}, H.} (eds.)
+  \emph{\bibinfo{booktitle}{Ground-based and Airborne Instrumentation for
+  Astronomy V}}, vol. \bibinfo{volume}{9147} of \emph{\bibinfo{series}{Society
+  of Photo-Optical Instrumentation Engineers (SPIE) Conference Series}},
+  \bibinfo{pages}{91470M} (\bibinfo{year}{2014}).
 
 \bibitem{dalton+2014}
-\bibinfo{author}{Dalton, G.} \emph{et~al.}
-\newblock \bibinfo{title}{Project overview and update on {{WEAVE}}: The next
-  generation wide-field spectroscopy facility for the {{William Herschel
-  Telescope}}} \textbf{\bibinfo{volume}{9147}}, \bibinfo{pages}{91470L}
-  (\bibinfo{year}{2014}).
+\bibinfo{author}{{Dalton}, G.} \emph{et~al.}
+\newblock \bibinfo{title}{{Project overview and update on WEAVE: the next
+  generation wide-field spectroscopy facility for the William Herschel
+  Telescope}}.
+\newblock In \bibinfo{editor}{{Ramsay}, S.~K.}, \bibinfo{editor}{{McLean},
+  I.~S.} \& \bibinfo{editor}{{Takami}, H.} (eds.)
+  \emph{\bibinfo{booktitle}{Ground-based and Airborne Instrumentation for
+  Astronomy V}}, vol. \bibinfo{volume}{9147} of \emph{\bibinfo{series}{Society
+  of Photo-Optical Instrumentation Engineers (SPIE) Conference Series}},
+  \bibinfo{pages}{91470L} (\bibinfo{year}{2014}).
+\newblock \eprint{1412.0843}.
 
 \bibitem{blanton+2019}
 \bibinfo{author}{{Blanton}, M.} \emph{et~al.}
 \newblock \bibinfo{title}{{The Sloan Digital Sky Survey as an Archetypal
   Mid-Scale Program}}.
-\newblock In \emph{\bibinfo{booktitle}{Bulletin of the American Astronomical
-  Society}}, vol.~\bibinfo{volume}{51}, \bibinfo{pages}{196}
-  (\bibinfo{year}{2019}).
+\newblock In \emph{\bibinfo{booktitle}{Bull. Am. Astron. Soc.}},
+  vol.~\bibinfo{volume}{51}, \bibinfo{pages}{196} (\bibinfo{year}{2019}).
 
 \bibitem{kollmeier+2019}
 \bibinfo{author}{{Kollmeier}, J.} \emph{et~al.}
 \newblock \bibinfo{title}{{SDSS-V Pioneering Panoptic Spectroscopy}}.
-\newblock In \emph{\bibinfo{booktitle}{Bulletin of the American Astronomical
-  Society}}, vol.~\bibinfo{volume}{51}, \bibinfo{pages}{274}
-  (\bibinfo{year}{2019}).
+\newblock In \emph{\bibinfo{booktitle}{Bull. Am. Astron. Soc.}},
+  vol.~\bibinfo{volume}{51}, \bibinfo{pages}{274} (\bibinfo{year}{2019}).
 
 \bibitem{handberg+lund2014}
 \bibinfo{author}{Handberg, R.} \& \bibinfo{author}{Lund, M.~N.}
 \newblock \bibinfo{title}{Automated preparation of {{Kepler}} time series of
   planet hosts for asteroseismic analysis}.
-\newblock \emph{\bibinfo{journal}{Monthly Notices of the Royal Astronomical
-  Society}} \textbf{\bibinfo{volume}{445}}, \bibinfo{pages}{2698--2709}
+\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+  \textbf{\bibinfo{volume}{445}}, \bibinfo{pages}{2698--2709}
   (\bibinfo{year}{2014}).
 
 \bibitem{garcia+2011}
 \bibinfo{author}{Garc{\'i}a, R.~A.} \emph{et~al.}
 \newblock \bibinfo{title}{Preparation of {{Kepler}} light curves for
   asteroseismic analyses}.
-\newblock \emph{\bibinfo{journal}{Monthly Notices of the Royal Astronomical
-  Society}} \textbf{\bibinfo{volume}{414}}, \bibinfo{pages}{L6--L10}
+\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+  \textbf{\bibinfo{volume}{414}}, \bibinfo{pages}{L6--L10}
   (\bibinfo{year}{2011}).
+
+\bibitem{christensen-dalsgaard2008}
+\bibinfo{author}{{Christensen-Dalsgaard}, J.}
+\newblock \bibinfo{title}{{{ASTEC}}\textemdash the {{Aarhus STellar Evolution
+  Code}}}.
+\newblock \emph{\bibinfo{journal}{Astrophysics and Space Science}}
+  \textbf{\bibinfo{volume}{316}}, \bibinfo{pages}{13} (\bibinfo{year}{2008}).
 
 \bibitem{huber+2013a}
 \bibinfo{author}{Huber, D.} \emph{et~al.}
@@ -439,15 +452,29 @@
 \bibinfo{author}{Buchhave, L.~A.} \& \bibinfo{author}{Latham, D.~W.}
 \newblock \bibinfo{title}{The {{Metallicities}} of {{Stars}} with and without
   {{Transiting Planets}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{808}}, \bibinfo{pages}{187} (\bibinfo{year}{2015}).
 
 \bibitem{astropycollaboration+2013}
 \bibinfo{author}{{Astropy Collaboration}} \emph{et~al.}
 \newblock \bibinfo{title}{Astropy: {{A}} community {{Python}} package for
   astronomy}.
-\newblock \emph{\bibinfo{journal}{Astronomy and Astrophysics}}
+\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
   \textbf{\bibinfo{volume}{558}}, \bibinfo{pages}{A33} (\bibinfo{year}{2013}).
+
+\bibitem{astropycollaboration+2018}
+\bibinfo{author}{{Astropy Collaboration}} \emph{et~al.}
+\newblock \bibinfo{title}{The {{Astropy Project}}: {{Building}} an
+  {{Open}}-science {{Project}} and {{Status}} of the v2.0 {{Core Package}}}.
+\newblock \emph{\bibinfo{journal}{Astron. J.}} \textbf{\bibinfo{volume}{156}},
+  \bibinfo{pages}{123} (\bibinfo{year}{2018}).
+
+\bibitem{ginsburg+2019}
+\bibinfo{author}{Ginsburg, A.} \emph{et~al.}
+\newblock \bibinfo{title}{Astroquery: {{An Astronomical Web}}-querying
+  {{Package}} in {{Python}}}.
+\newblock \emph{\bibinfo{journal}{Astron. J.}} \textbf{\bibinfo{volume}{157}},
+  \bibinfo{pages}{98} (\bibinfo{year}{2019}).
 
 \bibitem{mckinney2010}
 \bibinfo{author}{McKinney, W.}
@@ -467,21 +494,39 @@
 \bibinfo{author}{Tassoul, M.}
 \newblock \bibinfo{title}{Asymptotic approximations for stellar nonradial
   pulsations}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal Supplement Series}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J. Supplement Series}}
   \textbf{\bibinfo{volume}{43}}, \bibinfo{pages}{469} (\bibinfo{year}{1980}).
 
+\bibitem{vrard+2016}
+\bibinfo{author}{Vrard, M.}, \bibinfo{author}{Mosser, B.} \&
+  \bibinfo{author}{Samadi, R.}
+\newblock \bibinfo{title}{Period spacings in red giants. {{II}}. {{Automated}}
+  measurement}.
+\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
+  \textbf{\bibinfo{volume}{588}}, \bibinfo{pages}{A87} (\bibinfo{year}{2016}).
+
 \bibitem{hogg+2010}
-\bibinfo{author}{Hogg, D.~W.}, \bibinfo{author}{Bovy, J.} \&
-  \bibinfo{author}{Lang, D.}
-\newblock \bibinfo{title}{Data analysis recipes: {{Fitting}} a model to data}.
-\newblock \emph{\bibinfo{journal}{ArXiv e-prints}}
+\bibinfo{author}{{Hogg}, D.~W.}, \bibinfo{author}{{Bovy}, J.} \&
+  \bibinfo{author}{{Lang}, D.}
+\newblock \bibinfo{title}{{Data analysis recipes: Fitting a model to data}}.
+\newblock \emph{\bibinfo{journal}{arXiv e-prints}}
   \bibinfo{pages}{arXiv:1008.4686} (\bibinfo{year}{2010}).
+\newblock \eprint{1008.4686}.
+
+\bibitem{hall+2019}
+\bibinfo{author}{Hall, O.~J.} \emph{et~al.}
+\newblock \bibinfo{title}{Testing asteroseismology with {{Gaia DR2}}:
+  {{Hierarchical}} models of the {{Red Clump}}}.
+\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+  \textbf{\bibinfo{volume}{486}}, \bibinfo{pages}{3569--3585}
+  (\bibinfo{year}{2019}).
+\newblock \eprint{1904.07919}.
 
 \bibitem{mazumdar+2014}
 \bibinfo{author}{Mazumdar, A.} \emph{et~al.}
 \newblock \bibinfo{title}{Measurement of acoustic glitches in solar-type stars
   from oscillation frequencies observed by {{Kepler}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{782}}, \bibinfo{pages}{18} (\bibinfo{year}{2014}).
 \newblock \eprint{1312.4907}.
 
@@ -501,6 +546,12 @@
   \textbf{\bibinfo{volume}{15}}, \bibinfo{pages}{EGU2013--10059}
   (\bibinfo{year}{2013}).
 
+\bibitem{carpenter+2017}
+\bibinfo{author}{Carpenter, B.} \emph{et~al.}
+\newblock \bibinfo{title}{Stan: {{A Probabilistic Programming Language}}}.
+\newblock \emph{\bibinfo{journal}{Journal of Statistical Software}}
+  \textbf{\bibinfo{volume}{76}}, \bibinfo{pages}{1--32} (\bibinfo{year}{2017}).
+
 \bibitem{vanderwalt+2011}
 \bibinfo{author}{{van der Walt}, S.}, \bibinfo{author}{Colbert, S.~C.} \&
   \bibinfo{author}{Varoquaux, G.}
@@ -510,18 +561,27 @@
   \textbf{\bibinfo{volume}{13}}, \bibinfo{pages}{22--30}
   (\bibinfo{year}{2011}).
 
+\bibitem{thetheanodevelopmentteam+2016}
+\bibinfo{author}{{The Theano Development Team}} \emph{et~al.}
+\newblock \bibinfo{title}{{Theano: A Python framework for fast computation of
+  mathematical expressions}}.
+\newblock \emph{\bibinfo{journal}{arXiv e-prints}}
+  \bibinfo{pages}{arXiv:1605.02688} (\bibinfo{year}{2016}).
+\newblock \eprint{1605.02688}.
+
 \bibitem{gaiacollaboration+2018}
 \bibinfo{author}{{Gaia Collaboration}} \emph{et~al.}
-\newblock \bibinfo{title}{Gaia {{Data Release}} 2. {{Summary}} of the contents
-  and survey properties}.
-\newblock \emph{\bibinfo{journal}{ArXiv e-prints}}
-  \bibinfo{pages}{arXiv:1804.09365} (\bibinfo{year}{2018}).
+\newblock \bibinfo{title}{{Gaia Data Release 2. Summary of the contents and
+  survey properties}}.
+\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
+  \textbf{\bibinfo{volume}{616}}, \bibinfo{pages}{A1} (\bibinfo{year}{2018}).
+\newblock \eprint{1804.09365}.
 
 \bibitem{raghavan+2010}
 \bibinfo{author}{Raghavan, D.} \emph{et~al.}
 \newblock \bibinfo{title}{A {{Survey}} of {{Stellar Families}}:
   {{Multiplicity}} of {{Solar}}-type {{Stars}}}.
-\newblock \emph{\bibinfo{journal}{The Astrophysical Journal Supplement Series}}
+\newblock \emph{\bibinfo{journal}{Astrophys. J. Supplement Series}}
   \textbf{\bibinfo{volume}{190}}, \bibinfo{pages}{1--42}
   (\bibinfo{year}{2010}).
 
@@ -534,16 +594,33 @@
 
 \bibitem{seabold+perktold2010}
 \bibinfo{author}{Seabold, S.} \& \bibinfo{author}{Perktold, J.}
-\newblock \bibinfo{title}{Statsmodels: {{Econometric}} and {{Statistical
-  Modeling}} with {{Python}}} \bibinfo{pages}{5} (\bibinfo{year}{2010}).
+\newblock \bibinfo{title}{{S}tatsmodels: {E}conometric and {S}tatistical
+  {M}odeling with {P}ython}.
+\newblock In \bibinfo{editor}{{S}t\'efan van~der {W}alt} \&
+  \bibinfo{editor}{{J}arrod {M}illman} (eds.)
+  \emph{\bibinfo{booktitle}{{P}roceedings of the 9th {P}ython in {S}cience
+  {C}onference}}, \bibinfo{pages}{92 -- 96} (\bibinfo{year}{2010}).
+
+\bibitem{betancourt+girolami2013}
+\bibinfo{author}{{Astrophys. J.}, M.~J.} \& \bibinfo{author}{{Girolami}, M.}
+\newblock \bibinfo{title}{{Hamiltonian Monte Carlo for Hierarchical Models}}.
+\newblock \emph{\bibinfo{journal}{arXiv e-prints}}
+  \bibinfo{pages}{arXiv:1312.0906} (\bibinfo{year}{2013}).
+\newblock \eprint{1312.0906}.
 
 \bibitem{foreman-mackey+2013}
 \bibinfo{author}{{Foreman-Mackey}, D.}, \bibinfo{author}{Hogg, D.~W.},
   \bibinfo{author}{Lang, D.} \& \bibinfo{author}{Goodman, J.}
 \newblock \bibinfo{title}{Emcee: {{The MCMC Hammer}}}.
-\newblock \emph{\bibinfo{journal}{Publications of the Astronomical Society of
-  the Pacific}} \textbf{\bibinfo{volume}{125}}, \bibinfo{pages}{306--312}
+\newblock \emph{\bibinfo{journal}{Publ. Astron. Soc. Pacific}}
+  \textbf{\bibinfo{volume}{125}}, \bibinfo{pages}{306--312}
   (\bibinfo{year}{2013}).
 \newblock \eprint{1202.3665}.
+
+\bibitem{foreman-mackey2016}
+\bibinfo{author}{{Foreman-Mackey}, D.}
+\newblock \bibinfo{title}{Corner.py: {{Scatterplot}} matrices in {{Python}}}.
+\newblock \emph{\bibinfo{journal}{The Journal of Open Source Software}}
+  \textbf{\bibinfo{volume}{1}} (\bibinfo{year}{2016}).
 
 \end{thebibliography}
