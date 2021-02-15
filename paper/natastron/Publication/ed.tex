@@ -6,37 +6,8 @@
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.6 \textwidth]{pgm_models.pdf}
-	\caption{A probabilistic graphical model (PGM) represented algebraically in Equation \ref{eq:modelll}. The shaded circle indicates observed data, and solid black points represent other fixed information, such as the KDEs and observational uncertainties. The remaining circles represent parameters. The underline indicates that the symbol represents a set of parameters or data. Here, $\kappa_{\rm{s}}$ and $\kappa_{\rm WMB}$ represent the KDEs of standard and WMB model populations respectively. $Q_{\rm{WMB}}$ is the mixture model weighting factor. The latent parameters $\theta$, our observations $\mathcal{D}$ and their uncertainties $\sigma_{\mathcal{D}}$ include temperature (\teff), mass ($M$), log-age ($\ln(t)$), metallicity (\feh) and log-rotation ($\ln(P)$). This model is \textit{hierarchical}, as all the latent parameters are drawn from the common probability distribution set by $Q_{\rm{WMB}}$ and described in Equation \ref{eq:mixturell}.}
+	\includegraphics[width=0.6 \textwidth]{pgm_models.jpg}
+	\caption{\textbf{A probabilistic graphical model (PGM) represented algebraically in Equation \ref{eq:modelll}.} The shaded circle indicates observed data, and solid black points represent other fixed information, such as the KDEs and observational uncertainties. The remaining circles represent parameters. The underline indicates that the symbol represents a set of parameters or data. Here, $\kappa_{\rm{s}}$ and $\kappa_{\rm WMB}$ represent the KDEs of standard and WMB model populations respectively. $Q_{\rm{WMB}}$ is the mixture model weighting factor. The latent parameters $\theta$, our observations $\mathcal{D}$ and their uncertainties $\sigma_{\mathcal{D}}$ include temperature (\teff), mass ($M$), log-age ($\ln(t)$), metallicity (\feh) and log-rotation ($\ln(P)$). This model is \textit{hierarchical}, as all the latent parameters are drawn from the common probability distribution set by $Q_{\rm{WMB}}$ and described in Equation \ref{eq:mixturell}.}
 	\label{fig:pgm}
 \end{figure}
-
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{Images/priors.pdf}
-	\caption{Comparisons between posterior estimates of rotational parameters (data points and error bars) and the priors on these parameters (shaded regions). Shown are projected splitting ($\nu_{\rm s}\sin(i)$), inclination angle ($i$, sampled as $\cos(i)$) and rotation period ($P$). Both the prior and values for $P$ are a transformation of the upper two parameters (see \textbf{Methods} and \textbf{Supplementary Information}) In all cases, the extent of the error bars and shaded regions indicate the 68\% credible ($1\sigma$) interval of the posterior and prior distributions respectively. The solid lines indicate the median of the prior distributions. In this figure, results with means and errorbars that closely resemble the prior distribution can be interpreted as prior-dominated (i.e. poorly informed by the data). All stars are sorted and coloured and sorted by age. In the case of inclination angle $i$ and rotation period $P$, the displayed priors are transformed from the priors imposed on the sampled parameters from which their posteriors were derived.}
-	\label{fig:priors}
-\end{figure}
-
-\begin{figure*}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{Images/litcomp_alt2.pdf}
-	\caption{Comparisons between posterior estimates of rotational parameters from this work, LEGACY and `Kages' \cite[private communication]{m_davies+2016, m_lund+2017}.  Shown are projected splitting ($\nu_{\rm s}\sin(i)$), inclination angle ($i$, sampled as $\cos(i)$) and rotation period ($P$). Fractional differences are plotted against stellar rotation obtained in this work. The $\Delta$ indicates the fractional difference between this work and the literature (i.e. stars above the zero-line have higher values in this work). The right hand panels the distribution of the fractional differences around the zero line. The colour legend is consistent throughout all panels. The x-axis units on the right hand panels are equivalent to the y-axis of the left hand panels. 10 stars have been omitted from this plot and are discussed in more detail in \textbf{Methods}: KICs 5094751, 6196457, 8349582, 8494142, 8554498, 105114430 and 11133306 all have extremely low rotation periods in Kages, with high uncertainties. Conversely, KICs 6603624, 8760414 and 8938364 have extremely high rotation periods in LEGACY with low uncertainties. In cases where stars had asymmetric error bars, the larger of the two was used when propagating uncertainty for the purposes of this figure.}
-	\label{fig:legacykages}
-\end{figure*}
- 
-\begin{figure}[h!]
- \centering
- \includegraphics[width=0.8\textwidth]{Images/seis_comparison_rot_alt2.pdf}
- \caption{Fractional differences between posterior estimates of asteroseismic rotation period from this work. Literature sources are: Davies et al. (2015) \cite{m_davies+2015} (16 Cyg A \& B), Nielsen et al. (2015) \cite{m_nielsen+2015} (5 stars) and Benomar et al. (2018) \cite{m_benomar+2018} (40 stars). We used the reported parameter $a_{1}$ from the latter, which represents the rotational splitting in the case of uniform latitudinal rotation in their model. The dashed line represents the median of the sample shown, with the dotted lines representing the $15.9^{\rm{th}}$ and $84.1^{\rm{st}}$ percentiles. In cases where stars had asymmetric error bars, the larger of the two was used when propagating uncertainty for the purposes of this figure.}
- \label{fig:literaturecomp}
-\end{figure}
-
- 
- \begin{figure*}[h!]
- 	\centering
- 	\includegraphics[width=\textwidth]{Images/vsini_comparison_new.pdf}
- 	\caption{Comparisons between asteroseismic and spectroscopic measures of projected surface rotation, $\textrm{v}\sin(i)$. All asteroseismic (x-axis) values are from this work, all spectroscopic (y-axis) values are from the literature. \textit{Left}: comparisons to 81 stars values reported in LEGACY and Kages. \textit{Right}: comparisons to 16 stars observed by Benomar et al. (2015) \cite{m_benomar+2015}. Asteroseismic values are transformed from projected splitting ($\nu_s\sin(i)$) using the asteroseismic radius measurements presented in LEGACY and `Kages'. The solid lines indicate the 1:1 line, while the dash-dotted lines represent the 2:1 and 1:2 lines. The dashed lines indicate the location of $\textrm{v}\sin(i) = 5\, \rm{kms^{-1}}$, the point at which surface and seismic measures of projected rotation begin to differ strongly \cite{m_tayar+2015}.}
- 	\label{fig:vsinilit}
- \end{figure*}
  

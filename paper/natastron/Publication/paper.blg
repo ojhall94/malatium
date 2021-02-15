@@ -3,102 +3,64 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: paper.aux
 The style file: naturemag.bst
 Database file #1: library.bib
-Warning--I didn't find a database entry for "m_handberg+lund2014"
-Warning--I didn't find a database entry for "m_garcia+2011"
 Warning--I didn't find a database entry for "m_silvaaguirre+2015"
-Warning--I didn't find a database entry for "m_silvaaguirre+2017"
 Warning--I didn't find a database entry for "m_christensen-dalsgaard2008"
-Warning--I didn't find a database entry for "m_huber+2013a"
-Warning--I didn't find a database entry for "m_buchhave+latham2015"
-Warning--I didn't find a database entry for "m_astropycollaboration+2013"
+Warning--I didn't find a database entry for "m_silvaaguirre+2017"
 Warning--I didn't find a database entry for "m_astropycollaboration+2018"
 Warning--I didn't find a database entry for "m_ginsburg+2019"
-Warning--I didn't find a database entry for "m_mckinney2010"
-Warning--I didn't find a database entry for "m_davies+2015"
-Warning--I didn't find a database entry for "m_harvey1985"
-Warning--I didn't find a database entry for "m_tassoul1980"
 Warning--I didn't find a database entry for "m_vrard+2016"
-Warning--I didn't find a database entry for "m_hogg+2010"
 Warning--I didn't find a database entry for "m_hall+2019"
-Warning--I didn't find a database entry for "m_mazumdar+2014"
-Warning--I didn't find a database entry for "m_chaplin+basu2017"
-Warning--I didn't find a database entry for "m_vanhoey+2013"
 Warning--I didn't find a database entry for "m_carpenter+2017"
-Warning--I didn't find a database entry for "m_vanderwalt+2011"
 Warning--I didn't find a database entry for "m_salvatier+2016"
 Warning--I didn't find a database entry for "m_thetheanodevelopmentteam+2016"
-Warning--I didn't find a database entry for "m_gelman+rubin1992"
-Warning--I didn't find a database entry for "m_vansaders+pinsonneault2013"
-Warning--I didn't find a database entry for "m_vansaders+2016"
 Warning--I didn't find a database entry for "m_vansaders+2019"
-Warning--I didn't find a database entry for "m_girardi+2012"
-Warning--I didn't find a database entry for "m_berger+2020"
-Warning--I didn't find a database entry for "m_gaiacollaboration+2018"
-Warning--I didn't find a database entry for "m_raghavan+2010"
-Warning--I didn't find a database entry for "m_chaplin+2011"
-Warning--I didn't find a database entry for "m_seabold+perktold2010"
 Warning--I didn't find a database entry for "m_betancourt+girolami2013"
 Warning--I didn't find a database entry for "m_foreman-mackey+2013"
 Warning--I didn't find a database entry for "m_foreman-mackey2016"
-Warning--I didn't find a database entry for "m_nielsen+2015"
-Warning--I didn't find a database entry for "m_benomar+2018"
-Warning--I didn't find a database entry for "m_beck2000"
-Warning--I didn't find a database entry for "m_benomar+2015"
-Warning--I didn't find a database entry for "m_doyle+2014"
-Warning--I didn't find a database entry for "m_tayar+2015"
-Warning--I didn't find a database entry for "m_schofield+2019"
-Warning--I didn't find a database entry for "m_mathur+2019"
-Warning--I didn't find a database entry for "m_amard+matt2020"
-Warning--I didn't find a database entry for "m_matt+2015"
-Warning--I didn't find a database entry for "m_leiner+2019"
-Warning--I didn't find a database entry for "m_fleming+2019"
-Warning--I didn't find a database entry for "m_maxted+2015"
-Warning--I didn't find a database entry for "m_gallet+delorme2019"
-Warning--I didn't find a database entry for "m_benbakoura+2019"
-Warning--I didn't find a database entry for "m_ceillier+2016"
 Warning--I didn't find a database entry for "m_davies+2016"
 Warning--I didn't find a database entry for "m_lund+2017"
 Warning--empty journal in dejong+2014
 Warning--empty journal in dalton+2014
-You've used 53 entries,
+Warning--empty journal in seabold+perktold2010
+You've used 69 entries,
             2348 wiz_defined-function locations,
-            1333 strings with 30935 characters,
-and the built_in function-call counts, 20083 in all, are:
-= -- 1340
-> -- 504
+            1381 strings with 36041 characters,
+and the built_in function-call counts, 26709 in all, are:
+= -- 1844
+> -- 648
 < -- 2
-+ -- 252
-- -- 126
-* -- 2492
-:= -- 2250
-add.period$ -- 166
-call.type$ -- 53
-change.case$ -- 57
++ -- 324
+- -- 162
+* -- 3225
+:= -- 2948
+add.period$ -- 214
+call.type$ -- 69
+change.case$ -- 75
 chr.to.int$ -- 0
-cite$ -- 55
-duplicate$ -- 1950
-empty$ -- 1858
-format.name$ -- 171
-if$ -- 4020
+cite$ -- 72
+duplicate$ -- 2585
+empty$ -- 2460
+format.name$ -- 221
+if$ -- 5422
 int.to.chr$ -- 0
-int.to.str$ -- 53
-missing$ -- 442
-newline$ -- 280
-num.names$ -- 53
-pop$ -- 296
+int.to.str$ -- 69
+missing$ -- 573
+newline$ -- 360
+num.names$ -- 69
+pop$ -- 405
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 359
+skip$ -- 552
 stack$ -- 0
-substring$ -- 605
-swap$ -- 1929
+substring$ -- 868
+swap$ -- 2542
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 2
-while$ -- 107
-width$ -- 55
-write$ -- 603
-(There were 57 warnings)
+warning$ -- 3
+while$ -- 144
+width$ -- 71
+write$ -- 779
+(There were 19 warnings)
