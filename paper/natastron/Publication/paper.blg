@@ -2,48 +2,40 @@ This is BibTeX, Version 0.99d (TeX Live 2020)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: paper.aux
 The style file: naturemag.bst
-Illegal, another \bibstyle command---line 268 of file paper.aux
- : \bibstyle
- :          {naturemag}
-I'm skipping whatever remains of this command
-Illegal, another \bibdata command---line 269 of file paper.aux
- : \bibdata
- :         {library.bib}
-I'm skipping whatever remains of this command
 Database file #1: library.bib
 You've used 78 entries,
             2348 wiz_defined-function locations,
-            1424 strings with 52040 characters,
-and the built_in function-call counts, 31061 in all, are:
-= -- 2145
+            1435 strings with 52352 characters,
+and the built_in function-call counts, 31616 in all, are:
+= -- 2216
 > -- 760
 < -- 4
 + -- 377
 - -- 190
-* -- 3807
-:= -- 3405
-add.period$ -- 251
+* -- 3879
+:= -- 3467
+add.period$ -- 261
 call.type$ -- 78
 change.case$ -- 90
 chr.to.int$ -- 0
 cite$ -- 78
 duplicate$ -- 2978
-empty$ -- 2846
+empty$ -- 2898
 format.name$ -- 259
-if$ -- 6305
+if$ -- 6437
 int.to.chr$ -- 0
 int.to.str$ -- 78
 missing$ -- 669
-newline$ -- 415
+newline$ -- 425
 num.names$ -- 84
-pop$ -- 438
+pop$ -- 428
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
 skip$ -- 650
 stack$ -- 0
-substring$ -- 1000
-swap$ -- 2996
+substring$ -- 1126
+swap$ -- 3006
 text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
@@ -51,5 +43,4 @@ type$ -- 0
 warning$ -- 0
 while$ -- 170
 width$ -- 80
-write$ -- 903
-(There were 2 error messages)
+write$ -- 923

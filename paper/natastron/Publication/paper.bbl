@@ -6,28 +6,31 @@
 \providecommand{\eprint}[2][]{\url{#2}}
 
 \bibitem{barnes2007}
-\bibinfo{author}{Barnes, S.~A.}
-\newblock \bibinfo{title}{Ages for {{Illustrative Field Stars Using
-  Gyrochronology}}: {{Viability}}, {{Limitations}}, and {{Errors}}}.
+\bibinfo{author}{{Barnes}, S.~A.}
+\newblock \bibinfo{title}{{Ages for Illustrative Field Stars Using
+  Gyrochronology: Viability, Limitations, and Errors}}.
 \newblock \emph{\bibinfo{journal}{Astrophys. J.}}
-  \textbf{\bibinfo{volume}{669}}, \bibinfo{pages}{1167} (\bibinfo{year}{2007}).
+  \textbf{\bibinfo{volume}{669}}, \bibinfo{pages}{1167--1189}
+  (\bibinfo{year}{2007}).
+\newblock \eprint{0704.3068}.
 
 \bibitem{meibom+2015}
-\bibinfo{author}{Meibom, S.} \emph{et~al.}
-\newblock \bibinfo{title}{A spin-down clock for cool stars from observations of
-  a 2.5-billion-year-old cluster}.
+\bibinfo{author}{{Meibom}, S.} \emph{et~al.}
+\newblock \bibinfo{title}{{A spin-down clock for cool stars from observations
+  of a 2.5-billion-year-old cluster}}.
 \newblock \emph{\bibinfo{journal}{Nature}} \textbf{\bibinfo{volume}{517}},
-  \bibinfo{pages}{589} (\bibinfo{year}{2015}).
+  \bibinfo{pages}{589--591} (\bibinfo{year}{2015}).
+\newblock \eprint{1501.05651}.
 
 \bibitem{leiner+2019}
-\bibinfo{author}{Leiner, E.}, \bibinfo{author}{Mathieu, R.~D.},
-  \bibinfo{author}{Vanderburg, A.}, \bibinfo{author}{Gosnell, N.~M.} \&
-  \bibinfo{author}{Smith, J.~C.}
-\newblock \bibinfo{title}{Blue {{Lurkers}}: {{Hidden Blue Stragglers}} on the
-  {{M67 Main Sequence Identified}} from {{Their Kepler}}/{{K2 Rotation
-  Periods}}}.
+\bibinfo{author}{{Leiner}, E.}, \bibinfo{author}{{Mathieu}, R.~D.},
+  \bibinfo{author}{{Vanderburg}, A.}, \bibinfo{author}{{Gosnell}, N.~M.} \&
+  \bibinfo{author}{{Smith}, J.~C.}
+\newblock \bibinfo{title}{{Blue Lurkers: Hidden Blue Stragglers on the M67 Main
+  Sequence Identified from Their Kepler/K2 Rotation Periods}}.
 \newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{881}}, \bibinfo{pages}{47} (\bibinfo{year}{2019}).
+\newblock \eprint{1904.02169}.
 
 \bibitem{claytor+2019}
 \bibinfo{author}{{Claytor}, Z.~R.} \emph{et~al.}
@@ -57,19 +60,23 @@
   (\bibinfo{year}{2010}).
 
 \bibitem{silvaaguirre+2015}
-\bibinfo{author}{Silva~Aguirre, V.} \emph{et~al.}
-\newblock \bibinfo{title}{Ages and fundamental properties of {{Kepler}}
-  exoplanet host stars from asteroseismology}.
+\bibinfo{author}{{Silva Aguirre}, V.} \emph{et~al.}
+\newblock \bibinfo{title}{{Ages and fundamental properties of Kepler exoplanet
+  host stars from asteroseismology}}.
 \newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
-  \textbf{\bibinfo{volume}{452}}, \bibinfo{pages}{2127} (\bibinfo{year}{2015}).
+  \textbf{\bibinfo{volume}{452}}, \bibinfo{pages}{2127--2148}
+  (\bibinfo{year}{2015}).
+\newblock \eprint{1504.07992}.
 
 \bibitem{angus+2015}
-\bibinfo{author}{Angus, R.}, \bibinfo{author}{Aigrain, S.},
-  \bibinfo{author}{{Foreman-Mackey}, D.} \& \bibinfo{author}{McQuillan, A.}
-\newblock \bibinfo{title}{Calibrating gyrochronology using {{Kepler}}
-  asteroseismic targets}.
+\bibinfo{author}{{Angus}, R.}, \bibinfo{author}{{Aigrain}, S.},
+  \bibinfo{author}{{Foreman-Mackey}, D.} \& \bibinfo{author}{{McQuillan}, A.}
+\newblock \bibinfo{title}{{Calibrating gyrochronology using Kepler
+  asteroseismic targets}}.
 \newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
-  \textbf{\bibinfo{volume}{450}}, \bibinfo{pages}{1787} (\bibinfo{year}{2015}).
+  \textbf{\bibinfo{volume}{450}}, \bibinfo{pages}{1787--1798}
+  (\bibinfo{year}{2015}).
+\newblock \eprint{1502.06965}.
 
 \bibitem{nielsen+2015}
 \bibinfo{author}{Nielsen, M.~B.}, \bibinfo{author}{Schunker, H.},
@@ -80,18 +87,21 @@
   \textbf{\bibinfo{volume}{582}}, \bibinfo{pages}{A10} (\bibinfo{year}{2015}).
 
 \bibitem{davies+2015}
-\bibinfo{author}{Davies, G.~R.} \emph{et~al.}
-\newblock \bibinfo{title}{Asteroseismic inference on rotation, gyrochronology
-  and planetary system dynamics of 16 {{Cygni}}}.
+\bibinfo{author}{{Davies}, G.~R.} \emph{et~al.}
+\newblock \bibinfo{title}{{Asteroseismic inference on rotation, gyrochronology
+  and planetary system dynamics of 16 Cygni}}.
 \newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
-  \textbf{\bibinfo{volume}{446}}, \bibinfo{pages}{2959} (\bibinfo{year}{2015}).
+  \textbf{\bibinfo{volume}{446}}, \bibinfo{pages}{2959--2966}
+  (\bibinfo{year}{2015}).
+\newblock \eprint{1411.1359}.
 
 \bibitem{vansaders+2016}
 \bibinfo{author}{{van Saders}, J.~L.} \emph{et~al.}
-\newblock \bibinfo{title}{Weakened magnetic braking as the origin of
-  anomalously rapid rotation in old field stars}.
+\newblock \bibinfo{title}{{Weakened magnetic braking as the origin of
+  anomalously rapid rotation in old field stars}}.
 \newblock \emph{\bibinfo{journal}{Nature}} \textbf{\bibinfo{volume}{529}},
-  \bibinfo{pages}{181} (\bibinfo{year}{2016}).
+  \bibinfo{pages}{181--184} (\bibinfo{year}{2016}).
+\newblock \eprint{1601.02631}.
 
 \bibitem{reville+2015}
 \bibinfo{author}{{R{\'e}ville}, V.}, \bibinfo{author}{{Brun}, A.~S.},
@@ -178,11 +188,13 @@
   \textbf{\bibinfo{volume}{114}}, \bibinfo{pages}{373} (\bibinfo{year}{1951}).
 
 \bibitem{davies+2016}
-\bibinfo{author}{Davies, G.~R.} \emph{et~al.}
-\newblock \bibinfo{title}{Oscillation frequencies for 35 {{Kepler}} solar-type
-  planet-hosting stars using {{Bayesian}} techniques and machine learning}.
+\bibinfo{author}{{Davies}, G.~R.} \emph{et~al.}
+\newblock \bibinfo{title}{{Oscillation frequencies for 35 Kepler solar-type
+  planet-hosting stars using Bayesian techniques and machine learning}}.
 \newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
-  \textbf{\bibinfo{volume}{456}}, \bibinfo{pages}{2183} (\bibinfo{year}{2016}).
+  \textbf{\bibinfo{volume}{456}}, \bibinfo{pages}{2183--2195}
+  (\bibinfo{year}{2016}).
+\newblock \eprint{1511.02105}.
 
 \bibitem{lund+2017}
 \bibinfo{author}{Lund, M.~N.} \emph{et~al.}
@@ -246,11 +258,12 @@
   \textbf{\bibinfo{volume}{9}}, \bibinfo{pages}{90--95} (\bibinfo{year}{2007}).
 
 \bibitem{benomar+2018}
-\bibinfo{author}{Benomar, O.} \emph{et~al.}
-\newblock \bibinfo{title}{Asteroseismic detection of latitudinal differential
-  rotation in 13 {{Sun}}-like stars}.
+\bibinfo{author}{{Benomar}, O.} \emph{et~al.}
+\newblock \bibinfo{title}{{Asteroseismic detection of latitudinal differential
+  rotation in 13 Sun-like stars}}.
 \newblock \emph{\bibinfo{journal}{Science}} \textbf{\bibinfo{volume}{361}},
-  \bibinfo{pages}{1231} (\bibinfo{year}{2018}).
+  \bibinfo{pages}{1231--1234} (\bibinfo{year}{2018}).
+\newblock \eprint{1809.07938}.
 
 \bibitem{lund+2014}
 \bibinfo{author}{Lund, M.~N.}, \bibinfo{author}{Miesch, M.~S.} \&
@@ -352,10 +365,12 @@
 
 \bibitem{lorenzo-oliveira+2019}
 \bibinfo{author}{{Lorenzo-Oliveira}, D.} \emph{et~al.}
-\newblock \bibinfo{title}{Constraining the evolution of stellar rotation using
-  solar twins}.
+\newblock \bibinfo{title}{{Constraining the evolution of stellar rotation using
+  solar twins}}.
 \newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
-  \textbf{\bibinfo{volume}{485}}, \bibinfo{pages}{L68} (\bibinfo{year}{2019}).
+  \textbf{\bibinfo{volume}{485}}, \bibinfo{pages}{L68--L72}
+  (\bibinfo{year}{2019}).
+\newblock \eprint{1903.02630}.
 
 \bibitem{vansaders+pinsonneault2013}
 \bibinfo{author}{{van Saders}, J.~L.} \& \bibinfo{author}{Pinsonneault, M.~H.}
