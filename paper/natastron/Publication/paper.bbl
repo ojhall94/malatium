@@ -381,12 +381,13 @@
   \textbf{\bibinfo{volume}{776}}, \bibinfo{pages}{67} (\bibinfo{year}{2013}).
 
 \bibitem{barnes2010}
-\bibinfo{author}{Barnes, S.~A.}
-\newblock \bibinfo{title}{A {{Simple Nonlinear Model}} for the {{Rotation}} of
-  {{Main}}-sequence {{Cool Stars}}. {{I}}. {{Introduction}}, {{Implications}}
-  for {{Gyrochronology}}, and {{Color}}-{{Period Diagrams}}}.
+\bibinfo{author}{{Barnes}, S.~A.}
+\newblock \bibinfo{title}{{A Simple Nonlinear Model for the Rotation of
+  Main-sequence Cool Stars. I. Introduction, Implications for Gyrochronology,
+  and Color-Period Diagrams}}.
 \newblock \emph{\bibinfo{journal}{Astrophys. J.}}
-  \textbf{\bibinfo{volume}{722}}, \bibinfo{pages}{222} (\bibinfo{year}{2010}).
+  \textbf{\bibinfo{volume}{722}}, \bibinfo{pages}{222--234}
+  (\bibinfo{year}{2010}).
 
 \bibitem{deng+2012}
 \bibinfo{author}{Deng, L.-C.} \emph{et~al.}
@@ -457,11 +458,13 @@
   \textbf{\bibinfo{volume}{316}}, \bibinfo{pages}{13} (\bibinfo{year}{2008}).
 
 \bibitem{huber+2013a}
-\bibinfo{author}{Huber, D.} \emph{et~al.}
-\newblock \bibinfo{title}{Stellar {{Spin}}-{{Orbit Misalignment}} in a
-  {{Multiplanet System}}}.
-\newblock \emph{\bibinfo{journal}{Science}} \textbf{\bibinfo{volume}{342}},
-  \bibinfo{pages}{331} (\bibinfo{year}{2013}).
+\bibinfo{author}{{Barnes}, S.~A.}
+\newblock \bibinfo{title}{{A Simple Nonlinear Model for the Rotation of
+  Main-sequence Cool Stars. I. Introduction, Implications for Gyrochronology,
+  and Color-Period Diagrams}}.
+\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+  \textbf{\bibinfo{volume}{722}}, \bibinfo{pages}{222--234}
+  (\bibinfo{year}{2010}).
 
 \bibitem{buchhave+latham2015}
 \bibinfo{author}{Buchhave, L.~A.} \& \bibinfo{author}{Latham, D.~W.}
@@ -506,11 +509,12 @@
   (\bibinfo{year}{1985}).
 
 \bibitem{tassoul1980}
-\bibinfo{author}{Tassoul, M.}
-\newblock \bibinfo{title}{Asymptotic approximations for stellar nonradial
-  pulsations}.
+\bibinfo{author}{{Tassoul}, M.}
+\newblock \bibinfo{title}{{Asymptotic approximations for stellar nonradial
+  pulsations.}}
 \newblock \emph{\bibinfo{journal}{Astrophys. J. Supplement Series}}
-  \textbf{\bibinfo{volume}{43}}, \bibinfo{pages}{469} (\bibinfo{year}{1980}).
+  \textbf{\bibinfo{volume}{43}}, \bibinfo{pages}{469--490}
+  (\bibinfo{year}{1980}).
 
 \bibitem{vrard+2016}
 \bibinfo{author}{Vrard, M.}, \bibinfo{author}{Mosser, B.} \&
@@ -601,11 +605,12 @@
   (\bibinfo{year}{2010}).
 
 \bibitem{chaplin+2011}
-\bibinfo{author}{Chaplin, W.~J.} \emph{et~al.}
-\newblock \bibinfo{title}{Ensemble {{Asteroseismology}} of {{Solar}}-{{Type
-  Stars}} with the {{NASA Kepler Mission}}}.
+\bibinfo{author}{{Chaplin}, W.~J.} \emph{et~al.}
+\newblock \bibinfo{title}{{Ensemble Asteroseismology of Solar-Type Stars with
+  the NASA Kepler Mission}}.
 \newblock \emph{\bibinfo{journal}{Science}} \textbf{\bibinfo{volume}{332}},
   \bibinfo{pages}{213} (\bibinfo{year}{2011}).
+\newblock \eprint{1109.4723}.
 
 \bibitem{seabold+perktold2010}
 \bibinfo{author}{Seabold, S.} \& \bibinfo{author}{Perktold, J.}
