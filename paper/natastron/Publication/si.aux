@@ -42,8 +42,8 @@
 \citation{rasmussen+williams2006}
 \newlabel{eq:asymptotic}{{6}{3}{Mode Frequencies and Rotational Splitting ($\nu _{n,\ell ,m}$)}{equation.1.6}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {1.2.2}Mode Linewidth ($\Gamma _{n,\ell }$)}{3}{subsubsection.1.2.2}\protected@file@percent }
+\newlabel{eq:gpkernel}{{8}{3}{Mode Linewidth ($\Gamma _{n,\ell }$)}{equation.1.8}{}}
 \citation{toutain+appourchaux1994}
-\newlabel{eq:gpkernel}{{8}{4}{Mode Linewidth ($\Gamma _{n,\ell }$)}{equation.1.8}{}}
 \newlabel{eq:gpmean}{{9}{4}{Mode Linewidth ($\Gamma _{n,\ell }$)}{equation.1.9}{}}
 \newlabel{eq:gammagp}{{10}{4}{Mode Linewidth ($\Gamma _{n,\ell }$)}{equation.1.10}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {1.2.3}Mode Heights and Angle of Inclination ($H_{n,\ell ,m}$)}{4}{subsubsection.1.2.3}\protected@file@percent }
@@ -52,7 +52,7 @@
 \newlabel{eq:amplitwod}{{13}{4}{Mode Heights and Angle of Inclination ($H_{n,\ell ,m}$)}{equation.1.13}{}}
 \citation{gizon+solanki2003}
 \citation{handberg+campante2011}
-\citation{woodard1984}
+\citation{appourchaux+1998}
 \citation{anderson+1990}
 \newlabel{eq:legendre}{{14}{5}{Mode Heights and Angle of Inclination ($H_{n,\ell ,m}$)}{equation.1.14}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Likelihood Function for $M(\nu )$}{5}{subsection.1.3}\protected@file@percent }
@@ -80,44 +80,65 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Priors on rotational parameters}{9}{subsection.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Comparisons to previous studies}{10}{subsection.2.2}\protected@file@percent }
 \newlabel{ssec:litcomp}{{2.2}{10}{Comparisons to previous studies}{subsection.2.2}{}}
-\citation{m_davies+2015}
-\citation{m_nielsen+2015}
-\citation{m_benomar+2018}
-\citation{m_davies+2015}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Seismic vs Surface rotation}{11}{subsection.2.3}\protected@file@percent }
-\citation{m_beck2000}
-\citation{m_benomar+2018}
-\citation{m_benomar+2015}
-\citation{m_doyle+2014}
-\citation{m_tayar+2015}
-\citation{m_benomar+2015}
-\citation{m_tayar+2015}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Seismic vs spectroscopic rotation}{12}{subsection.2.4}\protected@file@percent }
-\citation{m_chaplin+2011}
-\citation{m_schofield+2019}
-\citation{m_mathur+2019}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Asteroseismic detection biases}{13}{subsection.2.5}\protected@file@percent }
-\citation{m_vansaders+2019}
-\citation{m_amard+matt2020}
-\citation{m_vansaders+pinsonneault2013}
-\citation{m_matt+2015}
-\citation{m_amard+matt2020}
-\citation{m_matt+2015}
-\citation{m_silvaaguirre+2015}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Verifying consequences for gyrochronology}{14}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Limits of our stellar models}{14}{subsection.3.1}\protected@file@percent }
-\newlabel{ssec:limits}{{3.1}{14}{Limits of our stellar models}{subsection.3.1}{}}
-\citation{m_leiner+2019}
-\citation{m_fleming+2019}
-\citation{m_halbwachs1986}
-\citation{m_white+2013}
-\citation{m_maxted+2015}
-\citation{m_gallet+delorme2019}
-\citation{m_benbakoura+2019}
-\citation{m_ceillier+2016}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Systematic uncertainties from asteroseismology}{15}{subsection.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Binaries and Planet Hosts}{15}{subsection.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Supplementary Table}{15}{section.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Comparisons between posterior estimates of rotational parameters (data points and error bars) and the priors on these parameters (shaded regions).} The data are sorted from young stars (left) to old (right). Shown are projected splitting ($\nu _{\rm  s}\qopname  \relax o{sin}(i)$), inclination angle ($i$, sampled as $\qopname  \relax o{cos}(i)$) and rotation period ($P$). Both the prior and values for $P$ are a transformation of the upper two parameters (see text). In all cases, the extent of the error bars and shaded regions indicate the 68\% credible interval of the posterior and prior distributions respectively. The solid lines indicate the median of the prior distributions. In this figure, results with means and errorbars that closely resemble the prior distribution can be interpreted as prior-dominated (i.e. poorly informed by the data). All stars are sorted and coloured and sorted by age. In the case of inclination angle $i$ and rotation period $P$, the displayed priors are transformed from the priors imposed on the sampled parameters from which their posteriors were derived.\relax }}{11}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:priors}{{2}{11}{\textbf {Comparisons between posterior estimates of rotational parameters (data points and error bars) and the priors on these parameters (shaded regions).} The data are sorted from young stars (left) to old (right). Shown are projected splitting ($\nu _{\rm s}\sin (i)$), inclination angle ($i$, sampled as $\cos (i)$) and rotation period ($P$). Both the prior and values for $P$ are a transformation of the upper two parameters (see text). In all cases, the extent of the error bars and shaded regions indicate the 68\% credible interval of the posterior and prior distributions respectively. The solid lines indicate the median of the prior distributions. In this figure, results with means and errorbars that closely resemble the prior distribution can be interpreted as prior-dominated (i.e. poorly informed by the data). All stars are sorted and coloured and sorted by age. In the case of inclination angle $i$ and rotation period $P$, the displayed priors are transformed from the priors imposed on the sampled parameters from which their posteriors were derived.\relax }{figure.caption.4}{}}
+\citation{davies+2016}
+\citation{lund+2017}
+\citation{davies+2016}
+\citation{lund+2017}
+\citation{davies+2015}
+\citation{nielsen+2015}
+\citation{benomar+2018}
+\citation{davies+2015}
+\citation{davies+2015}
+\citation{nielsen+2015}
+\citation{benomar+2018}
+\citation{davies+2015}
+\citation{nielsen+2015}
+\citation{benomar+2018}
+\citation{beck2000}
+\citation{benomar+2018}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Seismic vs spectroscopic rotation}{12}{subsection.2.3}\protected@file@percent }
+\citation{benomar+2015}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Comparisons between posterior estimates of rotational parameters from this work and the literature}. Literature values are taken from LEGACY and `Kages' \cite  [private communication]{davies+2016, lund+2017}. Shown are projected splitting ($\nu _{\rm  s}\qopname  \relax o{sin}(i)$), inclination angle ($i$, sampled as $\qopname  \relax o{cos}(i)$) and rotation period ($P$). Fractional differences are plotted against stellar rotation obtained in this work. The $\Delta $ indicates the fractional difference between this work and the literature (i.e. stars above the zero-line have higher values in this work). The right hand panels the distribution of the fractional differences around the zero line. The colour legend is consistent throughout all panels. The x-axis units on the right hand panels are equivalent to the y-axis of the left hand panels. 10 stars have been omitted from this plot and are discussed in more detail in the text: KICs 5094751, 6196457, 8349582, 8494142, 8554498, 105114430 and 11133306 all have extremely low rotation periods in Kages, with high uncertainties. Conversely, KICs 6603624, 8760414 and 8938364 have extremely high rotation periods in LEGACY with low uncertainties. Error bars represent the 68\% confidence intervals. In cases where stars had asymmetric error bars, the larger of the two was used when propagating uncertainty for the purposes of this figure.\relax }}{13}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:legacykages}{{3}{13}{\textbf {Comparisons between posterior estimates of rotational parameters from this work and the literature}. Literature values are taken from LEGACY and `Kages' \cite [private communication]{davies+2016, lund+2017}. Shown are projected splitting ($\nu _{\rm s}\sin (i)$), inclination angle ($i$, sampled as $\cos (i)$) and rotation period ($P$). Fractional differences are plotted against stellar rotation obtained in this work. The $\Delta $ indicates the fractional difference between this work and the literature (i.e. stars above the zero-line have higher values in this work). The right hand panels the distribution of the fractional differences around the zero line. The colour legend is consistent throughout all panels. The x-axis units on the right hand panels are equivalent to the y-axis of the left hand panels. 10 stars have been omitted from this plot and are discussed in more detail in the text: KICs 5094751, 6196457, 8349582, 8494142, 8554498, 105114430 and 11133306 all have extremely low rotation periods in Kages, with high uncertainties. Conversely, KICs 6603624, 8760414 and 8938364 have extremely high rotation periods in LEGACY with low uncertainties. Error bars represent the 68\% confidence intervals. In cases where stars had asymmetric error bars, the larger of the two was used when propagating uncertainty for the purposes of this figure.\relax }{figure.caption.5}{}}
+\citation{doyle+2014}
+\citation{tayar+2015}
+\citation{benomar+2015}
+\citation{tayar+2015}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Fractional differences between posterior estimates of asteroseismic rotation period from this work.} Literature sources are: Davies et al. (2015) \cite  {davies+2015} (16 Cyg A \& B), Nielsen et al. (2015) \cite  {nielsen+2015} (5 stars) and Benomar et al. (2018) \cite  {benomar+2018} (40 stars). We used the reported parameter $a_{1}$ from the latter, which represents the rotational splitting in the case of uniform latitudinal rotation in their model. The dashed line represents the median of the sample shown, with the dotted lines representing the $15.9^{\rm  {th}}$ and $84.1^{\rm  {st}}$ percentiles. Error bars represent the 68\% confidence intervals. In cases where stars had asymmetric error bars, the larger of the two was used when propagating uncertainty for the purposes of this figure.\relax }}{14}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:literaturecomp}{{4}{14}{\textbf {Fractional differences between posterior estimates of asteroseismic rotation period from this work.} Literature sources are: Davies et al. (2015) \cite {davies+2015} (16 Cyg A \& B), Nielsen et al. (2015) \cite {nielsen+2015} (5 stars) and Benomar et al. (2018) \cite {benomar+2018} (40 stars). We used the reported parameter $a_{1}$ from the latter, which represents the rotational splitting in the case of uniform latitudinal rotation in their model. The dashed line represents the median of the sample shown, with the dotted lines representing the $15.9^{\rm {th}}$ and $84.1^{\rm {st}}$ percentiles. Error bars represent the 68\% confidence intervals. In cases where stars had asymmetric error bars, the larger of the two was used when propagating uncertainty for the purposes of this figure.\relax }{figure.caption.6}{}}
+\citation{benomar+2015}
+\citation{tayar+2015}
+\citation{benomar+2015}
+\citation{tayar+2015}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Comparisons between asteroseismic and spectroscopic measures of projected surface rotation, $\textrm  {v}\qopname  \relax o{sin}(i)$.} All asteroseismic (x-axis) values are from this work, all spectroscopic (y-axis) values are from the literature. \textit  {Left}: comparisons to 81 stars values reported in LEGACY and Kages. \textit  {Right}: comparisons to 16 stars observed by Benomar et al. (2015) \cite  {benomar+2015}. Asteroseismic values are transformed from projected splitting ($\nu _s\qopname  \relax o{sin}(i)$) using the asteroseismic radius measurements presented in LEGACY and `Kages'. Horizontal error bars represent the 68\% confidence intervals. Vertical error bars represent the formal uncertainty on the published spectroscopic values. The solid lines indicate the 1:1 line, while the dash-dotted lines represent the 2:1 and 1:2 lines. The dashed lines indicate the location of $\textrm  {v}\qopname  \relax o{sin}(i) = 5\tmspace  +\thinmuskip {.1667em} \rm  {kms^{-1}}$, the point at which surface and seismic measures of projected rotation begin to differ strongly \cite  {tayar+2015}.\relax }}{15}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:vsinilit}{{5}{15}{\textbf {Comparisons between asteroseismic and spectroscopic measures of projected surface rotation, $\textrm {v}\sin (i)$.} All asteroseismic (x-axis) values are from this work, all spectroscopic (y-axis) values are from the literature. \textit {Left}: comparisons to 81 stars values reported in LEGACY and Kages. \textit {Right}: comparisons to 16 stars observed by Benomar et al. (2015) \cite {benomar+2015}. Asteroseismic values are transformed from projected splitting ($\nu _s\sin (i)$) using the asteroseismic radius measurements presented in LEGACY and `Kages'. Horizontal error bars represent the 68\% confidence intervals. Vertical error bars represent the formal uncertainty on the published spectroscopic values. The solid lines indicate the 1:1 line, while the dash-dotted lines represent the 2:1 and 1:2 lines. The dashed lines indicate the location of $\textrm {v}\sin (i) = 5\, \rm {kms^{-1}}$, the point at which surface and seismic measures of projected rotation begin to differ strongly \cite {tayar+2015}.\relax }{figure.caption.7}{}}
+\citation{chaplin+2011}
+\citation{schofield+2019}
+\citation{mathur+2019}
+\citation{vansaders+2019}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Asteroseismic detection biases}{16}{subsection.2.4}\protected@file@percent }
+\citation{amard+matt2020}
+\citation{vansaders+pinsonneault2013}
+\citation{matt+2015}
+\citation{amard+matt2020}
+\citation{matt+2015}
+\citation{silvaaguirre+2015}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Verifying consequences for gyrochronology}{17}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Limits of our stellar models}{17}{subsection.3.1}\protected@file@percent }
+\newlabel{ssec:limits}{{3.1}{17}{Limits of our stellar models}{subsection.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Systematic uncertainties from asteroseismology}{17}{subsection.3.2}\protected@file@percent }
+\citation{leiner+2019}
+\citation{fleming+2019}
+\citation{halbwachs1986}
+\citation{white+2013}
+\citation{maxted+2015}
+\citation{gallet+delorme2019}
+\citation{benbakoura+2019}
+\citation{ceillier+2016}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Binaries and Planet Hosts}{18}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Supplementary Table}{18}{section.4}\protected@file@percent }
 \citation{lund+2017}
 \citation{silvaaguirre+2017}
 \citation{silvaaguirre+2015}
@@ -128,8 +149,8 @@
 \citation{silvaaguirre+2015}
 \citation{davies+2016}
 \citation{m_gelman+rubin1992}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Parameters for the 94 stars for which seismic rotation rates were obtained in this work. Temperature (\mbox  {$T_{\rm  eff}$}\xspace  ), age, mass, metallicity (\mbox  {$\rm  {[Fe/H]}$}\xspace  ) and surface gravity ($\qopname  \relax o{log}(g)$) are adopted from the LEGACY \cite  [L]{lund+2017,silvaaguirre+2017} and`Kages' \cite  [K]{silvaaguirre+2015,davies+2016} catalogues, as listed in the Source column. Projected splitting ($\nu _{\rm  s}\qopname  \relax o{sin}(i)$), inclination angle ($i$) and asteroseismic rotation ($P$) are from this work. Uncertainties were taken using the $15.9^{\rm  th}$ and $84.1^{\rm  st}$ percentiles of posterior distributions on the parameters, which are frequently asymmetrical in linear space. Reported values are the median of the posteriors. For parameters with no direct posterior samples (e.g. rotation) the full posterior samples were transformed before taking the summary statistics. The stellar type denotes whether a star is roughly classified as belonging to the main sequence (MS), Sub-Giants (SG) or `hot' stars (H) (see text). The flags indicate the following: 0; no issues, used in the gyrochronology analysis. 1; has either a number of effective samples $n_{\rm  eff} < 1000$ for the asteroseismic splitting, or Gelman-Rubin convergence metric of $\hat  {R} > 1.1$ \cite  {m_gelman+rubin1992}, indicating that rotation measurements for these stars are less robust than those with a flag of 0. 2; was found to strongly disagree with multiple literature values, excluded from the gyrochronology analysis. 3; fell outside the model range of the stellar models, and were therefore not used in the gyrochronology analysis. Table is continued on the next page.\relax }}{16}{table.1}\protected@file@percent }
-\newlabel{tab:results}{{1}{16}{Parameters for the 94 stars for which seismic rotation rates were obtained in this work. Temperature (\teff ), age, mass, metallicity (\feh ) and surface gravity ($\log (g)$) are adopted from the LEGACY \cite [L]{lund+2017,silvaaguirre+2017} and`Kages' \cite [K]{silvaaguirre+2015,davies+2016} catalogues, as listed in the Source column. Projected splitting ($\nu _{\rm s}\sin (i)$), inclination angle ($i$) and asteroseismic rotation ($P$) are from this work. Uncertainties were taken using the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles of posterior distributions on the parameters, which are frequently asymmetrical in linear space. Reported values are the median of the posteriors. For parameters with no direct posterior samples (e.g. rotation) the full posterior samples were transformed before taking the summary statistics. The stellar type denotes whether a star is roughly classified as belonging to the main sequence (MS), Sub-Giants (SG) or `hot' stars (H) (see text). The flags indicate the following: 0; no issues, used in the gyrochronology analysis. 1; has either a number of effective samples $n_{\rm eff} < 1000$ for the asteroseismic splitting, or Gelman-Rubin convergence metric of $\hat {R} > 1.1$ \cite {m_gelman+rubin1992}, indicating that rotation measurements for these stars are less robust than those with a flag of 0. 2; was found to strongly disagree with multiple literature values, excluded from the gyrochronology analysis. 3; fell outside the model range of the stellar models, and were therefore not used in the gyrochronology analysis. Table is continued on the next page.\relax }{table.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Parameters for the 94 stars for which seismic rotation rates were obtained in this work. Temperature (\mbox  {$T_{\rm  eff}$}\xspace  ), age, mass, metallicity (\mbox  {$\rm  {[Fe/H]}$}\xspace  ) and surface gravity ($\qopname  \relax o{log}(g)$) are adopted from the LEGACY \cite  [L]{lund+2017,silvaaguirre+2017} and`Kages' \cite  [K]{silvaaguirre+2015,davies+2016} catalogues, as listed in the Source column. Projected splitting ($\nu _{\rm  s}\qopname  \relax o{sin}(i)$), inclination angle ($i$) and asteroseismic rotation ($P$) are from this work. Uncertainties were taken using the $15.9^{\rm  th}$ and $84.1^{\rm  st}$ percentiles of posterior distributions on the parameters, which are frequently asymmetrical in linear space. Reported values are the median of the posteriors. For parameters with no direct posterior samples (e.g. rotation) the full posterior samples were transformed before taking the summary statistics. The stellar type denotes whether a star is roughly classified as belonging to the main sequence (MS), Sub-Giants (SG) or `hot' stars (H) (see text). The flags indicate the following: 0; no issues, used in the gyrochronology analysis. 1; has either a number of effective samples $n_{\rm  eff} < 1000$ for the asteroseismic splitting, or Gelman-Rubin convergence metric of $\hat  {R} > 1.1$ \cite  {m_gelman+rubin1992}, indicating that rotation measurements for these stars are less robust than those with a flag of 0. 2; was found to strongly disagree with multiple literature values, excluded from the gyrochronology analysis. 3; fell outside the model range of the stellar models, and were therefore not used in the gyrochronology analysis. Table is continued on the next page.\relax }}{19}{table.1}\protected@file@percent }
+\newlabel{tab:results}{{1}{19}{Parameters for the 94 stars for which seismic rotation rates were obtained in this work. Temperature (\teff ), age, mass, metallicity (\feh ) and surface gravity ($\log (g)$) are adopted from the LEGACY \cite [L]{lund+2017,silvaaguirre+2017} and`Kages' \cite [K]{silvaaguirre+2015,davies+2016} catalogues, as listed in the Source column. Projected splitting ($\nu _{\rm s}\sin (i)$), inclination angle ($i$) and asteroseismic rotation ($P$) are from this work. Uncertainties were taken using the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles of posterior distributions on the parameters, which are frequently asymmetrical in linear space. Reported values are the median of the posteriors. For parameters with no direct posterior samples (e.g. rotation) the full posterior samples were transformed before taking the summary statistics. The stellar type denotes whether a star is roughly classified as belonging to the main sequence (MS), Sub-Giants (SG) or `hot' stars (H) (see text). The flags indicate the following: 0; no issues, used in the gyrochronology analysis. 1; has either a number of effective samples $n_{\rm eff} < 1000$ for the asteroseismic splitting, or Gelman-Rubin convergence metric of $\hat {R} > 1.1$ \cite {m_gelman+rubin1992}, indicating that rotation measurements for these stars are less robust than those with a flag of 0. 2; was found to strongly disagree with multiple literature values, excluded from the gyrochronology analysis. 3; fell outside the model range of the stellar models, and were therefore not used in the gyrochronology analysis. Table is continued on the next page.\relax }{table.1}{}}
 \gdef \LT@i {\LT@entry 
     {8}{52.00014pt}\LT@entry 
     {5}{54.77792pt}\LT@entry 
@@ -143,6 +164,8 @@
     {1}{31.30563pt}\LT@entry 
     {1}{34.50006pt}\LT@entry 
     {1}{40.91673pt}}
+\bibstyle{naturemag}
+\bibdata{library.bib}
 \bibcite{davies+2015}{1}
 \bibcite{chaplin+2011}{2}
 \bibcite{harvey1985}{3}
@@ -160,7 +183,7 @@
 \bibcite{toutain+appourchaux1994}{15}
 \bibcite{gizon+solanki2003}{16}
 \bibcite{handberg+campante2011}{17}
-\bibcite{woodard1984}{18}
+\bibcite{appourchaux+1998}{18}
 \bibcite{anderson+1990}{19}
 \bibcite{vanhoey+2013}{20}
 \bibcite{salvatier+2016}{21}
@@ -168,5 +191,25 @@
 \bibcite{ballot+2006}{23}
 \bibcite{ballot+2008a}{24}
 \bibcite{kass+raftery1995}{25}
-\bibcite{silvaaguirre+2017}{26}
-\bibcite{silvaaguirre+2015}{27}
+\bibcite{nielsen+2015}{26}
+\bibcite{benomar+2018}{27}
+\bibcite{beck2000}{28}
+\bibcite{benomar+2015}{29}
+\bibcite{doyle+2014}{30}
+\bibcite{tayar+2015}{31}
+\bibcite{schofield+2019}{32}
+\bibcite{mathur+2019}{33}
+\bibcite{vansaders+2019}{34}
+\bibcite{amard+matt2020}{35}
+\bibcite{vansaders+pinsonneault2013}{36}
+\bibcite{matt+2015}{37}
+\bibcite{silvaaguirre+2015}{38}
+\bibcite{leiner+2019}{39}
+\bibcite{fleming+2019}{40}
+\bibcite{halbwachs1986}{41}
+\bibcite{white+2013}{42}
+\bibcite{maxted+2015}{43}
+\bibcite{gallet+delorme2019}{44}
+\bibcite{benbakoura+2019}{45}
+\bibcite{ceillier+2016}{46}
+\bibcite{silvaaguirre+2017}{47}

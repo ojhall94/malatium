@@ -3,46 +3,46 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: si.aux
 The style file: naturemag.bst
 Database file #1: library.bib
-Warning--missing school in woodard1984
-You've used 25 entries,
+Warning--I didn't find a database entry for "m_gelman+rubin1992"
+You've used 47 entries,
             2348 wiz_defined-function locations,
-            1131 strings with 15497 characters,
-and the built_in function-call counts, 9586 in all, are:
-= -- 677
-> -- 220
+            1257 strings with 22513 characters,
+and the built_in function-call counts, 18831 in all, are:
+= -- 1309
+> -- 480
 < -- 0
-+ -- 110
-- -- 55
-* -- 1173
-:= -- 1060
-add.period$ -- 77
-call.type$ -- 25
-change.case$ -- 23
++ -- 240
+- -- 120
+* -- 2393
+:= -- 2084
+add.period$ -- 153
+call.type$ -- 47
+change.case$ -- 46
 chr.to.int$ -- 0
-cite$ -- 26
-duplicate$ -- 895
-empty$ -- 894
-format.name$ -- 75
-if$ -- 1934
+cite$ -- 47
+duplicate$ -- 1722
+empty$ -- 1724
+format.name$ -- 161
+if$ -- 3765
 int.to.chr$ -- 0
-int.to.str$ -- 25
-missing$ -- 203
-newline$ -- 135
-num.names$ -- 25
-pop$ -- 139
+int.to.str$ -- 47
+missing$ -- 402
+newline$ -- 255
+num.names$ -- 47
+pop$ -- 245
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 174
+skip$ -- 306
 stack$ -- 0
-substring$ -- 382
-swap$ -- 892
+substring$ -- 771
+swap$ -- 1766
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 1
-while$ -- 54
-width$ -- 27
-write$ -- 284
+warning$ -- 0
+while$ -- 104
+width$ -- 49
+write$ -- 547
 (There was 1 warning)

@@ -13,11 +13,10 @@
 \contentsline {section}{\numberline {2}Verifying asteroseismic results}{9}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Priors on rotational parameters}{9}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Comparisons to previous studies}{10}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Seismic vs Surface rotation}{11}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Seismic vs spectroscopic rotation}{12}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Asteroseismic detection biases}{13}{subsection.2.5}%
-\contentsline {section}{\numberline {3}Verifying consequences for gyrochronology}{14}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Limits of our stellar models}{14}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Systematic uncertainties from asteroseismology}{15}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Binaries and Planet Hosts}{15}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Supplementary Table}{15}{section.4}%
+\contentsline {subsection}{\numberline {2.3}Seismic vs spectroscopic rotation}{12}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Asteroseismic detection biases}{16}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Verifying consequences for gyrochronology}{17}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Limits of our stellar models}{17}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Systematic uncertainties from asteroseismology}{17}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Binaries and Planet Hosts}{18}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Supplementary Table}{18}{section.4}%
