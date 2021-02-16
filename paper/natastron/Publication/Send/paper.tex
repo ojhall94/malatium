@@ -19,7 +19,6 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage[ ]{hyperref}
-\graphicspath{{Images/}}
 %\usepackage[symbol]{footmisc}
 
 
@@ -108,7 +107,7 @@ We separated our sample into three categories \cite{garcia+2014}: 64 main sequen
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.6\textwidth]{data.pdf}
+	\includegraphics[width=0.6\textwidth]{data_Fig1.pdf}
 	\caption{\textbf{Our sample of 95 stars from the `Kages' and LEGACY catalogues.} Data are coloured by asteroseismic age  \cite{silvaaguirre+2015, silvaaguirre+2017}. The dashed lines indicate our classification boundaries: main sequence (circles, $\teff < 6250\, K$, $\logg < 4\, \rm{dex}$), potential sub-giants (squares, $\teff < 6250\, K$, $\logg > 4\, \rm{dex}$), and `hot' stars (triangles, $\teff > 6250\, K$). The Sun is shown with the `$\odot$' symbol, and has an age of $4.6\, \rm{Gyr}$ \cite{bonanno+frohlich2015}. The solid lines are evolutionary tracks generated using MESA \cite{paxton+2017}, for a metallicity of $Z = 0.01493$ and helium content of $Y = 0.26588$. Left to right, they represent masses of $1.5$, $1.25$, $1$ and $0.75\, M_\odot$. Data points represent median values. Horizontal error bars represent the standard deviation on \teff. Vertical error bars represent the 68\% confidence interval on \logg, and are too small to be visible \cite{hunter2007}.}
 	\label{fig:sample}
 \end{figure}
@@ -124,7 +123,7 @@ Figure \ref{fig:protlit} shows a comparison between 48 stars from our sample for
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.6\textwidth]{Images/surf-seis-comparison_update.pdf}
+	\includegraphics[width=0.6\textwidth]{surf-seis-comparison_update_FIg2.pdf}
 	\caption{\textbf{Comparisons between asteroseismic and photometric measures of stellar rotation, for 48 stars.} Literature values were taken Garcia et al. (2014) \cite{garcia+2014} and Nielsen et al. (2013) \cite{nielsen+2013} (if a value was reported in both, the Garcia et al. 2014 value was used). Stars used in the original van Saders et al. (2019) \cite{vansaders+2016} study that first proposed weakened magnetic braking are highlighted. The four triangles represent stars included in the Nielsen et al. (2015) study \cite{nielsen+2015} that previously measured this relationship. The solid line indicates 1:1 line, while the dash-dotted lines represent 2:1 and 1:2 lines. The slim shaded region around the 1:1 line is the $1\sigma$ credible interval of the fit to the data, the result of which is shown as the title of the figure. Stars that were not included in the fitting process are transparent. Data points represent median values. The error bars on the asteroseismic rotation represent the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles on the measured posterior distributions, and are smaller than the points in some cases.}
 	\label{fig:protlit}
 \end{figure}
@@ -137,7 +136,7 @@ In order to ensure our results were based on the most robust rotation measuremen
 
 \begin{figure*}
 	\centering
-	\includegraphics[width=.9\textwidth]{fullsample.pdf}
+	\includegraphics[width=.9\textwidth]{fullsample_Fig3.pdf}
 	\caption{\textbf{Stars for which rotation was measured in this work, plotted over stellar population models evolved under standard (top) and weakened magnetic braking (WMB, bottom) prescriptions of angular momentum evolution.} The model populations were generated using TRILEGAL (see text) \cite{girardi+2012}. \rtwo{The z-axis colour scale indicates the density of stars in $P$-\teff space for the models.} The 21 stars that were excluded from the gyrochronology analysis are marked with crosses and without uncertainties (see text). Circles, squares and triangles denote main sequence, sub-giant, and `hot' stars respectively. Stars with a metallicity of $\bigl\lvert \feh \bigl\rvert > 0.4$ are shown in purple, to indicate that they fall outside the functional range of the stellar models  \cite{vansaders+2019}. Note that this figure shows the projection of a 5-dimensional space onto a 2-dimensional representation, as only period-temperature space is shown here. When evaluating between the two model prescriptions we also considered mass, age and metallicity. Data points represent median values. The error bars on the asteroseismic rotation represent the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles on the measured posterior distributions.}
 	\label{fig:fullsample}
 \end{figure*}
@@ -150,7 +149,7 @@ Both hot and sub-giant stars do not strongly prefer one model over the other (wi
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{modelresults.pdf}
+	\includegraphics[width=\textwidth]{modelresults_Fig4.pdf}
 	\caption{\textbf{Posterior estimates of the mixture model parameter $Q_{\rm WMB}$, broken down by stellar classification.} A value of $Q_{\rm WMB}$ close to 1 indicates that the data are more consistent with a rotational evolution that includes weakened magnetic braking, whereas a value close to 0 indicates that the data are more consistent with a standard rotational evolution scenario. \textit{Left:} \rtwo{the joint posterior probabilities} for 73 stars, or subsets thereof for different stellar classifications. \textit{Right:} the cumulative posterior probability for 73 stars, or subsets thereof for different stellar types. On the y-axis of the left hand plot, $p(Q_{\rm WMB} | \mathcal{D})$ represents the posterior distribution of $Q_{\rm WMB}$ given the data. The product symbol represents the combination of the posteriors for individual stars $i$, for a total of $N$ stars (which differs depending on the stellar type being shown).}
 	\label{fig:gyroresults}
 \end{figure}
@@ -184,8 +183,6 @@ In the near future our new asteroseismic rotation catalogue will be further comp
 \input{bblpaper.tex}
 
 \vspace{5mm}
-%\bibliographystyle{naturemag}
-%\bibliography{library.bib} % if your bibtex file is called example.bib
 
 \textbf{Acknowledgments}: The authors would like to thank the anonymous reviewers for their help improving this manuscript. They would also like to thank Sean Matt, Ellis Avallone, Alex Dixon, Warrick Ball and Brett Morris for helpful discussions.
 OJH, GRD and WJC acknowledge the support of the UK Science and Technology Facilities Council (STFC). 
@@ -208,8 +205,8 @@ This paper includes data collected by the Kepler mission and obtained from the M
 \clearpage
 \input{methods.tex}
 
-\clearpage
-\input{ed.tex}
+%\clearpage
+%\input{ed.tex}
 
 
 
