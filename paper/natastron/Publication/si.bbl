@@ -393,4 +393,12 @@
 \newblock \emph{\bibinfo{journal}{Astrophys. J.}}
   \textbf{\bibinfo{volume}{835}}, \bibinfo{pages}{173} (\bibinfo{year}{2017}).
 
+\bibitem{gelman+rubin1992}
+\bibinfo{author}{Gelman, A.} \& \bibinfo{author}{Rubin, D.~B.}
+\newblock \bibinfo{title}{Inference from {{Iterative Simulation Using Multiple
+  Sequences}}}.
+\newblock \emph{\bibinfo{journal}{Statistical Science}}
+  \textbf{\bibinfo{volume}{7}}, \bibinfo{pages}{457--472}
+  (\bibinfo{year}{1992}).
+
 \end{thebibliography}
