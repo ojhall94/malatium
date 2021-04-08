@@ -1,0 +1,988 @@
+\documentclass[12pt]{article}
+\setlength{\textwidth}{167mm}
+\setlength{\headsep}{0mm}
+\setlength{\headheight}{0mm}
+\setlength{\textheight}{230mm}
+\setlength{\oddsidemargin}{1.6mm}
+\setlength{\evensidemargin}{1.6mm}
+\setlength{\topmargin}{4.6mm}
+
+\usepackage{chngcntr}
+\usepackage{xspace}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{amsmath}	% Advanced maths commands
+\usepackage{amssymb}	% Extra maths symbols
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{threeparttable}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage[ ]{hyperref}
+%\graphicspath{{Images/}}
+%\usepackage[symbol]{footmisc}
+
+
+
+% Astronomical abbreviations (thanks to Dan Huber)
+\newcommand{\numax}{\mbox{$\nu_{\rm max}$}\xspace}
+\newcommand{\dnu}{\mbox{$\Delta \nu$}\xspace}
+\newcommand{\muHz}{\mbox{$\mu$Hz}\xspace}
+\newcommand{\teff}{\mbox{$T_{\rm eff}$}\xspace}
+\newcommand{\logg}{\mbox{$\log(g)$}\xspace}
+\newcommand{\feh}{\mbox{$\rm{[Fe/H]}$}\xspace}
+\newcommand{\msun}{\mbox{$\mathrm{M}_{\odot}$}\xspace}
+\newcommand{\lsun}{\mbox{$\mathrm{L}_{\odot}$}\xspace}
+\newcommand{\mearth}{\mbox{$\mathrm{M}_{\oplus}$}\xspace}
+\newcommand{\rsun}{\mbox{$\mathrm{R}_{\odot}$}\xspace}
+\newcommand{\kepler}{\emph{Kepler}\xspace}
+\newcommand{\tess}{\emph{TESS}\xspace}
+\newcommand{\ktwo}{K2\xspace}
+\newcommand{\gaia}{\emph{Gaia}\xspace}
+\newcommand{\rtwo}[1]{{#1}}
+
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\begin{document}
+\noindent\textbf{\LARGE{Weakened magnetic braking supported by asteroseismic rotation rates of \textit{Kepler} dwarfs}}\\
+
+\noindent Oliver J. Hall$^{1,2,3,*}$,
+	Guy R. Davies$^{2,3}$, 
+	Jennifer van Saders$^{4}$,
+	Martin B. Nielsen$^{2,3}$,
+	Mikkel N. Lund$^{3}$, 
+	William J. Chaplin$^{2,3}$, 
+	Rafael A. Garc\'ia$^{5, 6}$, 
+	Louis Amard$^{7}$,
+	Angela A. Breimann$^{7}$, 
+	Saniya Khan$^{2,3}$, 
+	Victor See$^{7}$, 
+	Jamie Tayar$^{4, 8}$
+	\\
+	
+	% List of institutions
+	\noindent $^{1}$ European Space Agency (ESA), European Space Research and Technology Centre (ESTEC), Keplerlaan 1, 2201 AZ Noordwijk, The Netherlands
+
+	\noindent 	$^{2}$ School of Physics and Astronomy, University of Birmingham, Edgbaston, Birmingham, B15 2TT, UK
+
+	\noindent 	$^{3}$ Stellar Astrophysics Centre, Department of Physics and Astronomy, Aarhus University, Ny Munkegade 120, 8000 Aarhus C, Denmark
+
+	\noindent 	$^{4}$ Institute for Astronomy, University of Hawai'i, Honolulu, HI 96822
+
+	\noindent 	$^{5}$ IRFU, CEA, Universit\'e Paris-Saclay, F-91191 Gif-sur-Yvette, France
+
+	\noindent 	$^{6}$ AIM, CEA, CNRS, Universit\'e Paris-Saclay, Universit\'e Paris Diderot, Sorbonne Paris Cit\'e, F-91191 Gif-sur-Yvette, France
+
+	\noindent 	$^{7}$ University of Exeter Department of Physics and Astronomy, Stocker Road, Devon, Exeter, EX4 4QL, UK
+	
+	\noindent $^{8}$ Hubble Fellow
+	
+	\noindent $^{*}$ Email: \texttt{oliver.hall@esa.int} | Twitter: \texttt{@asteronomer} | GitHub: \texttt{@ojhall94}
+
+
+\vspace{10mm}
+
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+\textbf{Studies using asteroseismic ages and rotation rates from star-spot rotation have indicated that standard age-rotation relations may break down roughly half-way through the main sequence lifetime, a phenomenon referred to as weakened magnetic braking. While rotation rates from spots can be difficult to determine for older, less active stars, rotational splitting of asteroseismic oscillation frequencies can provide rotation rates for both active and quiescent stars, and so can confirm whether this effect really takes place on the main sequence.\\
+We obtained asteroseismic rotation rates of 91 main sequence stars showing high signal-to-noise modes of oscillation.
+Using these new rotation rates, along with effective temperatures, metallicities and seismic masses and ages, we built a hierarchical Bayesian mixture model to determine whether the ensemble more closely agreed with a standard rotational evolution scenario, or one where weakened magnetic braking takes place. The weakened magnetic braking scenario was found to be $98.4\%$ more likely for our stellar ensemble, adding to the growing body of evidence for this stage of stellar rotational evolution. This work represents the largest catalogue of seismic rotation on the main sequence to date, opening up possibilities for more detailed ensemble analysis of rotational evolution with \textit{Kepler}.}
+
+%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%
+ %500 words
+Gyrochronology is the study of the relationship between a star's rotation period and its age. As a star grows older along the main sequence, magnetic winds will cause it to lose angular momentum, slowing its rotation. The loss rate is thought to depend on the depth of the convection zone, which is a strong function of mass and temperature, and so the rotation period of a young star will rapidly settle on to a plane in age-colour-rotation space \cite{barnes2007}. Knowing the rotation and colour of stars therefore provides an avenue to measure ages, to a precision of $\sim 10\%$ for stars most similar to the Sun \cite{meibom+2015}. Age can otherwise be difficult to infer, and so gyrochronology enables more in-depth studies of stellar populations and individual stars \cite{leiner+2019,claytor+2019}.
+
+Gyrochronology was previously calibrated on stellar clusters, which have well constrained ages, but only up to roughly $4\, \rm{Gyr}$ \cite{meibom+2015, barnes+2016}. Recently, ages of main sequence field stars (i.e. not in clusters) observed by \kepler \cite{borucki+2010} became more widely available through asteroseismology, the study of stellar variability \cite{silvaaguirre+2015}. When looking at these stars, disagreements were found between observations and gyrochronology beyond the middle of stars' main sequence lifetimes, which could not be reconciled with existing theories \cite{angus+2015, nielsen+2015, davies+2015}. It was proposed that at some stage in a star's evolution it undergoes \textit{weakened magnetic braking} (WMB, \cite{vansaders+2016}), where the efficiency of angular momentum loss rapidly drops. This would cause stars to maintain relatively fast rotation rates at old ages, which we would not expect from the extrapolation of existing gyrochronology relations.
+
+The mechanism by which weakened magnetic braking occurs is subject of debate, and may be connected to changes in the magnetic field morphology \cite{vansaders+2016,reville+2015,garraffo+2016, metcalfe+2016, metcalfe+2019, see+2019}. It may also be explained from an observational point of view. A large survey of stellar rotation rates measured using star-spots found a lack of slowly rotating stars older then Sun \cite{mcquillan+2014}. As activity reduces with age, older stars with fewer spots are less likely to have their rotation measured \cite{matt+2015, reinhold+2020}. The point at which the detection probability drops appears to lie at a similar level of activity as the expected onset of weakened magnetic braking, placing these two possibilities in opposition to one another \cite{vansaders+2019}.
+
+Determining whether weakened magnetic braking is a true phenomenon or a bias in star-spot observations requires new measurements of rotation in quiescent stars, which can be provided by asteroseismology. \rtwo{Rotation causes certain modes of oscillation -- which lie at the same frequency in a non-rotating case -- to shift to higher or lower frequencies. The size of this `splitting' provides a means of independently measuring the rotation of the star \cite{ledoux1951}}. 
+
+Asteroseismic rotation requires a faster observing cadence and higher signal-to-noise than spot rotation, but does not require spots to be visible, meaning that we can measure rotation for older, quiescent stars that would not have been present in existing rotation catalogues. 
+%This makes asteroseismic rotation rates a perfect test of weakened magnetic braking on the main sequence. 
+Here, we measured asteroseismic rotation rates of 91 main sequence stars across a broad range of  ages, and determined whether \rtwo{these new data agree} more closely with a classical rotational evolution scenario, or one in which weakened magnetic braking takes place.\\
+
+\textbf{Asteroseismic main sequence targets:} In order to obtain robust asteroseismic rotation rates, we required detections of multiples of both dipole (denoted as $\ell = 1$) and quadrupole ($\ell = 2$) p mode (\textit{Pressure} modes, the type of oscillation visible in main sequence stars) oscillations for each star, of which the latter have significantly lower signal-to noise. Radial oscillations ($\ell = 0$) are also visible, but do not split. In this work, we studied a sample of 95 of the highest signal-to-noise targets observed by \textit{Kepler}, combining the `Kages' \cite{silvaaguirre+2015,davies+2016} and LEGACY \cite{lund+2017, silvaaguirre+2017} catalogues. For these catalogues the mode extraction through frequency fitting \cite{davies+2016, lund+2017} and modelling using mode frequencies to obtain stellar parameters \cite{silvaaguirre+2015, silvaaguirre+2017} are covered in separate papers. Further details on these data can be found in \textbf{Methods}. 
+
+We separated our sample into three categories \cite{garcia+2014}: 64 main sequence stars (MS, $\rm{log(g)} > 4.0\, \rm dex$, $T_{\rm eff} < 6250\, \rm K$); 4 potential sub-giant stars (SG, $\rm{log(g)} < 4.0\, \rm dex$, $T_{\rm eff} < 6250\, \rm K$), which may have begun to evolve off the main sequence, complicating their rotational history. ; and 24 `hot' stars (H, $T_{\rm eff} > 6250\, \rm K$), which lie above the Kraft break, the point at which convective envelopes are thin, and angular momentum loss through magnetic winds becomes inefficient \cite{kraft1967}. It should be noted that none of these stars have identified mixed dipole modes, which indicate an evolved structure (see \cite{bedding+2010}). Our conclusions are largely insensitive to these categorical assignments, and they are intended solely to help explore results category-by-category. The sample, which can be seen in Figure \ref{fig:sample}, spans surface gravities of $3.8\, \rm{dex} < \rm{log(g)} < 4.6\, \rm{dex}$, temperatures of $5000\, \textrm{K} < T_{\rm eff} <  6700\, \rm{K}$, and ages from $1$ to $\sim 13\, \rm{Gyr}$.\\
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6\textwidth]{data_Fig1.pdf}
+	\caption{\textbf{Our sample of 95 stars from the `Kages' and LEGACY catalogues.} Data are coloured by asteroseismic age  \cite{silvaaguirre+2015, silvaaguirre+2017}. The dashed lines indicate our classification boundaries: main sequence (circles, $\teff < 6250\, K$, $\logg < 4\, \rm{dex}$), potential sub-giants (squares, $\teff < 6250\, K$, $\logg > 4\, \rm{dex}$), and `hot' stars (triangles, $\teff > 6250\, K$). The Sun is shown with the `$\odot$' symbol, and has an age of $4.6\, \rm{Gyr}$ \cite{bonanno+frohlich2015}. The solid lines are evolutionary tracks generated using MESA \cite{paxton+2017}, for a metallicity of $Z = 0.01493$ and helium content of $Y = 0.26588$. Left to right, they represent masses of $1.5$, $1.25$, $1$ and $0.75\, M_\odot$. Data points represent median values. Horizontal error bars represent the standard deviation on \teff. Vertical error bars represent the 68\% confidence interval on \logg, and are too small to be visible \cite{hunter2007}.}
+	\label{fig:sample}
+\end{figure}
+
+
+\textbf{Results of asteroseismic fitting:} The stars in `Kages' and LEGACY which form our stellar sample have been subject to detailed asteroseismic frequency fitting in the catalogue papers, but did not have reported asteroseismic rotation. Here, we repeated the mode frequency fitting with a Bayesian model that accounted for rotation in more detail, and improved the treatment of existing asteroseismic relations in frequency fitting techniques (see \textbf{Methods} and \textbf{Supplementary Information}). We fit our new model to \kepler power-spectra of 95 stars, which was successful in 94 cases. We report summary statistics used throughout the rest of this paper as the median of the posterior distribution on the model parameters, with the uncertainties being the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles, meaning that some reported parameters (such as period) have asymmetric uncertainties.
+
+We compared our results with both published and unpublished asteroseismic rotation rates \cite{nielsen+2015,davies+2015,davies+2016, lund+2017, benomar+2018}, and found that the three stars with the lowest angles of inclination ($< 10^\circ$) were inconsistent with multiple other studies. For stars viewed near pole-on the split modes of oscillation have extremely low power, making them hard to detect reliably \cite{lund+2014}. We flagged our rotation rates for these stars, and did not use them in the next steps in our analysis, leaving a sample of 91 stars for which we considered our asteroseismic rotation measurements to be robust (for a full justification, see \textbf{Supplementary Information}).\\
+
+\textbf{Seismic versus surface rotation rates:} Different methods of rotation measurement probe different depths of stars. Asteroseismology of main sequence stars probes internal rotation in the near surface layers, where the observed modes of oscillation are most sensitive \cite{lund+2014}. Measurements of star-spot modulation instead probe the rotation rates of star-spots on the surface, at active latitudes. Previous studies have shown that seismic rotation rates show no statistically significant deviation from spot rotation rates \cite{nielsen+2015, benomar+2015}. We confirm that this holds true for our larger sample, in order to ensure that our seismic rotation periods can be reliably used to draw conclusions on the evolution of surface rotation.
+
+Figure \ref{fig:protlit} shows a comparison between 48 stars from our sample for which spot  rotation rates had previously been measured. Rotation rates from spot modulation are subject to measuring multiples of the true rotation rate, and also sometimes over-correct for this effect. This is not the case for asteroseismic rotation, and so some stars may appear at the 2:1 and 1:2 lines in the figure. We fit a line of the form $P_{\rm surf} = m \times P_{\rm seis}$, using the larger of the asymmetrical uncertainties on asteroseismic rotation, and excluding stars above the 1.8:1 line to avoid likely multiples of the true rotation rate acting as outliers (transparent in the Figure, see \textbf{Methods} for details). Our fit found a value of $m = 0.96 \pm 0.03$, showing a close agreement ($<2\sigma$) between asteroseismic and surface rotation rates on a population level. This overall agreement between spot and seismic rotation rates is in line with previous studies of Sun-like stars \cite{nielsen+2015, benomar+2015, gizon+2013, chaplin+2013}, and so we concluded that our asteroseismic ensemble can be reliably used to draw inferences about gyrochronology.\\
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6\textwidth]{surf-seis-comparison_update_FIg2.pdf}
+	\caption{\textbf{Comparisons between asteroseismic and photometric measures of stellar rotation, for 48 stars.} Literature values were taken Garcia et al. (2014) \cite{garcia+2014} and Nielsen et al. (2013) \cite{nielsen+2013} (if a value was reported in both, the Garcia et al. 2014 value was used). Stars used in the original van Saders et al. (2019) \cite{vansaders+2016} study that first proposed weakened magnetic braking are highlighted. The four triangles represent stars included in the Nielsen et al. (2015) study \cite{nielsen+2015} that previously measured this relationship. The solid line indicates 1:1 line, while the dash-dotted lines represent 2:1 and 1:2 lines. The slim shaded region around the 1:1 line is the $1\sigma$ credible interval of the fit to the data, the result of which is shown as the title of the figure. Stars that were not included in the fitting process are transparent. Data points represent median values. The error bars on the asteroseismic rotation represent the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles on the measured posterior distributions, and are smaller than the points in some cases.}
+	\label{fig:protlit}
+\end{figure}
+
+\textbf{Comparing gyrochronology models:} To evaluate the implications of our \rtwo{new seismic rotation rates} for gyrochronology, we compared \rtwo{the stars in our ensemble} to two population models of rotational evolution \cite{vansaders+2019}: a `standard' model, which assumes a traditional angular momentum transport through magnetically driven stellar winds \cite{vansaders+2016,skumanich1972, kawaler1988}, and one where weakened magnetic braking takes place (hereafter the `WMB model') \cite{vansaders+2016}.  The WMB model was identical to the standard model in its input physics, except for the condition that angular momentum loss ceases above a critical Rossby number of $Ro_{\rm crit} = 1.97$. The Rossby number may be defined as $Ro \equiv P/\tau_{\rm cz}$, where $\tau_{\rm cz}$ is the convective turnover timescale, and $P$ is the rotation. The Rossby number roughly scales inversely with stellar activity (and so increases as stars age). \rtwo{Because of this, the distribution of stars with a Rossby number below this threshold will be identical in both models}.
+
+Instead of comparing our rotation rates directly to models of individual stars, we instead compared them to \rtwo{the distribution of} synthetic TRILEGAL populations based on what the \textit{Kepler} field would look like under these two different braking laws \cite{vansaders+2019, girardi+2012}. These synthetic populations were then altered to match the distribution of existing catalogues of stars in the \kepler field in order to replicate the \kepler selection effects \cite{berger+2020}, and evolved following a standard or WMB braking law. For details on how these models were constructed, see \textbf{Methods}.
+
+In order to ensure our results were based on the most robust rotation measurements, we focused on the stars with the best convergence metrics in the mode frequency fitting, excluding those with a number of effective samples $n_{\rm eff} < 1000$ and a Gelman-Rubin metric of $\hat{R}<1.1$ \cite{gelman+rubin1992,salvatier+2016} (see  \textbf{Supplementary Information} Table 1). Two stars with low metallicities ($< -0.8\, \rm {dex}$) that fell outside the boundaries of our stellar models were also excluded. The remaining sample of 73 stars contained 4 potential sub-giants, 22 `hot' stars and 47 main sequence stars. Figure \ref{fig:fullsample} shows these stars plotted over the top of both the standard and WMB population models in rotation-temperature space, alongside the stars not used in the gyrochronology analysis (shown without uncertainties).
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=.9\textwidth]{fullsample_Fig3.pdf}
+	\caption{\textbf{Stars for which rotation was measured in this work, plotted over stellar population models evolved under standard (top) and weakened magnetic braking (WMB, bottom) prescriptions of angular momentum evolution.} The model populations were generated using TRILEGAL (see text) \cite{girardi+2012}. \rtwo{The z-axis colour scale indicates the density of stars in $P$-\teff space for the models.} The 21 stars that were excluded from the gyrochronology analysis are marked with crosses and without uncertainties (see text). Circles, squares and triangles denote main sequence, sub-giant, and `hot' stars respectively. Stars with a metallicity of $\bigl\lvert \feh \bigl\rvert > 0.4$ are shown in purple, to indicate that they fall outside the functional range of the stellar models  \cite{vansaders+2019}. Note that this figure shows the projection of a 5-dimensional space onto a 2-dimensional representation, as only period-temperature space is shown here. When evaluating between the two model prescriptions we also considered mass, age and metallicity. Data points represent median values. The error bars on the asteroseismic rotation represent the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles on the measured posterior distributions.}
+	\label{fig:fullsample}
+\end{figure*}
+
+We evaluated our ensemble against both population models simultaneously using a Bayesian mixture model, which treated the data as being drawn from a mixture made from Kernel Density Estimates (KDEs) of both populations, modulated by a mixing parameter $Q_{\rm WMB}$. In the limit that $Q_{\rm WMB} \rightarrow 1$, the data are most likely drawn from the WMB model. In the limit $Q_{\rm WMB} \rightarrow 0$, the standard model is more likely. This mixture model was evaluated in a five-dimensional parameter space, accounting for the population distributions in effective temperature ($T_{\rm eff}$), metallicity (\feh), asteroseismic mass ($M$) and age ($t$) and our new rotation periods ($P$). For further details, see \textbf{Methods}.\\
+
+\textbf{Results of comparing models:} We fit our mixture model to each star individually, which yielded a posterior probability density for the value of $Q_{\rm WMB}$ given the data for that star. In order to assess the posterior probability for the full sample, we multiplied the individual posterior probabilities for $Q_{\rm{WMB}}$. \rtwo{This joint posterior then describes the probability distribution of $Q_{\rm WMB}$ given multiple stars.} This was done for the full ensemble of 73 stars together, as well as for the three different stellar types separately. These joint probabilities can be seen in Figure \ref{fig:gyroresults} in the left-hand plot. The cumulative probabilities can be seen in the right-hand plot. In both of these plots, the right-hand side holds 98.4\% of the probability, indicating that the weakened magnetic braking model is preferred. When only considering the 47 main sequence stars, for which braking models are best calibrated, this rises to 99.2\%. 
+
+Both hot and sub-giant stars do not strongly prefer one model over the other (with both cumulative probabilities crossing the $Q_{\rm{WMB}} = 0.5$ line at roughly $60\%$). \rtwo{This indicates that these stars lie below our model's critical Rossby number (and therefore in the parameter space where our two models are identical), or that they are only weakly affected by angular momentum loss (as is the case for hot stars near the Kraft break).} When performing this analysis on all 89 stars for which seismic rotation was measured (excluding the two stars with low metallicity), the total probability above $Q_{\rm{WMB}} = 0.5$ was 96.6\%. \rtwo{The total posterior probability for all stars above $Q_{\rm{WMB}} = 0.6$ and $0.7$ was $93.3\%$ and $78.2\%$  respectively. This does not necessarily mean that a mixture of the two models is preferred, as stars that have not yet undergone weakened braking, or which are near the transition period, will have a flat posterior distribution with no strong preference for either model.}\\
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{modelresults_Fig4.pdf}
+	\caption{\textbf{Posterior estimates of the mixture model parameter $Q_{\rm WMB}$, broken down by stellar classification.} A value of $Q_{\rm WMB}$ close to 1 indicates that the data are more consistent with a rotational evolution that includes weakened magnetic braking, whereas a value close to 0 indicates that the data are more consistent with a standard rotational evolution scenario. \textit{Left:} \rtwo{the joint posterior probabilities} for 73 stars, or subsets thereof for different stellar classifications. \textit{Right:} the cumulative posterior probability for 73 stars, or subsets thereof for different stellar types. On the y-axis of the left hand plot, $p(Q_{\rm WMB} | \mathcal{D})$ represents the posterior distribution of $Q_{\rm WMB}$ given the data. The product symbol represents the combination of the posteriors for individual stars $i$, for a total of $N$ stars (which differs depending on the stellar type being shown).}
+	\label{fig:gyroresults}
+\end{figure}
+
+\textbf{Verifying consequences for gyrochronology:} In order to verify that our results presented a meaningful \rtwo{conclusion about} weakened magnetic braking, we ensured that the same results were obtained when using different subsets of the ensemble, and when exploring potential biases. We found that the joint posterior distribution did not change significantly when excluding stars with metallicities that fell only slightly outside the model range, or those with extremely small uncertainties on asteroseismic mass. Stars in our sample with known binary companions that may disrupt their rotational evolution were not found to contribute strongly to the joint posterior probability of $Q_{\rm WMB}$. 
+
+We checked that our results remained the same if the `Kages' and LEGACY catalogues had underestimated the uncertainties on the asteroseismic mass and age, which form part of our mixture model analysis. We reran our analysis after inflating the uncertainties on these properties to align with the expected systematic uncertainty from stellar models \cite{silvaaguirre+2015,silvaaguirre+2017}. The results from this echoed what we found for the unaltered ensemble. We also accounted for the possibility that asteroseismic methods systematically overestimated stellar age, and reran our analysis after shifting the seismic ages younger by their systematic uncertainty ($6-8\%$). This resulted in $95.8\%$ of the posterior probability to lie above $Q_{\rm WMB} = 0.5$, compared to $98.4\%$ for the unaltered ensemble. From this, we can infer that our conclusions are robust against potential issues in seismic analyses. For a full discussion of these tests and other biases, see \textbf{Supplementary Information}.\\
+
+Weakened magnetic braking was first proposed by van Saders et al. (2016) \cite[hereafter the `van Saders' study]{vansaders+2016} in response to stars with spot rotation rates faster than expected from gyrochronology at their asteroseismic ages. This discrepancy was also indicated at around the same time in other studies of asteroseismic ages of main sequence stars \cite{angus+2015, nielsen+2015,  davies+2015}. The theory of weakened magnetic braking has been both reinforced by recent studies \cite{metcalfe+egeland2019}, as well as disputed \cite{lorenzo-oliveira+2019}, at least at the critical Rossby number originally proposed.
+
+A recent study using spectroscopic rotation measurements of 14 solar twins, compared to grids of stellar models, found marginal evidence favouring a standard rotational evolution \cite{lorenzo-oliveira+2019}. If weakened magnetic braking were to take place, this work proposed that it would most likely be outside the range of their sample, at $Ro_{\rm {crit}} \geq 2.29$, compared to the value of $1.97$ used in this work. Our sample does not overlap with theirs, so we can not directly compare to their results.
+The statistical agreement between our seismic stars and a model of weakened magnetic braking at a critical Rossby number of $1.97$ over the standard scenario indicates that traces of weakened magnetic braking do occur at Rossby numbers of around $2$. \rtwo{However, we only intend to show that asteroseismic rotation rates indicate a preference for the presence of weakened magnetic braking, instead of claiming a particular critical Rossby number is correct. A measurement of the exact critical Rossby number at which these occurs is the subject of a paper in preparation.}
+
+As a sanity check that the evidence in favour of weakened magnetic braking presented in this work is independently robust, we recreated the joint posterior probability for $Q_{\rm WMB}$, this time looking only at MS stars, and excluding any of the 22 stars that were part of the original van Saders study used to propose weakened magnetic braking. Of the 47 MS stars used to distinguish between stellar models, 16 were included in the van Saders sample. Both the 16 stars in the original van Saders study as well as the remaining MS stars favoured the WMB model, although the van Saders stars did so more strongly, not including any stars that favoured the standard model. Specifically, when considering only the van Saders stars, $96.3\%$ of the total joint probability lay above $Q_{\rm WMB} = 0.5$, compared to $91.7\%$ when considering only those stars \emph{not} included in the van Saders study. The stars initially used to propose the WMB model are still those most strongly in favour of it even when using asteroseismic rotation rates only, a result which is now further reinforced by an expanded sample that includes quiescent stars.\\
+
+
+\textbf{Conclusions:} In this work, we obtained asteroseismic rotation rates for 91 stars using a hierarchical Bayesian model to fit for oscillation frequencies, convective background, and rotational splitting simultaneously. We validated these results against previously published and unpublished asteroseismic rotation measurements, making our new rotation catalogue the largest self-consistent sample of asteroseismic rotation in main sequence stars to date. We evaluated the stars in our sample against synthetic population \rtwo{distribution} models of the \textit{Kepler} field evolved under either a `standard' model of rotational evolution, or one where weakened magnetic braking takes place. This evaluation was done using a Bayesian mixture model to determine whether the ensemble preferred one model over another, and was done simultaneously in asteroseismic rotation, mass, age, and spectroscopic temperature and metallicity.\\
+
+We leave the reader with the following conclusions:
+\begin{enumerate}
+	\item We found that our ensemble was $98.4\%$ more likely to be drawn from a weakened magnetic braking model than a standard model of rotational evolution \cite{vansaders+pinsonneault2013}, at a critical Rossby number of $Ro_{\rm{crit}} = 1.97$. \rtwo{Stars in our ensemble overall showed a weaker rate of braking than one would expect from solar (and extrapolated solar) braking rates.} This work expands upon previous analysis \cite{vansaders+2019} by including quiescent stars older than the Sun. This conclusion was found to be robust against change of ensemble members and potentially underestimated asteroseismic systematic uncertainties. A comparison to other braking laws \cite{matt+2015} and other gyrochronology relations \cite{barnes2010} using our asteroseismic ensemble will take place in future work.
+	
+	\item We compared our new asteroseismic rotation rates with surface rotation measures from spot modulation. Our findings replicate those in similar studies \cite{nielsen+2015,benomar+2015}, in the sense that we find no statistically significant difference between seismic and spot modulation measures of stellar rotation in our ensemble.
+	
+	\item The new asteroseismic rotation catalogue presented in this work will act as an entry point for more detailed studies, including comparisons between different braking laws and individually modeled values of stellar rotation at different critical Rossby numbers.
+	
+\end{enumerate}
+
+In the near future our new asteroseismic rotation catalogue will be further complemented with high-precision surface rotation measurements, activity indicators and atmospheric parameters from spectroscopic surveys such as LAMOST \cite{deng+2012}, 4MOST \cite{dejong+2014}, WEAVE \cite{dalton+2014} and SDSS-V \cite{blanton+2019, kollmeier+2019}, and new asteroseismic measurements of age from the \ktwo and \tess missions. With these surveys, large scale ensemble asteroseismology will continue to increase the possibilities for understanding gyrochronology.\\
+
+\begin{thebibliography}{10}
+	\expandafter\ifx\csname url\endcsname\relax
+	\def\url#1{\texttt{#1}}\fi
+	\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+	\providecommand{\bibinfo}[2]{#2}
+	\providecommand{\eprint}[2][]{\url{#2}}
+	
+	\bibitem{barnes2007}
+	\bibinfo{author}{{Barnes}, S.~A.}
+	\newblock \bibinfo{title}{{Ages for Illustrative Field Stars Using
+			Gyrochronology: Viability, Limitations, and Errors}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{669}}, \bibinfo{pages}{1167--1189}
+	(\bibinfo{year}{2007}).
+	\newblock \eprint{0704.3068}.
+	
+	\bibitem{meibom+2015}
+	\bibinfo{author}{{Meibom}, S.} \emph{et~al.}
+	\newblock \bibinfo{title}{{A spin-down clock for cool stars from observations
+			of a 2.5-billion-year-old cluster}}.
+	\newblock \emph{\bibinfo{journal}{Nature}} \textbf{\bibinfo{volume}{517}},
+	\bibinfo{pages}{589--591} (\bibinfo{year}{2015}).
+	\newblock \eprint{1501.05651}.
+	
+	\bibitem{leiner+2019}
+	\bibinfo{author}{{Leiner}, E.}, \bibinfo{author}{{Mathieu}, R.~D.},
+	\bibinfo{author}{{Vanderburg}, A.}, \bibinfo{author}{{Gosnell}, N.~M.} \&
+	\bibinfo{author}{{Smith}, J.~C.}
+	\newblock \bibinfo{title}{{Blue Lurkers: Hidden Blue Stragglers on the M67 Main
+			Sequence Identified from Their Kepler/K2 Rotation Periods}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{881}}, \bibinfo{pages}{47} (\bibinfo{year}{2019}).
+	\newblock \eprint{1904.02169}.
+	
+	\bibitem{claytor+2019}
+	\bibinfo{author}{{Claytor}, Z.~R.} \emph{et~al.}
+	\newblock \bibinfo{title}{{Chemical Evolution in the Milky Way: Rotation-based
+			Ages for APOGEE-Kepler Cool Dwarf Stars}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{888}}, \bibinfo{pages}{43} (\bibinfo{year}{2020}).
+	\newblock \eprint{1911.04518}.
+	
+	\bibitem{barnes+2016}
+	\bibinfo{author}{Barnes, S.~A.}, \bibinfo{author}{Weingrill, J.},
+	\bibinfo{author}{Fritzewski, D.}, \bibinfo{author}{Strassmeier, K.~G.} \&
+	\bibinfo{author}{Platais, I.}
+	\newblock \bibinfo{title}{Rotation {{Periods}} for {{Cool Stars}} in the 4
+		{{Gyr}} old {{Open Cluster M67}}, {{The Solar}}-{{Stellar Connection}}, and
+		the {{Applicability}} of {{Gyrochronology}} to at least {{Solar Age}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{823}}, \bibinfo{pages}{16} (\bibinfo{year}{2016}).
+	
+	\bibitem{borucki+2010}
+	\bibinfo{author}{Borucki, W.~J.}, \bibinfo{author}{Koch, D.} \&
+	\bibinfo{author}{Team, K.~S.}
+	\newblock \bibinfo{title}{Kepler {{Planet Detection Mission}}: {{Highlights}}
+		of the {{First Results}}}.
+	\newblock \emph{\bibinfo{journal}{AAS/Division for Planetary Sciences Meeting
+			Abstracts \#42}} \textbf{\bibinfo{volume}{42}}, \bibinfo{pages}{47.03}
+	(\bibinfo{year}{2010}).
+	
+	\bibitem{silvaaguirre+2015}
+	\bibinfo{author}{{Silva Aguirre}, V.} \emph{et~al.}
+	\newblock \bibinfo{title}{{Ages and fundamental properties of Kepler exoplanet
+			host stars from asteroseismology}}.
+	\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+	\textbf{\bibinfo{volume}{452}}, \bibinfo{pages}{2127--2148}
+	(\bibinfo{year}{2015}).
+	\newblock \eprint{1504.07992}.
+	
+	\bibitem{angus+2015}
+	\bibinfo{author}{{Angus}, R.}, \bibinfo{author}{{Aigrain}, S.},
+	\bibinfo{author}{{Foreman-Mackey}, D.} \& \bibinfo{author}{{McQuillan}, A.}
+	\newblock \bibinfo{title}{{Calibrating gyrochronology using Kepler
+			asteroseismic targets}}.
+	\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+	\textbf{\bibinfo{volume}{450}}, \bibinfo{pages}{1787--1798}
+	(\bibinfo{year}{2015}).
+	\newblock \eprint{1502.06965}.
+	
+	\bibitem{nielsen+2015}
+	\bibinfo{author}{Nielsen, M.~B.}, \bibinfo{author}{Schunker, H.},
+	\bibinfo{author}{Gizon, L.} \& \bibinfo{author}{Ball, W.~H.}
+	\newblock \bibinfo{title}{Constraining differential rotation of {{Sun}}-like
+		stars from asteroseismic and starspot rotation periods}.
+	\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
+	\textbf{\bibinfo{volume}{582}}, \bibinfo{pages}{A10} (\bibinfo{year}{2015}).
+	
+	\bibitem{davies+2015}
+	\bibinfo{author}{{Davies}, G.~R.} \emph{et~al.}
+	\newblock \bibinfo{title}{{Asteroseismic inference on rotation, gyrochronology
+			and planetary system dynamics of 16 Cygni}}.
+	\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+	\textbf{\bibinfo{volume}{446}}, \bibinfo{pages}{2959--2966}
+	(\bibinfo{year}{2015}).
+	\newblock \eprint{1411.1359}.
+	
+	\bibitem{vansaders+2016}
+	\bibinfo{author}{{van Saders}, J.~L.} \emph{et~al.}
+	\newblock \bibinfo{title}{{Weakened magnetic braking as the origin of
+			anomalously rapid rotation in old field stars}}.
+	\newblock \emph{\bibinfo{journal}{Nature}} \textbf{\bibinfo{volume}{529}},
+	\bibinfo{pages}{181--184} (\bibinfo{year}{2016}).
+	\newblock \eprint{1601.02631}.
+	
+	\bibitem{reville+2015}
+	\bibinfo{author}{{R{\'e}ville}, V.}, \bibinfo{author}{{Brun}, A.~S.},
+	\bibinfo{author}{{Matt}, S.~P.}, \bibinfo{author}{{Strugarek}, A.} \&
+	\bibinfo{author}{{Pinto}, R.~F.}
+	\newblock \bibinfo{title}{{The Effect of Magnetic Topology on Thermally Driven
+			Wind: Toward a General Formulation of the Braking Law}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{798}}, \bibinfo{pages}{116} (\bibinfo{year}{2015}).
+	\newblock \eprint{1410.8746}.
+	
+	\bibitem{garraffo+2016}
+	\bibinfo{author}{Garraffo, C.}, \bibinfo{author}{Drake, J.~J.} \&
+	\bibinfo{author}{Cohen, O.}
+	\newblock \bibinfo{title}{The {{Missing Magnetic Morphology Term}} in {{Stellar
+				Rotation Evolution}}}.
+	\newblock \emph{\bibinfo{journal}{Astronomy \& Astrophysics}}
+	\textbf{\bibinfo{volume}{595}}, \bibinfo{pages}{A110} (\bibinfo{year}{2016}).
+	\newblock \eprint{1607.06096}.
+	
+	\bibitem{metcalfe+2016}
+	\bibinfo{author}{Metcalfe, T.~S.}, \bibinfo{author}{Egeland, R.} \&
+	\bibinfo{author}{{van Saders}, J.}
+	\newblock \bibinfo{title}{Stellar {{Evidence That}} the {{Solar Dynamo May Be}}
+		in {{Transition}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J. Letters}}
+	\textbf{\bibinfo{volume}{826}}, \bibinfo{pages}{L2} (\bibinfo{year}{2016}).
+	
+	\bibitem{metcalfe+2019}
+	\bibinfo{author}{{Metcalfe}, T.~S.} \emph{et~al.}
+	\newblock \bibinfo{title}{{LBT/PEPSI Spectropolarimetry of a Magnetic
+			Morphology Shift in Old Solar-type Stars}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{887}}, \bibinfo{pages}{L38} (\bibinfo{year}{2019}).
+	\newblock \eprint{1912.01186}.
+	
+	\bibitem{see+2019}
+	\bibinfo{author}{See, V.} \emph{et~al.}
+	\newblock \bibinfo{title}{Do {{Non}}-dipolar {{Magnetic Fields Contribute}} to
+		{{Spin}}-down {{Torques}}?}
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{886}}, \bibinfo{pages}{120} (\bibinfo{year}{2019}).
+	
+	\bibitem{mcquillan+2014}
+	\bibinfo{author}{McQuillan, A.}, \bibinfo{author}{Mazeh, T.} \&
+	\bibinfo{author}{Aigrain, S.}
+	\newblock \bibinfo{title}{Rotation {{Periods}} of 34,030 {{Kepler
+				Main}}-{{Sequence Stars}}: {{The Full Autocorrelation Sample}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J. Supplement Series}}
+	\textbf{\bibinfo{volume}{211}}, \bibinfo{pages}{24} (\bibinfo{year}{2014}).
+	\newblock \eprint{1402.5694}.
+	
+	\bibitem{matt+2015}
+	\bibinfo{author}{Matt, S.~P.}, \bibinfo{author}{Brun, A.~S.},
+	\bibinfo{author}{Baraffe, I.}, \bibinfo{author}{Bouvier, J.} \&
+	\bibinfo{author}{Chabrier, G.}
+	\newblock \bibinfo{title}{The {{Mass}}-dependence of {{Angular Momentum
+				Evolution}} in {{Sun}}-like {{Stars}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{799}}, \bibinfo{pages}{L23} (\bibinfo{year}{2015}).
+	
+	\bibitem{reinhold+2020}
+	\bibinfo{author}{{Reinhold}, T.} \emph{et~al.}
+	\newblock \bibinfo{title}{{The Sun is less active than other solar-like
+			stars}}.
+	\newblock \emph{\bibinfo{journal}{Science}} \textbf{\bibinfo{volume}{368}},
+	\bibinfo{pages}{518--521} (\bibinfo{year}{2020}).
+	\newblock \eprint{2005.01401}.
+	
+	\bibitem{vansaders+2019}
+	\bibinfo{author}{{van Saders}, J.~L.}, \bibinfo{author}{Pinsonneault, M.~H.} \&
+	\bibinfo{author}{Barbieri, M.}
+	\newblock \bibinfo{title}{Forward {{Modeling}} of the {{Kepler Stellar Rotation
+				Period Distribution}}: {{Interpreting Periods}} from {{Mixed}} and {{Biased
+				Stellar Populations}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{872}}, \bibinfo{pages}{128} (\bibinfo{year}{2019}).
+	
+	\bibitem{ledoux1951}
+	\bibinfo{author}{Ledoux, P.}
+	\newblock \bibinfo{title}{The {{Nonradial Oscillations}} of {{Gaseous Stars}}
+		and the {{Problem}} of {{Beta Canis Majoris}}.}
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{114}}, \bibinfo{pages}{373} (\bibinfo{year}{1951}).
+	
+	\bibitem{davies+2016}
+	\bibinfo{author}{{Davies}, G.~R.} \emph{et~al.}
+	\newblock \bibinfo{title}{{Oscillation frequencies for 35 Kepler solar-type
+			planet-hosting stars using Bayesian techniques and machine learning}}.
+	\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+	\textbf{\bibinfo{volume}{456}}, \bibinfo{pages}{2183--2195}
+	(\bibinfo{year}{2016}).
+	\newblock \eprint{1511.02105}.
+	
+	\bibitem{lund+2017}
+	\bibinfo{author}{Lund, M.~N.} \emph{et~al.}
+	\newblock \bibinfo{title}{Standing on the {{Shoulders}} of {{Dwarfs}}: The
+		{{Kepler Asteroseismic LEGACY Sample}}. {{I}}. {{Oscillation Mode
+				Parameters}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{835}}, \bibinfo{pages}{172} (\bibinfo{year}{2017}).
+	
+	\bibitem{silvaaguirre+2017}
+	\bibinfo{author}{Silva~Aguirre, V.} \emph{et~al.}
+	\newblock \bibinfo{title}{Standing on the {{Shoulders}} of {{Dwarfs}}: The
+		{{Kepler Asteroseismic LEGACY Sample}}. {{II}}.{{Radii}}, {{Masses}}, and
+		{{Ages}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{835}}, \bibinfo{pages}{173} (\bibinfo{year}{2017}).
+	
+	\bibitem{garcia+2014}
+	\bibinfo{author}{Garc{\'i}a, R.~A.} \emph{et~al.}
+	\newblock \bibinfo{title}{Rotation and magnetism of {{Kepler}} pulsating
+		solar-like stars. {{Towards}} asteroseismically calibrated age-rotation
+		relations}.
+	\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
+	\textbf{\bibinfo{volume}{572}}, \bibinfo{pages}{A34} (\bibinfo{year}{2014}).
+	
+	\bibitem{kraft1967}
+	\bibinfo{author}{Kraft, R.~P.}
+	\newblock \bibinfo{title}{Studies of {{Stellar Rotation}}. {{V}}. {{The
+				Dependence}} of {{Rotation}} on {{Age}} among {{Solar}}-{{Type Stars}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{150}}, \bibinfo{pages}{551} (\bibinfo{year}{1967}).
+	
+	\bibitem{bedding+2010}
+	\bibinfo{author}{Bedding, T.~R.} \emph{et~al.}
+	\newblock \bibinfo{title}{Solar-like {{Oscillations}} in {{Low}}-luminosity
+		{{Red Giants}}: {{First Results}} from {{Kepler}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J. Letters}}
+	\textbf{\bibinfo{volume}{713}}, \bibinfo{pages}{L176--L181}
+	(\bibinfo{year}{2010}).
+	
+	\bibitem{bonanno+frohlich2015}
+	\bibinfo{author}{Bonanno, A.} \& \bibinfo{author}{Fr{\"o}hlich, H.-E.}
+	\newblock \bibinfo{title}{A {{Bayesian}} estimation of the helioseismic solar
+		age}.
+	\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
+	\textbf{\bibinfo{volume}{580}}, \bibinfo{pages}{A130} (\bibinfo{year}{2015}).
+	
+	\bibitem{paxton+2017}
+	\bibinfo{author}{{Paxton}, B.} \emph{et~al.}
+	\newblock \bibinfo{title}{{Modules for Experiments in Stellar Astrophysics
+			(MESA): Convective Boundaries, Element Diffusion, and Massive Star
+			Explosions}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J. Supplement Series}}
+	\textbf{\bibinfo{volume}{234}}, \bibinfo{pages}{34} (\bibinfo{year}{2018}).
+	\newblock \eprint{1710.08424}.
+	
+	\bibitem{hunter2007}
+	\bibinfo{author}{Hunter, J.~D.}
+	\newblock \bibinfo{title}{Matplotlib: {{A 2D Graphics Environment}}}.
+	\newblock \emph{\bibinfo{journal}{Computing in Science and Engineering}}
+	\textbf{\bibinfo{volume}{9}}, \bibinfo{pages}{90--95} (\bibinfo{year}{2007}).
+	
+	\bibitem{benomar+2018}
+	\bibinfo{author}{{Benomar}, O.} \emph{et~al.}
+	\newblock \bibinfo{title}{{Asteroseismic detection of latitudinal differential
+			rotation in 13 Sun-like stars}}.
+	\newblock \emph{\bibinfo{journal}{Science}} \textbf{\bibinfo{volume}{361}},
+	\bibinfo{pages}{1231--1234} (\bibinfo{year}{2018}).
+	\newblock \eprint{1809.07938}.
+	
+	\bibitem{lund+2014}
+	\bibinfo{author}{Lund, M.~N.}, \bibinfo{author}{Miesch, M.~S.} \&
+	\bibinfo{author}{{Christensen-Dalsgaard}, J.}
+	\newblock \bibinfo{title}{Differential rotation in main-sequence solar-like
+		stars: {{Qualitative}} inference from asteroseismic data}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{790}}, \bibinfo{pages}{121} (\bibinfo{year}{2014}).
+	\newblock \eprint{1406.7873}.
+	
+	\bibitem{benomar+2015}
+	\bibinfo{author}{Benomar, O.}, \bibinfo{author}{Takata, M.},
+	\bibinfo{author}{Shibahashi, H.}, \bibinfo{author}{Ceillier, T.} \&
+	\bibinfo{author}{Garc{\'i}a, R.~A.}
+	\newblock \bibinfo{title}{Nearly uniform internal rotation of solar-like
+		main-sequence stars revealed by space-based asteroseismology and
+		spectroscopic measurements}.
+	\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+	\textbf{\bibinfo{volume}{452}}, \bibinfo{pages}{2654--2674}
+	(\bibinfo{year}{2015}).
+	
+	\bibitem{gizon+2013}
+	\bibinfo{author}{Gizon, L.} \emph{et~al.}
+	\newblock \bibinfo{title}{Seismic constraints on rotation of {{Sun}}-like star
+		and mass of exoplanet}.
+	\newblock \emph{\bibinfo{journal}{Proceedings of the National Academy of
+			Science}} \textbf{\bibinfo{volume}{110}}, \bibinfo{pages}{13267}
+	(\bibinfo{year}{2013}).
+	
+	\bibitem{chaplin+2013}
+	\bibinfo{author}{Chaplin, W.~J.} \emph{et~al.}
+	\newblock \bibinfo{title}{Asteroseismic {{Determination}} of {{Obliquities}} of
+		the {{Exoplanet Systems Kepler}}-50 and {{Kepler}}-65}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{766}}, \bibinfo{pages}{101} (\bibinfo{year}{2013}).
+	
+	\bibitem{nielsen+2013}
+	\bibinfo{author}{Nielsen, M.~B.}, \bibinfo{author}{Gizon, L.},
+	\bibinfo{author}{Schunker, H.} \& \bibinfo{author}{Karoff, C.}
+	\newblock \bibinfo{title}{Rotation periods of 12 000 main-sequence {{Kepler}}
+		stars: {{Dependence}} on stellar spectral type and comparison with v sin i
+		observations}.
+	\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
+	\textbf{\bibinfo{volume}{557}}, \bibinfo{pages}{L10} (\bibinfo{year}{2013}).
+	
+	\bibitem{skumanich1972}
+	\bibinfo{author}{{Skumanich}, A.}
+	\newblock \bibinfo{title}{{Time Scales for Ca II Emission Decay, Rotational
+			Braking, and Lithium Depletion}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{171}}, \bibinfo{pages}{565} (\bibinfo{year}{1972}).
+	
+	\bibitem{kawaler1988}
+	\bibinfo{author}{Kawaler, S.~D.}
+	\newblock \bibinfo{title}{Angular momentum loss in low-mass stars}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{333}}, \bibinfo{pages}{236} (\bibinfo{year}{1988}).
+	
+	\bibitem{girardi+2012}
+	\bibinfo{author}{Girardi, L.} \emph{et~al.}
+	\newblock \bibinfo{title}{{{TRILEGAL}}, a {{TRIdimensional modeL}} of {{thE
+				GALaxy}}: {{Status}} and {{Future}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophysics and Space Science Proceedings}}
+	\textbf{\bibinfo{volume}{26}}, \bibinfo{pages}{165} (\bibinfo{year}{2012}).
+	
+	\bibitem{berger+2020}
+	\bibinfo{author}{{Berger}, T.~A.}, \bibinfo{author}{{Huber}, D.},
+	\bibinfo{author}{{Gaidos}, E.}, \bibinfo{author}{{van Saders}, J.~L.} \&
+	\bibinfo{author}{{Weiss}, L.~M.}
+	\newblock \bibinfo{title}{{The Gaia-Kepler Stellar Properties Catalog. II.
+			Planet Radius Demographics as a Function of Stellar Mass and Age}}.
+	\newblock \emph{\bibinfo{journal}{Astron. J.}} \textbf{\bibinfo{volume}{160}},
+	\bibinfo{pages}{108} (\bibinfo{year}{2020}).
+	\newblock \eprint{2005.14671}.
+	
+	\bibitem{gelman+rubin1992}
+	\bibinfo{author}{Gelman, A.} \& \bibinfo{author}{Rubin, D.~B.}
+	\newblock \bibinfo{title}{Inference from {{Iterative Simulation Using Multiple
+				Sequences}}}.
+	\newblock \emph{\bibinfo{journal}{Statistical Science}}
+	\textbf{\bibinfo{volume}{7}}, \bibinfo{pages}{457--472}
+	(\bibinfo{year}{1992}).
+	
+	\bibitem{salvatier+2016}
+	\bibinfo{author}{Salvatier, J.}, \bibinfo{author}{Wiecki, T.~V.} \&
+	\bibinfo{author}{Fonnesbeck, C.}
+	\newblock \bibinfo{title}{Probabilistic programming in {{Python}} using
+		{{PyMC3}}}.
+	\newblock \emph{\bibinfo{journal}{PeerJ Computer Science}}
+	\textbf{\bibinfo{volume}{2}}, \bibinfo{pages}{e55} (\bibinfo{year}{2016}).
+	
+	\bibitem{metcalfe+egeland2019}
+	\bibinfo{author}{Metcalfe, T.~S.} \& \bibinfo{author}{Egeland, R.}
+	\newblock \bibinfo{title}{Understanding the {{Limitations}} of
+		{{Gyrochronology}} for {{Old Field Stars}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{871}}, \bibinfo{pages}{39} (\bibinfo{year}{2019}).
+	\newblock \eprint{1811.11905}.
+	
+	\bibitem{lorenzo-oliveira+2019}
+	\bibinfo{author}{{Lorenzo-Oliveira}, D.} \emph{et~al.}
+	\newblock \bibinfo{title}{{Constraining the evolution of stellar rotation using
+			solar twins}}.
+	\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+	\textbf{\bibinfo{volume}{485}}, \bibinfo{pages}{L68--L72}
+	(\bibinfo{year}{2019}).
+	\newblock \eprint{1903.02630}.
+	
+	\bibitem{vansaders+pinsonneault2013}
+	\bibinfo{author}{{van Saders}, J.~L.} \& \bibinfo{author}{Pinsonneault, M.~H.}
+	\newblock \bibinfo{title}{Fast {{Star}}, {{Slow Star}}; {{Old Star}}, {{Young
+				Star}}: {{Subgiant Rotation}} as a {{Population}} and {{Stellar Physics
+				Diagnostic}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{776}}, \bibinfo{pages}{67} (\bibinfo{year}{2013}).
+	
+	\bibitem{barnes2010}
+	\bibinfo{author}{{Barnes}, S.~A.}
+	\newblock \bibinfo{title}{{A Simple Nonlinear Model for the Rotation of
+			Main-sequence Cool Stars. I. Introduction, Implications for Gyrochronology,
+			and Color-Period Diagrams}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{722}}, \bibinfo{pages}{222--234}
+	(\bibinfo{year}{2010}).
+	
+	\bibitem{deng+2012}
+	\bibinfo{author}{Deng, L.-C.} \emph{et~al.}
+	\newblock \bibinfo{title}{{{LAMOST Experiment}} for {{Galactic Understanding}}
+		and {{Exploration}} ({{LEGUE}}) \textemdash{} {{The}} survey's science plan}.
+	\newblock \emph{\bibinfo{journal}{Research in Astron. Astrophys.}}
+	\textbf{\bibinfo{volume}{12}}, \bibinfo{pages}{735--754}
+	(\bibinfo{year}{2012}).
+	
+	\bibitem{dejong+2014}
+	\bibinfo{author}{{de Jong}, R.~S.} \emph{et~al.}
+	\newblock \bibinfo{title}{{4MOST: 4-metre Multi-Object Spectroscopic
+			Telescope}}.
+	\newblock In \bibinfo{editor}{{Ramsay}, S.~K.}, \bibinfo{editor}{{McLean},
+		I.~S.} \& \bibinfo{editor}{{Takami}, H.} (eds.)
+	\emph{\bibinfo{booktitle}{Ground-based and Airborne Instrumentation for
+			Astronomy V}}, vol. \bibinfo{volume}{9147} of \emph{\bibinfo{series}{Society
+			of Photo-Optical Instrumentation Engineers (SPIE) Conference Series}},
+	\bibinfo{pages}{91470M} (\bibinfo{year}{2014}).
+	
+	\bibitem{dalton+2014}
+	\bibinfo{author}{{Dalton}, G.} \emph{et~al.}
+	\newblock \bibinfo{title}{{Project overview and update on WEAVE: the next
+			generation wide-field spectroscopy facility for the William Herschel
+			Telescope}}.
+	\newblock In \bibinfo{editor}{{Ramsay}, S.~K.}, \bibinfo{editor}{{McLean},
+		I.~S.} \& \bibinfo{editor}{{Takami}, H.} (eds.)
+	\emph{\bibinfo{booktitle}{Ground-based and Airborne Instrumentation for
+			Astronomy V}}, vol. \bibinfo{volume}{9147} of \emph{\bibinfo{series}{Society
+			of Photo-Optical Instrumentation Engineers (SPIE) Conference Series}},
+	\bibinfo{pages}{91470L} (\bibinfo{year}{2014}).
+	\newblock \eprint{1412.0843}.
+	
+	\bibitem{blanton+2019}
+	\bibinfo{author}{{Blanton}, M.} \emph{et~al.}
+	\newblock \bibinfo{title}{{The Sloan Digital Sky Survey as an Archetypal
+			Mid-Scale Program}}.
+	\newblock In \emph{\bibinfo{booktitle}{Bull. Am. Astron. Soc.}},
+	vol.~\bibinfo{volume}{51}, \bibinfo{pages}{196} (\bibinfo{year}{2019}).
+	
+	\bibitem{kollmeier+2019}
+	\bibinfo{author}{{Kollmeier}, J.} \emph{et~al.}
+	\newblock \bibinfo{title}{{SDSS-V Pioneering Panoptic Spectroscopy}}.
+	\newblock In \emph{\bibinfo{booktitle}{Bull. Am. Astron. Soc.}},
+	vol.~\bibinfo{volume}{51}, \bibinfo{pages}{274} (\bibinfo{year}{2019}).
+	
+	
+\end{thebibliography}
+
+
+\vspace{5mm}
+
+\textbf{Acknowledgments}: The authors would like to thank the anonymous reviewers for their help improving this manuscript. They would also like to thank Sean Matt, Ellis Avallone, Alex Dixon, Warrick Ball and Brett Morris for helpful discussions.
+OJH, GRD and WJC acknowledge the support of the UK Science and Technology Facilities Council (STFC). 
+JvS acknowledges support from the TESS Guest Investigator Program (80NSSC18K18584).
+MBN acknowledges support from the UK Space Agency
+This work has received funding from the European Research Council (ERC) under the European Union's Horizon 2020 research and innovation programme (CartographY GA. 804752).
+Funding for the Stellar Astrophysics Centre is provided by The Danish National Research Foundation (Grant agreement no.: DNRF106). 
+LA, AB and VS acknowledge funding from the European Research Council (ERC) under the European Union's Horizon 2020 research and innovation program (grant agreement No. 682393 AWESoMeStars). AB also acknowledges the support of the College of Engineering, Mathematics and Physical Sciences at the University of Exeter.
+RAG acknowledges the support from the PLATO and GOLF CNES grants.
+JT acknowledges that support for this work was provided by NASA through the NASA Hubble Fellowship grant $\#51424$ awarded by the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., for NASA, under contract NAS5-26555.
+The computations described in this paper were performed using the University of Birmingham's BlueBEAR HPC service.
+This paper includes data collected by the Kepler mission and obtained from the MAST data archive at the Space Telescope Science Institute (STScI). Funding for the Kepler mission is provided by the NASA Science Mission Directorate. STScI is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS 5–26555.\\
+
+\textbf{Author Contributions:} O.J.H. led the project, with help from G.R.D., J.V.S., M.B.N and W.J.C.. J.V.S. also led the development of the stellar population models. M.N.L., R.A.G. and S.K. provided data or stellar models and along with J.T. assessed the validity of our asteroseismic results. L.A., A.B. and V.S. provided the assessment of the theoretical implications of the gyrochronology results. All authors have contributed to the interpretation of the data and the results, and all discussed and provided comments for all drafts of the paper.
+
+\textbf{Competing Interests:} The authors declare that they have no competing financial interests.
+
+\textbf{Correspondence:} Correspondence and requests for materials should be addressed to O.J.H. (email: oliver.hall@esa.int).\\
+
+\clearpage
+\section*{\underline{Methods}}
+\section{Asteroseismic Methods}
+\subsection{Asteroseismic Data}
+For our asteroseismic power spectrum data we used the unweighted power spectra from the KASOC pipeline \cite{handberg+lund2014}. We did not apply any additional treatment to these data. For 16 Cyg A \& B (KIC 12069424 and KIC 12069449) we used the KEPSEISMIC lightcurves \cite{garcia+2011}, which have significantly better signal-to-noise for these two stars.
+
+For our asteroseismic ages, we used the ages obtained by \texttt{BASTA} \cite[BAyesian STellar Algorithm]{silvaaguirre+2015} in the `Kages' and LEGACY catalogues. These ages have been obtained by comparisons of measured oscillation properties to stellar models, accounting for an expanded range of metallicities. \texttt{BASTA} is thoroughly compared to four other seismic modelling techniques in \cite{silvaaguirre+2017}. While uncertainties found through \texttt{BASTA} are typically higher than for other techniques, only \texttt{BASTA} and \texttt{ASTFIT} \cite[Aarhus STellar Evolution Code]{christensen-dalsgaard2008} recover the radius, mass and age of the Sun, when applied to solar data. Although the uncertainties on \texttt{ASTFIT} ages are overall lower, they are not published for the `Kages' sample. In order to maintain an internally consistent stellar age sample, we used age results from \texttt{BASTA} for both the `Kages' and LEGACY samples.
+
+For our stellar masses we used asteroseismic model masses obtained by \texttt{BASTA} reported in `Kages' and LEGACY, in order to maintain internal consistency with the age measurements. We note that age and mass posteriors from \texttt{BASTA} are correlated, but chose not to account for the unpublished correlations in this work.
+
+As described in the catalogue papers, for `Kages' stars atmospheric properties (\teff and \feh) were measured through high-resolution spectroscopy \cite{huber+2013a}. For LEGACY stars, atmospheric properties were similarly taken from one study \cite{buchhave+latham2015} for most stars in the catalogue, and complemented by other values from the literature for the remaining stars \cite[see Table 3]{silvaaguirre+2017}.
+
+Other asteroseismic properties used in this study, such as those used as first guesses on the free parameters in our asteroseismic model, were taken from the `Kages' and LEGACY catalogues \cite{astropycollaboration+2013, astropycollaboration+2018, ginsburg+2019}. In cases where both catalogues contained the same target, we used the stellar parameters reported in LEGACY \cite{mckinney2010}. This is also the case for the masses and ages described above.
+
+\subsection{Mode Frequency Fitting}
+
+In order to extract signatures of stellar rotation from the asteroseismic mode frequencies, we built a model that simultaneously treats the convective background, modes of oscillation, and white noise, while accounting for rotational splitting. The foundations of this approach follows best-practices in asteroseismology \cite{davies+2015}, fitting Harvey profiles for the background \cite{harvey1985} and expressing the frequencies of the modes using an asymptotic expression \cite{tassoul1980, vrard+2016}.
+
+The first core improvement in this work is the use of hierarchical latent variable models \cite{hogg+2010, hall+2019}, which account for small-scale deviations in mode frequencies due to effects not explicitly accounted for in our model (such as acoustic glitches \cite{mazumdar+2014}). By improving the inference of mode frequencies in this way, we also improve the ability to resolve the rotational splitting. The second improvement comes in the form of priors on our parameters, and in particular the rotational inclination, which more accurately reflects the true distribution of angles than previous techniques \cite{chaplin+basu2017}. A step-by-step breakdown of the model and all priors can be found in \textbf{Supplementary Information}.\\
+
+We separated our model fitting into two parts. First, we fit a model for the convective background and white noise only, to the region of the power spectra that did not contain modes of oscillation. This was done using \texttt{PyStan} \cite{vanhoey+2013, carpenter+2017}, for 10,000 iterations on each star. These \texttt{PyStan} runs were initiated with a random seed of 11, as were all other random processes in this work. Second, we fit our full model (including the convective background) to the region containing the modes of oscillation. The results of the first fit to the convective background were used as extremely informative priors on the background parameters in this second fit. This was done using \texttt{PyMC3} \cite{vanderwalt+2011, salvatier+2016, thetheanodevelopmentteam+2016} for 2500 iterations each on 4 chains.
+
+From this asteroseismic analysis, we report inclination angle ($i$), rotational splitting ($\nu_{\rm s}$), and rotation period ($P$) in \textbf{Supplementary Information} Table 1. The summary statistics on these parameters were taken as the median of the posterior distribution, with uncertainties being the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles. For inclination angle ($i = \arccos(\cos(i))$) and rotation ($P = 1/\nu_{\rm s}$), the full posterior samples were transformed before taking the summary statistics, as our model sampled in $\cos(i)$ and $\nu_{\rm s}$.
+
+We flagged any sub-optimal conditions of the final fit. We flagged 5 for which the Gelman-Rubin convergence metric, $\hat{R}$, was greater than 1.01 and 2 stars for which it was greater than 1.1 on inclination angle or rotation, where a $\hat{R} = 1$ indicates a converged result \cite{gelman+rubin1992}. We also performed visual checks of the sampled chains on all hyperparameters and of the best-fit model compared to both the raw and smoothed asteroseismic data. We found no issues in the visual investigation of 94 stars. KIC 8478994 is not reported due to both a poor unconverged fit as well as high $\hat{R}$ on rotational parameters. KICs 6603624, 8760414 and 8938364 are reported in  \textbf{Supplementary Information} Table 1, but were excluded from the gyrochronology analysis due to strong disagreement with multiple studies in the literature (see main body of paper). Finally, we flagged any stars with fewer than 1000 effective samples ($n_{\rm eff}$) of $\nu_s$.
+
+\subsection{Seismic vs Surface rotation}
+As described in the main body of the paper, we compared a subsample of our asteroesismic rotation rates to surface rotation rates from spot rotation, where available. Both the surface ($P_{\rm surf}$) and seismic ($P_{\rm seis}$) rotation rates have associated uncertainties. Instead of fitting the slope between these two values directly, we instead fit the distribution
+
+\begin{equation}
+	p(\frac{P_{\rm seis}}{P_{\rm surf}}\, |\, m) = \mathcal{N}(m, \sigma_\frac{P_{\rm seis}}{P_{\rm surf}})\, ,
+\end{equation}
+
+\noindent where $m$ is the slope, and $\sigma_\frac{P_{\rm seis}}{P_{\rm surf}}$ is the uncertainty corresponding to $\frac{P_{\rm seis}}{P_{\rm surf}}$, following the propagation of the errors on both values. We used the larger of the asymmetrical uncertainties on asteroseismic rotation from our analysis. The model was fit using \texttt{PyMC3} for 2000 iterations each on 4 chains. Five stars for which both surface and seismic rotation were available, but which had a surface rotation above the 1.8:1 line, were excluded from this analysis. This was to exclude likely multiples of the true rotation rate skewing the fit, as measurements of double the true rotation may occur in spot rotation measurements.
+
+Our fit found a value of $m = 0.96 \pm 0.03$ using 48 stars. We reran this analysis using the 21 stars in this sample for which the median of their posterior probability for $Q_{\rm WMB}$ was greater than $0.5$ in our stellar model analysis, preferring the WMB model. A fit to these stars alone found a value of $m = 0.96 \pm 0.04$.
+
+\section{Gyrochronology Methods}\label{s:gyro}
+\subsection{Stellar Models}\label{ssec:models}
+The braking models used in this work have several parameters that inform the rotational evolution. These are: a normalization factor to reproduce the solar rotation ($f_k$); a disk locking timescale ($T_{\rm disk}$) and period ($P_{\rm disk}$) which together regulate the stellar angular velocity during the pre-main sequence; the critical angular velocity that marks the transition from saturated (rapidly rotating) to unsaturated (slowly rotating) regimes ($\omega_{\rm crit}$), and the critical Rossby number, above which stars conserve angular momentum ($Ro_{\rm crit}$), mentioned above. $T_{\rm disk}$, $P_{\rm disk}$ and $\omega_{\rm crit}$ are calibrated to match the behavior in young open clusters, but have little impact on the rotational evolution beyond $\approx 1\, \rm{Gyr}$ in solar-mass stars. Both $f_k$ and $Ro_{\rm crit}$ affect the late-time evolution. Both models adopt $\omega_{\rm crit} = 3.4  \times 10^{-5}\, \rm{s}^{-1}$, $P_{\rm disk} = 8.1$, $T_{\rm disk} = 0.28$ and $f_k = 6.6$. In the weakened magnetic braking model, $Ro_{\rm crit} = 1.97$. \rtwo{This Rossby number is based on model comparisons to catalogues of spot rotation rates \cite{vansaders+2019}. Its exact value is not critical in our analysis, as any similar value would create a model population significantly different from the standard case. In the model, the Rossby number is defined as the rotation period divided by the convective turnover timescale, which in turn is defined as $\tau_{\rm cz} = H_p / v_{\rm conv}$, where $H_p$ is the pressure scale height at the base of the convection zone, and $v_{\rm conv}$ is the convetive velocity evaluated one pressure scale height above the base in a mixing length theory of convection. Solid body rotation is assumed \cite{nielsen+2015}.} For further details, see \cite{vansaders+pinsonneault2013} and \cite{vansaders+2016, vansaders+2019} for the standard and weakened magnetic braking cases respectively.
+
+To construct a synthetic population of rotating stars, we expanded upon previous forward-models of the \textit{Kepler} field with the purpose of studying weakened magnetic braking \cite{vansaders+2019}, with some important improvements. We started with a TRILEGAL \cite{girardi+2012} Milky-Way simulation of the \kepler field, using the simulation's standard population values intended for this purpose. In order to replicate the \kepler selection effect, the TRILEGAL simulation was matched to the largest current catalogue of temperatures, luminosities and 2MASS $K$-band magnitudes of stars in the \kepler field \cite{berger+2020}. This was done using a nearest-neighbours approach, based on the density of stars on the HR diagram. This ensured that the TRILEGAL population matched the density of stars actually observed by \kepler, replicating its selection effects, and improved upon previous efforts \cite{vansaders+2019} by incorporating contemporary \textit{Gaia} mission data \cite{gaiacollaboration+2018}.
+
+We made further changes to account for possible binarity in the the matching sample \cite{berger+2020}. If the first step is performed blindly, blended binaries in the sample cause an overestimation of the number of old stars. In order to overcome this, we:
+
+\begin{enumerate}
+	\item blended the TRILEGAL stars with binary companions drawn from a flat mass-ratio distribution, using a known binary fraction \cite{raghavan+2010},
+	\item recalculated the `observed' luminosities and magnitudes assuming that each binary pair was blended, and
+	\item shifted these stars' temperatures following a $g$-$K$ magnitude relation \cite{berger+2020}.
+\end{enumerate}
+
+This new distribution was used for the nearest-neighbour matching. Once drawn we dropped the binary companion and used the true TRILEGAL properties of those stars. For stars where the mass of the companion was $M < 0.4\, \odot$, binary contributions were ignored. Every binary was assumed to result in a blend, regardless of separation. This results in slightly more young stars than reality, because young, blended binary systems contaminate regions of the HR diagram where one expects to find old stars, and the number of blends is overestimated by assuming every binary system is a blend.
+
+Our asteroseismic sample of stars with short cadence observations are subject to additional selection functions not included in the creation of the model populations above. We did \textit{not} explicitly account for these asteroseismic selection functions in our model, by design. Both the standard and WMB models contain stars with the same fundamental parameters (mass, radius, effective temperature, metallicity) but a different period based on the choice of rotational evolution prescription. Applying an asteroseismic selection function that depends on these fundamental parameters would have an identical effect on both models, therefore providing no net effect on our posterior distribution \cite{chaplin+2011}.  Additionally, we expected any seismic selection function to be relatively flat (and therefore uninformative) on a star-by-star scale, on which we run our model analysis. 
+
+\subsection{Bayesian Mixture Model}
+In order to determine whether weakened magnetic braking occurs on the main sequence, we compared our sample of seismic age and rotation, along with temperature, metallicity and mass, to the two stellar population models of the \kepler field \cite{vansaders+2019}, discussed above. Both stellar models were evaluated in a Bayesian framework, with the rationale of determining which of the two models (standard or WMB) is most likely to reproduce our observed data. Each model sample contained temperature (\teff), mass ($M$), age ($t$), metallicity ($\rm{[Fe/H]}$) and rotation ($P$) information.
+
+In order to draw probabilistic inference about the models, we built a five-dimensional Kernel Density Estimate (KDE) of both model populations using the \texttt{statsmodels} package \cite{seabold+perktold2010}. We used a band-width (setting the resolution of the KDE) of $0.02\, \odot$ in mass, $10\, \rm K$ in \teff, $0.01\, \rm{dex}$ in $\ln(t)$, $0.01\, \rm{dex}$ in $\rm{[Fe/H]}$ and $0.01\, \rm{dex}$ in $\ln(P)$. Note that age and rotation were treated in log space, where the posterior estimates from asteroseismology more closely resemble normal distributions. This approach translates the population models to a probability distribution we can use in a Bayesian framework.
+
+We evaluated our data against both models simultaneously by treating the data as being drawn from a mixture of both model KDEs. In this mixture model structure, the two KDEs were modulated by a weighting factor, $Q_{\rm WMB}$. In the limit $Q_{\rm WMB} \rightarrow 1$, the data are most likely drawn from the WMB model. In the limit $Q_{\rm WMB} \rightarrow 0$, the data are most likely drawn from the standard model.
+
+The posterior probability of obtaining $Q_{\rm WMB}$ and additional parameters $\theta$ given our data $\mathcal{D}$ is $p(Q_{\rm{WMB}}, \theta | \mathcal{D})$. Using Bayes equation, we can express this as:
+
+\begin{equation}\label{eq:modelll}
+	p(Q_{\rm{WMB}}, \theta | \mathcal{D}) \propto p(\mathcal{D} | \theta)\ p(\theta | Q_{\rm{WMB}}, \kappa_{\rm{s}}, \kappa_{\rm{WMB}})\ p(Q_{\rm{WMB}})\, ,
+\end{equation}
+
+\noindent where $\kappa_{\rm{s}}$ and $\kappa_{\rm{WMB}}$ are the KDE functions for the standard and WMB models respectively, and $\theta$ here are parameters, $\theta = \{M, \teff, \ln(t), \feh, \ln(P)\}$. The parameters $\theta$ may be referred to as latent parameters, as they form a step between the parameter we want to infer ($Q_{\rm{WMB}}$) and our data. Using this approach allowed our model to properly take into account the observational uncertainties on the data \rtwo{in five dimensions.}
+
+The second component on the right hand side of Equation \ref{eq:modelll} describes the probability of obtaining our latent parameters $\theta$ given our KDEs and the mixture model weighting parameter $Q_{\rm WMB}$, and is described by the mixture model
+
+\begin{equation}\label{eq:mixturell}
+	p(\theta | Q_{\rm{WMB}}, \kappa_{\rm{WMB}}, \kappa_{\rm{s}}) = Q_{\rm WMB} \times \kappa_{\rm WMB}(\theta) + (1 - Q_{\rm WMB}) \times \kappa_{\rm s}(\theta)\, ,
+\end{equation}
+
+\noindent where all parameters are as described above. This probability function describes a distribution that is a mixture of both KDEs. While the KDEs are constant, $Q_{\rm WMB}$ is a free parameter, and so the shape of this distribution can vary. The latent parameters $\theta$ are drawn from this distribution, and therefore from some combination of the two stellar models.
+
+The first component in Equation \ref{eq:modelll} describes the likelihood of obtaining the parameters $\theta$ given our data and their observational uncertainty. It takes the form
+
+\begin{equation}
+	p(\mathcal{D} | \theta) = \mathcal{N}(\mathcal{D} | \theta, \sigma_{\mathcal{D}})\, ,
+\end{equation}
+
+\noindent a normal distribution evaluating the latent parameters $\theta$ against the observations, with observational uncertainty $\sigma_{\mathcal{D}}$. This approach means that in each parameter space (such as age), the age drawn from the stellar model mixture is entered into the likelihood equation with our static observations. The value of this equation (and thus the likelihood) will increase if $\theta$ is closer to the observations, and the mixture model will be modulated in a manner that maximises this probability, inferring whether one stellar model is more likely to produce our data than the other.
+
+The final term, $p(Q_{\rm WMB})$, represents the prior on the mixture model weight, which is uniform between 0 and 1. A visual representation of our model is shown in \textbf{Extended Data} Figure 1.
+
+Typically, this model would evaluate all stars in our sample against the stellar models simultaneously for a single posterior estimate of $Q_{\rm WMB}$. At 95 stars, in 5 parameter spaces, this totals 476 free parameters to marginalise over. This is not an issue for Hamiltonian Monte Carlo \cite[HMC]{betancourt+girolami2013}, however the use of KDE functions, over which a probabilistic gradient can not be measured, reduces HMCs effectiveness. Alternative Markov Chain Monte Carlo techniques \cite[MCMC]{foreman-mackey+2013} can more efficiently sample the KDE functions, but can not treat the large number of hierarchical parameters. To overcome this, we fit our model to each star to obtain an independent individual posterior distribution for $Q_{\rm WMB}$, and multiplied these post hoc to obtain a combined posterior. This comes with the benefit of easily allowing us to calculate the combined posterior for different stellar classifications, at the expense of the ability to marginalise for a single value of $Q_{\rm WMB}$ directly.\\
+
+The parameter space of the stellar model populations were reduced before calculating the KDEs. These cuts were made in $M$, $\teff$, $\ln(t)$ and \feh, removing any stars in the models that fell more than $3 \times \sigma_{\mathcal{D}}$ outside the observations. Our observables $M$, $t$ and $P$ have asymmetric uncertainties from the Bayesian asteroseismic analysis. We used the larger of the reported uncertainties on each parameter as $\sigma_{\mathcal{D}}$ in each parameter space. 
+
+KIC 6278762 was excluded from this stellar model analysis, because its age fell more than $3\sigma$ outside of the highest age in the stellar models (this is a metallicity issue, as the oldest stars have metallicities outside the range of the rotational model grids), and KICs 7106245 and 8760414 were excluded for the same reason due to low metallicities outside the functional range of the stellar models (-0.99 and -0.92 respectively). We also excluded any stars with $n_{\rm eff} < 1000$ for rotational splitting, and those with $\hat{R} > 1.1$. The remaining sample of 73 stars contained 4 sub-giants, 22 `hot' stars, and 47 main sequence stars.
+
+We fit our model Equation \ref{eq:modelll} using \texttt{emcee} \cite{foreman-mackey+2013, foreman-mackey2016}, using 32 walkers for a total of 7500 samples per walker, of which the first 2500 were discarded as a burn-in.
+
+After fitting, we took a normalised histogram of the posterior estimate of $Q_{\rm WMB}$ for each star, using 100 bins. In this histogram, each bin approximated the value of the posterior function for $Q_{\rm WMB}$. The array of 100 bins for all stars were multiplied, resulting in an approximation of the joint posterior probability function for $Q_{\rm WMB}$ given all stars in the ensemble.\\
+
+\textbf{Data availability statement:} The core input data and results are summarised in  \textbf{Supplementary Information} Table 1, which is published with this article, and is also available on Vizier. Larger data files, such as stellar model populations and individual posterior distribution chains from the asteroseismic and gyrochronology model fitting are fully available on request.
+
+This work made use of publicly available data. \kepler power spectral densities were obtained from the \href{http://kasoc.phys.au.dk/}{KASOC} webpages for the majority of stars, and from the \href{https://archive.
+	stsci.edu/prepds/kepseismic/}{MAST} for 16 Cyg A and B. This work used asteroseismic data from Silva Aguirre et al. (2015, 2017), Davies et al. (2016) and Lund et al. (2017) \cite{silvaaguirre+2015, silvaaguirre+2017, davies+2016, lund+2017}. Parameter distributions of the \kepler field used to alter our stellar population models were taken from Berger et al. (2020) \cite{berger+2020}.\\
+
+\textbf{Code availability statement:} The code required to replicate our results has been placed in a curated online repository found here: \url{www.github.com/ojhall94/halletal2021}. 
+
+All code written in the duration of this project, along with a full commit history, can be found in an un-curated online repository here: \url{www.github.com/ojhall94/malatium}. 
+
+The code used to construct the stellar population models used in this work is available upon request.
+
+\begin{thebibliography}{99}
+	\makeatletter
+	\addtocounter{\@listctr}{51}
+	\makeatother
+	\expandafter\ifx\csname url\endcsname\relax
+	\def\url#1{\texttt{#1}}\fi
+	\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+	\providecommand{\bibinfo}[2]{#2}
+	\providecommand{\eprint}[2][]{\url{#2}}
+	
+	
+	\bibitem{handberg+lund2014}
+	\bibinfo{author}{Handberg, R.} \& \bibinfo{author}{Lund, M.~N.}
+	\newblock \bibinfo{title}{Automated preparation of {{Kepler}} time series of
+		planet hosts for asteroseismic analysis}.
+	\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+	\textbf{\bibinfo{volume}{445}}, \bibinfo{pages}{2698--2709}
+	(\bibinfo{year}{2014}).
+	
+	\bibitem{garcia+2011}
+	\bibinfo{author}{Garc{\'i}a, R.~A.} \emph{et~al.}
+	\newblock \bibinfo{title}{Preparation of {{Kepler}} light curves for
+		asteroseismic analyses}.
+	\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+	\textbf{\bibinfo{volume}{414}}, \bibinfo{pages}{L6--L10}
+	(\bibinfo{year}{2011}).
+	
+	\bibitem{christensen-dalsgaard2008}
+	\bibinfo{author}{{Christensen-Dalsgaard}, J.}
+	\newblock \bibinfo{title}{{{ASTEC}}\textemdash the {{Aarhus STellar Evolution
+				Code}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophysics and Space Science}}
+	\textbf{\bibinfo{volume}{316}}, \bibinfo{pages}{13} (\bibinfo{year}{2008}).
+	
+	\bibitem{huber+2013a}
+	\bibinfo{author}{{Barnes}, S.~A.}
+	\newblock \bibinfo{title}{{A Simple Nonlinear Model for the Rotation of
+			Main-sequence Cool Stars. I. Introduction, Implications for Gyrochronology,
+			and Color-Period Diagrams}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{722}}, \bibinfo{pages}{222--234}
+	(\bibinfo{year}{2010}).
+	
+	\bibitem{buchhave+latham2015}
+	\bibinfo{author}{Buchhave, L.~A.} \& \bibinfo{author}{Latham, D.~W.}
+	\newblock \bibinfo{title}{The {{Metallicities}} of {{Stars}} with and without
+		{{Transiting Planets}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{808}}, \bibinfo{pages}{187} (\bibinfo{year}{2015}).
+	
+	\bibitem{astropycollaboration+2013}
+	\bibinfo{author}{{Astropy Collaboration}} \emph{et~al.}
+	\newblock \bibinfo{title}{Astropy: {{A}} community {{Python}} package for
+		astronomy}.
+	\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
+	\textbf{\bibinfo{volume}{558}}, \bibinfo{pages}{A33} (\bibinfo{year}{2013}).
+	
+	\bibitem{astropycollaboration+2018}
+	\bibinfo{author}{{Astropy Collaboration}} \emph{et~al.}
+	\newblock \bibinfo{title}{The {{Astropy Project}}: {{Building}} an
+		{{Open}}-science {{Project}} and {{Status}} of the v2.0 {{Core Package}}}.
+	\newblock \emph{\bibinfo{journal}{Astron. J.}} \textbf{\bibinfo{volume}{156}},
+	\bibinfo{pages}{123} (\bibinfo{year}{2018}).
+	
+	\bibitem{ginsburg+2019}
+	\bibinfo{author}{Ginsburg, A.} \emph{et~al.}
+	\newblock \bibinfo{title}{Astroquery: {{An Astronomical Web}}-querying
+		{{Package}} in {{Python}}}.
+	\newblock \emph{\bibinfo{journal}{Astron. J.}} \textbf{\bibinfo{volume}{157}},
+	\bibinfo{pages}{98} (\bibinfo{year}{2019}).
+	
+	\bibitem{mckinney2010}
+	\bibinfo{author}{McKinney, W.}
+	\newblock \bibinfo{title}{Data {{Structures}} for {{Statistical Computing}} in
+		{{Python}}}.
+	\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 9th {{Python}} in
+			{{Science Conference}}}}, \bibinfo{pages}{51--56} (\bibinfo{year}{2010}).
+	
+	\bibitem{harvey1985}
+	\bibinfo{author}{Harvey, J.}
+	\newblock \bibinfo{title}{High-{{Resolution Helioseismology}}}.
+	\newblock \emph{\bibinfo{journal}{Future Missions in Solar, Heliospheric \&
+			Space Plasma Physics}} \textbf{\bibinfo{volume}{235}}, \bibinfo{pages}{199}
+	(\bibinfo{year}{1985}).
+	
+	\bibitem{tassoul1980}
+	\bibinfo{author}{{Tassoul}, M.}
+	\newblock \bibinfo{title}{{Asymptotic approximations for stellar nonradial
+			pulsations.}}
+	\newblock \emph{\bibinfo{journal}{Astrophys. J. Supplement Series}}
+	\textbf{\bibinfo{volume}{43}}, \bibinfo{pages}{469--490}
+	(\bibinfo{year}{1980}).
+	
+	\bibitem{vrard+2016}
+	\bibinfo{author}{Vrard, M.}, \bibinfo{author}{Mosser, B.} \&
+	\bibinfo{author}{Samadi, R.}
+	\newblock \bibinfo{title}{Period spacings in red giants. {{II}}. {{Automated}}
+		measurement}.
+	\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
+	\textbf{\bibinfo{volume}{588}}, \bibinfo{pages}{A87} (\bibinfo{year}{2016}).
+	
+	\bibitem{hogg+2010}
+	\bibinfo{author}{{Hogg}, D.~W.}, \bibinfo{author}{{Bovy}, J.} \&
+	\bibinfo{author}{{Lang}, D.}
+	\newblock \bibinfo{title}{{Data analysis recipes: Fitting a model to data}}.
+	\newblock \emph{\bibinfo{journal}{arXiv e-prints}}
+	\bibinfo{pages}{arXiv:1008.4686} (\bibinfo{year}{2010}).
+	\newblock \eprint{1008.4686}.
+	
+	\bibitem{hall+2019}
+	\bibinfo{author}{Hall, O.~J.} \emph{et~al.}
+	\newblock \bibinfo{title}{Testing asteroseismology with {{Gaia DR2}}:
+		{{Hierarchical}} models of the {{Red Clump}}}.
+	\newblock \emph{\bibinfo{journal}{Mon. Not. R. Astron. Soc.}}
+	\textbf{\bibinfo{volume}{486}}, \bibinfo{pages}{3569--3585}
+	(\bibinfo{year}{2019}).
+	\newblock \eprint{1904.07919}.
+	
+	\bibitem{mazumdar+2014}
+	\bibinfo{author}{Mazumdar, A.} \emph{et~al.}
+	\newblock \bibinfo{title}{Measurement of acoustic glitches in solar-type stars
+		from oscillation frequencies observed by {{Kepler}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J.}}
+	\textbf{\bibinfo{volume}{782}}, \bibinfo{pages}{18} (\bibinfo{year}{2014}).
+	\newblock \eprint{1312.4907}.
+	
+	\bibitem{chaplin+basu2017}
+	\bibinfo{author}{Chaplin, W.~J.} \& \bibinfo{author}{Basu}.
+	\newblock \emph{\bibinfo{title}{Asteroseismic {{Data Analysis}}:
+			{{Foundations}} and {{Techniques}}}} (\bibinfo{publisher}{{Princeton
+			University Press}}, \bibinfo{address}{{Princeton, New Jersey}},
+	\bibinfo{year}{2017}), \bibinfo{edition}{1st} edn.
+	
+	\bibitem{vanhoey+2013}
+	\bibinfo{author}{Van~Hoey, S.}, \bibinfo{author}{{van der Kwast}, J.},
+	\bibinfo{author}{Nopens, I.} \& \bibinfo{author}{Seuntjens, P.}
+	\newblock \bibinfo{title}{Python package for model {{STructure ANalysis}}
+		({{pySTAN}})}.
+	\newblock \emph{\bibinfo{journal}{EGU General Assembly Conference Abstracts}}
+	\textbf{\bibinfo{volume}{15}}, \bibinfo{pages}{EGU2013--10059}
+	(\bibinfo{year}{2013}).
+	
+	\bibitem{carpenter+2017}
+	\bibinfo{author}{Carpenter, B.} \emph{et~al.}
+	\newblock \bibinfo{title}{Stan: {{A Probabilistic Programming Language}}}.
+	\newblock \emph{\bibinfo{journal}{Journal of Statistical Software}}
+	\textbf{\bibinfo{volume}{76}}, \bibinfo{pages}{1--32} (\bibinfo{year}{2017}).
+	
+	\bibitem{vanderwalt+2011}
+	\bibinfo{author}{{van der Walt}, S.}, \bibinfo{author}{Colbert, S.~C.} \&
+	\bibinfo{author}{Varoquaux, G.}
+	\newblock \bibinfo{title}{The {{NumPy Array}}: {{A Structure}} for {{Efficient
+				Numerical Computation}}}.
+	\newblock \emph{\bibinfo{journal}{Computing in Science and Engineering}}
+	\textbf{\bibinfo{volume}{13}}, \bibinfo{pages}{22--30}
+	(\bibinfo{year}{2011}).
+	
+	\bibitem{thetheanodevelopmentteam+2016}
+	\bibinfo{author}{{The Theano Development Team}} \emph{et~al.}
+	\newblock \bibinfo{title}{{Theano: A Python framework for fast computation of
+			mathematical expressions}}.
+	\newblock \emph{\bibinfo{journal}{arXiv e-prints}}
+	\bibinfo{pages}{arXiv:1605.02688} (\bibinfo{year}{2016}).
+	\newblock \eprint{1605.02688}.
+	
+	\bibitem{gaiacollaboration+2018}
+	\bibinfo{author}{{Gaia Collaboration}} \emph{et~al.}
+	\newblock \bibinfo{title}{{Gaia Data Release 2. Summary of the contents and
+			survey properties}}.
+	\newblock \emph{\bibinfo{journal}{Astron. Astrophys.}}
+	\textbf{\bibinfo{volume}{616}}, \bibinfo{pages}{A1} (\bibinfo{year}{2018}).
+	\newblock \eprint{1804.09365}.
+	
+	\bibitem{raghavan+2010}
+	\bibinfo{author}{Raghavan, D.} \emph{et~al.}
+	\newblock \bibinfo{title}{A {{Survey}} of {{Stellar Families}}:
+		{{Multiplicity}} of {{Solar}}-type {{Stars}}}.
+	\newblock \emph{\bibinfo{journal}{Astrophys. J. Supplement Series}}
+	\textbf{\bibinfo{volume}{190}}, \bibinfo{pages}{1--42}
+	(\bibinfo{year}{2010}).
+	
+	\bibitem{chaplin+2011}
+	\bibinfo{author}{{Chaplin}, W.~J.} \emph{et~al.}
+	\newblock \bibinfo{title}{{Ensemble Asteroseismology of Solar-Type Stars with
+			the NASA Kepler Mission}}.
+	\newblock \emph{\bibinfo{journal}{Science}} \textbf{\bibinfo{volume}{332}},
+	\bibinfo{pages}{213} (\bibinfo{year}{2011}).
+	\newblock \eprint{1109.4723}.
+	
+	\bibitem{seabold+perktold2010}
+	\bibinfo{author}{Seabold, S.} \& \bibinfo{author}{Perktold, J.}
+	\newblock \bibinfo{title}{{S}tatsmodels: {E}conometric and {S}tatistical
+		{M}odeling with {P}ython}.
+	\newblock In \bibinfo{editor}{{S}t\'efan van~der {W}alt} \&
+	\bibinfo{editor}{{J}arrod {M}illman} (eds.)
+	\emph{\bibinfo{booktitle}{{P}roceedings of the 9th {P}ython in {S}cience
+			{C}onference}}, \bibinfo{pages}{92 -- 96} (\bibinfo{year}{2010}).
+	
+	\bibitem{betancourt+girolami2013}
+	\bibinfo{author}{{Astrophys. J.}, M.~J.} \& \bibinfo{author}{{Girolami}, M.}
+	\newblock \bibinfo{title}{{Hamiltonian Monte Carlo for Hierarchical Models}}.
+	\newblock \emph{\bibinfo{journal}{arXiv e-prints}}
+	\bibinfo{pages}{arXiv:1312.0906} (\bibinfo{year}{2013}).
+	\newblock \eprint{1312.0906}.
+	
+	\bibitem{foreman-mackey+2013}
+	\bibinfo{author}{{Foreman-Mackey}, D.}, \bibinfo{author}{Hogg, D.~W.},
+	\bibinfo{author}{Lang, D.} \& \bibinfo{author}{Goodman, J.}
+	\newblock \bibinfo{title}{Emcee: {{The MCMC Hammer}}}.
+	\newblock \emph{\bibinfo{journal}{Publ. Astron. Soc. Pacific}}
+	\textbf{\bibinfo{volume}{125}}, \bibinfo{pages}{306--312}
+	(\bibinfo{year}{2013}).
+	\newblock \eprint{1202.3665}.
+	
+	\bibitem{foreman-mackey2016}
+	\bibinfo{author}{{Foreman-Mackey}, D.}
+	\newblock \bibinfo{title}{Corner.py: {{Scatterplot}} matrices in {{Python}}}.
+	\newblock \emph{\bibinfo{journal}{The Journal of Open Source Software}}
+	\textbf{\bibinfo{volume}{1}} (\bibinfo{year}{2016}).
+\end{thebibliography}
+
+
+\setcounter{figure}{0}    
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6 \textwidth]{Images/pgm_models.pdf}
+	\caption{\textbf{A probabilistic graphical model (PGM) represented algebraically in Equation \ref{eq:modelll}.} The shaded circle indicates observed data, and solid black points represent other fixed information, such as the KDEs and observational uncertainties. The remaining circles represent parameters. The underline indicates that the symbol represents a set of parameters or data. Here, $\kappa_{\rm{s}}$ and $\kappa_{\rm WMB}$ represent the KDEs of standard and WMB model populations respectively. $Q_{\rm{WMB}}$ is the mixture model weighting factor. The latent parameters $\theta$, our observations $\mathcal{D}$ and their uncertainties $\sigma_{\mathcal{D}}$ include temperature (\teff), mass ($M$), log-age ($\ln(t)$), metallicity (\feh) and log-rotation ($\ln(P)$). This model is \textit{hierarchical}, as all the latent parameters are drawn from the common probability distribution set by $Q_{\rm{WMB}}$ and described in Equation \ref{eq:mixturell}.}
+	\label{fig:pgm}
+\end{figure}
+
+\clearpage
+
+\input{si.tex}
+
+\end{document}

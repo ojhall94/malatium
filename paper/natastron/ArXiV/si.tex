@@ -1,0 +1,411 @@
+%\documentclass[12pt]{article}
+%\setlength{\textwidth}{167mm}
+%\setlength{\headsep}{0mm}
+%\setlength{\headheight}{0mm}
+%\setlength{\textheight}{230mm}
+%\setlength{\oddsidemargin}{1.6mm}
+%\setlength{\evensidemargin}{1.6mm}
+%\setlength{\topmargin}{4.6mm}
+%
+%\usepackage{chngcntr}
+%\usepackage{xspace}
+%\usepackage{color}
+%\usepackage{graphicx}
+%\usepackage{amsmath}	% Advanced maths commands
+%\usepackage{amssymb}	% Extra maths symbols
+%\usepackage{lscape}
+%\usepackage{longtable}
+%\usepackage{threeparttable}
+%\usepackage{multirow}
+%\usepackage[figurename={Supplementary Figure}, tablename={Supplementary Table}]{caption}
+%\usepackage{booktabs}
+%\usepackage[ ]{hyperref}
+%\graphicspath{{Images/}}
+%%\usepackage[symbol]{footmisc}
+%
+%
+%% Astronomical abbreviations (thanks to Dan Huber)
+%\newcommand{\numax}{\mbox{$\nu_{\rm max}$}\xspace}
+%\newcommand{\dnu}{\mbox{$\Delta \nu$}\xspace}
+%\newcommand{\muHz}{\mbox{$\mu$Hz}\xspace}
+%\newcommand{\teff}{\mbox{$T_{\rm eff}$}\xspace}
+%\newcommand{\logg}{\mbox{$\log(g)$}\xspace}
+%\newcommand{\feh}{\mbox{$\rm{[Fe/H]}$}\xspace}
+%\newcommand{\msun}{\mbox{$\mathrm{M}_{\odot}$}\xspace}
+%\newcommand{\lsun}{\mbox{$\mathrm{L}_{\odot}$}\xspace}
+%\newcommand{\mearth}{\mbox{$\mathrm{M}_{\oplus}$}\xspace}
+%\newcommand{\rsun}{\mbox{$\mathrm{R}_{\odot}$}\xspace}
+%\newcommand{\kepler}{\emph{Kepler}\xspace}
+%\newcommand{\tess}{\emph{TESS}\xspace}
+%\newcommand{\ktwo}{K2\xspace}
+%\newcommand{\gaia}{\emph{Gaia}\xspace}
+%
+%\begin{document}
+
+\section*{\underline{Supplementary Information}}
+\tableofcontents
+
+\section{Asteroseismic Model}\label{s:seismo}
+In order to extract signatures of stellar rotation from the asteroseismic p mode frequencies, we built a model that simultaneously treats the convective background ($B(\nu)$), the oscillations ($O(\nu)$), and the white noise ($W$), where $\nu$ is frequency \cite{davies+2015}. Our data, observed with \kepler, are also subject to the apodization (attenuation) of signals in the frequency-domain, where we fit our model \cite{chaplin+2011}. The apodization in power is given by
+
+\begin{equation}\label{eq:apodization}
+	\eta^2(\nu) = \rm{sinc}^2\left(\frac{\pi}{2}\frac{\nu}{\nu_{\rm nyq}}\right)\, ,
+\end{equation}
+where $\nu_{\rm nyq}$ is the Nyquist frequency for the \kepler short cadence, which was treated as a free parameter in our model to account for gaps in the data. Apodization only affects signals with characteristic timescales, meaning that it does not affect the white noise level, only the oscillations and convective background components. Given the above, our comprehensive model for the power spectrum is
+
+\begin{equation}\label{eq:model}
+	M(\nu) = W + \eta^2(\nu)[O(\nu) + B(\nu)]\, .
+\end{equation}
+
+\subsection{Convective Background ($B(\nu)$)}
+To model the convective background we used three Harvey components \cite{harvey1985}, which express the background in power as Lorentzian-like functions centered on zero frequency. The Harvey components take the form 
+
+\begin{equation}
+	H(\nu, a, b, x) = \frac{4a^2/b}{1 + (2\pi b\nu)^x}\, ,
+\end{equation}
+
+\noindent where $a$ and $b$ are the free parameters in our model, and $x$ is fixed. The three Harvey components together form our background function as
+
+\begin{equation}\label{eq:background}
+	B(\nu) = H(\nu, a, b, x=4) + H(\nu, c, d, x=4) + H(\nu, j, k, x=2)\, ,
+\end{equation}
+
+\noindent where we have labeled parameters for the separate components. The $x = 2$ term here contributes to the background at high frequencies, whereas the $x=4$ terms contribute the background at low frequencies.
+
+\subsection{Modes of Oscillation ($O(\nu)$)}
+Modes of oscillation appear in the power spectrum as Lorentzian peaks \cite{chaplin+basu2017}. These peaks can be described by three values: the radial order ($n$, the overtone number of the oscillation), the angular degree ($\ell$) and the azimuthal order ($m$). Due to stellar rotation, each mode with an angular degree of $\ell > 0$ is split into its $(2\ell +1)$ Lorentzian components, labeled by $m$. For all $\ell=(0,1,2)$ modes identified for our targets in the  `Kages'  and LEGACY studies \cite{davies+2016,lund+2017} we add a (set of) Lorentzian(s) to our model, building a composite model representing all visible modes. The construction of our oscillation model takes the form
+
+\begin{equation}
+	O(\nu) = \sum_n \sum_\ell \sum_{m=-\ell}^\ell \frac{H_{n,\ell,m}}{1 + \frac{4}{\Gamma^2_{n,\ell}}(\nu - \nu_{n,\ell,m})^2}\, ,
+\end{equation}
+
+\noindent where $H_{n,\ell,m}$ is the height of the mode, $\Gamma_{n,\ell}$ is the linewidth of the mode (approximated to be equal for all split azimuthal orders at a single $n$ and $\ell$) and $\nu_{n, \ell, m}$ is the frequency of the mode. The range of $n$ differs per star depending on how many radial orders were reported in LEGACY or Kages, and the range of $\ell$ depends on how many angular degrees were reported for the corresponding radial order.
+
+\subsubsection{Mode Frequencies and Rotational Splitting ($\nu_{n,\ell,m}$)}\label{ssec:frequencies}
+The mode frequencies of main sequence stars are described by the asymptotic expression \cite{tassoul1980, vrard+2016}. The asymptotic expression defines the locations of the modes as regularly spaced, with structured deviation around \numax, the frequency of maximum oscillation amplitude. The expression takes the form
+
+\begin{equation}\label{eq:asymptotic}
+	\nu_{n,\ell,m} = \dnu\left(n + \epsilon + \delta\nu_{0\ell} + \frac{\alpha}{2}(n - \frac{\numax}{\dnu} + \epsilon)^2\right) + m\nu_{s}\, ,
+\end{equation}
+
+\noindent where \dnu is the large frequency separation between two consecutive radial orders $n$, $\epsilon$ is a a phase offset, $\delta\nu_{0\ell}$ is the small frequency separation between two oscillation modes of different $\ell$ at the same radial order, $\alpha$ describes the curvature of the spacing around \numax, and $\nu_s$ is the rotational splitting. Note that here we have expressed the small separation $\delta\nu_{0\ell}$ as a fraction of $\dnu$. In order to improve the computational efficiency of this analysis, we fixed \dnu to the values reported in LEGACY and Kages.
+
+Instead of calculating mode frequencies directly from Equation \ref{eq:asymptotic} for the model, we treated the individual mode frequencies as parameters as well, drawn from Equation \ref{eq:asymptotic}. This is called a `latent parameter' implementation \cite{hogg2012, hall+2019}, as it forms a step between the parameters we want to draw inference on (also called hyperparameters) and our data. 
+The parameters $\nu_{n,\ell,m}$ were allowed to vary within an uncertainty $\sigma_{\ell}$, which has a single value for each angular degree and also varied as a free parameter.
+This allowed us to account for small shifts in frequency due to sudden changes in the stellar structure \cite{mazumdar+2014}. 
+
+The mode frequency latent parameters were drawn from a normal distribution using Equation \ref{eq:asymptotic} as its mean function, as
+
+\begin{equation}
+	\nu_{n, \ell, m} \sim \mathcal{N}(\nu_{n, \ell, m}, \sigma_{\ell})\, ,
+\end{equation}
+
+\noindent where the expression $\nu_{n, \ell, m}$ on the right hand side represents the contents of Equation \ref{eq:asymptotic}, and $\mathcal{N}$ represents a normal distribution with a mean equal to $\nu_{n, \ell, m}$ and a standard deviation equal to $\sigma_{\ell}$. The symbol `$\sim$' indicates that the parameters on the left hand side of the equation are drawn from the probability distribution on the right hand side. This notation will be used throughout this work.
+
+\subsubsection{Mode Linewidth ($\Gamma_{n,\ell}$)}
+The linewidths of asteroseismic p modes vary roughly as a function of mode frequency, and do so slowly relative to \dnu. This can be expressed as an empirical relation \cite{lund+2017, davies+2014, appourchaux+2016}. However, this relation has six free parameters, none of which are directly relevant to this work. Instead of fitting this relation, we chose to employ a more flexible Gaussian Process \cite[GP]{rasmussen+williams2006} to act as a prior on the linewidths. This can be considered as us modelling the linewidths as correlated measurements, effectively loosely constraining how linewidth varies with frequency.
+
+A GP is defined by a covariance kernel (describing the degree of correlation between linewidths) and a mean function (describing a global trend with frequency). As this approach describes the mode linewidths relative to one another in frequency, the radial orders of each target $n$ were rescaled to be between 0 (for the lowest $n$) and 1 (for the highest $n$). The radial orders of $\ell = 2$ modes were increased by $1$ to ensure this approximation applied to all modes. This approximation was used to describe the change in linewidth as a function of frequency without depending on the exact frequencies of the modes, which themselves were free parameters (see above). Given this, we defined our GP covariance kernel as a Squared Exponential Kernel to capture the slight periodicity of linewidth with frequency, as
+
+\begin{equation}\label{eq:gpkernel}
+	K_{i,j} = \rho^2 \exp \left[ -\frac{(n_{\textrm{f}, i} - n_{\textrm{f}, j})^2}{2L^2} \right]\, ,
+\end{equation}
+
+\noindent where $n_{\rm f}$ is the fractional radial order of a given mode and  $K_{i,j}$ represents an element of the covariance matrix $\underline{K}$, describing the covariance between two values of linewidth at different fractional radial orders. The GP kernel has two hyperparameters: $\rho$, which determines the spread of the kernel in linewidth, and $L$, which determines the length scale in terms of $n_{\rm f}$. The length scale $L$ was significantly larger than the large frequency separation (\dnu) in all cases, and so we considered the use of fractional radial orders a valid approximation in this model.
+
+A linear function was used for the mean of the GP, as
+
+\begin{equation}\label{eq:gpmean}
+	\mu = m \times n_{\textrm{f}} + c\, ,
+\end{equation}
+where $m$ and $c$ are the slope and intercept of the line. The linewidth latent parameters were then drawn from the multivariate probability distribution
+
+\begin{equation}\label{eq:gammagp}
+	\Gamma \sim \mathcal{N}(\mu, \underline{K})\, ,
+\end{equation}
+
+\noindent where $\Gamma$ represents the linewidths of all the modes in the model. The parameters $m$, $c$ and $\rho$ were marginalised over, whereas $L$ was fixed to a pre-determined value.
+
+\subsubsection{Mode Heights and Angle of Inclination ($H_{n,\ell,m}$)}
+The height in power of each mode, $H_{n, \ell, m}$, varies not only as a function of distance in frequency from \numax, but also due to observation conditions, such as inclination angle and passband. In our model, we treated $H_{n, \ell, m}$ as a deterministic parameter, as
+
+\begin{equation}\label{eq:height}
+	H_{n, \ell, m} =  \varepsilon_{\ell, m}(i) \frac{2 (A_{n, \ell})^2}{\pi \Gamma_{n, \ell}}\, ,
+\end{equation}
+
+\noindent where $\varepsilon_{\ell, m}(i)$ modulates the height as a function of inclination angle $i$ (see below), and $A_{n, \ell}$ and $\Gamma_{n, \ell}$ are the mode amplitude and linewidth respectively for a given radial order and angular degree. Instead of modeling and modulating height directly, we instead sampled in amplitude and linewidth. This approach mitigates the correlations between height and linewidth in the sampling process \cite{toutain+appourchaux1994}.
+
+As done above for the mode frequencies and linewidths, the mode amplitudes $A_{n,\ell}$ were also treated as latent parameters drawn from a probability distribution governed by hyperparameters. For this, we used a Gaussian function $G(\nu)$, centered on $\numax$, as
+
+\begin{equation}\label{eq:amplitude}
+	G(\nu) = A \times \exp\left[-\frac{(\nu - \numax)^2}{2w^2}\right]\, ,
+\end{equation}
+
+\noindent where $A$ is the modes' amplitude at \numax, and $w$ is the width of the Gaussian, both free parameters in our model. 
+The mode amplitude latent parameters were then drawn from the probability distribution
+
+\begin{equation}\label{eq:amplitwod}
+	A_{n, \ell} \sim \mathcal{N}(G(\nu_{n,\ell}) \times V_\ell, \sigma_{A})\, ,
+\end{equation}
+
+\noindent where $V_\ell$ is a free parameter for the mode visibility of different angular degrees, which should be consistent for all \kepler observations. These parameters describe the difference in relative height between modes of different radial order. The mode visibility for $V_0$ is fixed at 1, and $V_{1,2}$ are treated as free parameters. The parameter $\sigma_{A}$, the uncertainty on the distribution, is also a free parameter, and takes the same value for all amplitudes regardless of angular degree.\\
+
+The angle of inclination of a star with respect to Earth changes the net perturbation by a given mode when integrated across the stellar disc, changing the amplitudes of modes of different azimuthal orders. This is a geometric problem, and is expressed by $\varepsilon_{\ell, m}(i)$, which takes the form \cite{gizon+solanki2003}
+
+\begin{equation}\label{eq:legendre}
+	\varepsilon_{\ell, m}(i) = \frac{(\ell - |m|)!}{(\ell + |m|)!}\left[P_\ell^{|m|}(\cos(i))\right]^2\, ,
+\end{equation}
+
+\noindent where $P_\ell^{|m|}$ are associated Legendre functions. For the first three angular degrees, Equation \ref{eq:legendre} takes the form \cite{handberg+campante2011}
+
+\begin{equation}
+	\begin{split}
+		\varepsilon_{0,0}(i) &= 1\, ,\\
+		\varepsilon_{1,0}(i) &= \cos^2(i)\, ,    \\
+		\varepsilon_{1,\pm1}(i) &= \frac{1}{2}\sin^2(i)\, ,\\
+		\varepsilon_{2,0}(i) &= \frac{1}{4}(3\cos^2(i) - 1)^2\, ,\\
+		\varepsilon_{2,\pm1}(i) &= \frac{3}{8}\sin^2(2i)\, ,\\
+		\varepsilon_{2,\pm2}(i) &= \frac{3}{8}\sin^4(i)\, ,
+	\end{split}
+\end{equation}
+
+\noindent where the sum of available components for a single $\ell$ are normalized to one.
+
+\subsection{Likelihood Function for $M(\nu)$}\label{sec:like}
+If data have Gaussian noise in the time domain, they will appear in the frequency domain with noise following a $\chi^2$ distribution with two degrees of freedom \cite[$\chi^2_2$ hereafter]{appourchaux+1998}. The noise properties of $\chi^2_2$ distributed data are multiplicative, and require a specific treatment when fitting a model. As our frequency bins can be approximated to be independent, we used the likelihood function \cite{anderson+1990},
+
+\begin{equation}
+	\ln p(\mathcal{P} | M(\nu)) = \sum_{j=0}^{N-1} \left[\ln[M_j(\nu)] + \frac{\mathcal{P}_j}{M_j(\nu)}\right]\, , 
+\end{equation}
+
+\noindent where $\mathcal{P}$ is the power spectral density (and thus our data), and $M(\nu)$ represents our model. The subscript $j$ denotes an individual datum, for a total of $N$ data. We have omitted the dependence of the model $M(\nu)$ on its parameters, for clarity. This equation is functionally equivalent to the evaluation of a gamma distribution of the form $\gamma(\mathcal{P} | 1, \beta)$, where $\beta = 1/M(\nu)$, which is the implementation we used in the sampling process.
+
+\subsection{Model preparation and hyperparameter priors}
+\subsubsection{Fitting the convective background}\label{sec:background}
+Fitting the convective background, apodization and white noise component must be done for the full range of the power spectrum in order to be accurately constrained. However, fitting a single model to the full range of frequencies is computationally inefficient when we are interested in the modes of oscillation, as these occupy a relatively small range of frequencies.
+
+In order to speed up this process, the background was first fit independently to a subset of our data for each star. This subset was created by removing all frequencies within a range $0.1 \times \dnu$ below and above the minimum and maximum mode frequencies reported in LEGACY and Kages. For KIC 3427720 we also removed frequencies in the range $90\, \mu\rm{Hz} < \nu < 400\, \mu{\rm{Hz}}$, where there were large peaks not of asteroseismic origin, skewing the background fit.
+
+For each star the model function (see Eq. \ref{eq:model}) was fit, as
+
+\begin{equation}
+	M_{B}(\nu) = W + \eta^2(\nu)B(\nu)\, ,
+\end{equation}
+
+\noindent where $B(\nu)$ is the background model described in Equation \ref{eq:background}. The parameter components of our background fit are then $\phi_B = \{\log(a), \log(b), \log(c), \log(d), \log(j), \log(k), W, \nu_{\rm nyq}\}$, where the parameters of the Harvey components were sampled in log space. The model was fit to the background data using \texttt{PyStan} \cite{vanhoey+2013}, run for 10,000 iterations on each star. 
+
+\subsubsection{Obtaining First Guesses and Prior Values}
+In order to utilise some of the prior measurements of our targets without using them as hard constraints on our parameters, some of our model equations were fit to LEGACY and `Kages' data to obtain first guesses and mean values on hyperparameter priors.
+
+For first guesses for parameters in the asymptotic expression, we fit Equation \ref{eq:asymptotic}, \textit{not} including the rotational component $m\nu_s$, to the $\ell = (0, 1, 2)$ mode frequencies reported in LEGACY and `Kages' for each star, using their reported uncertainties. This yielded estimates of $\hat{\epsilon}$, $\widehat{\delta\nu}_{01}$, $\widehat{\delta\nu}_{02}$ and $\hat{\alpha}$, where the hat symbol `\, $\widehat{}$\, ' indicates a prior value (e.g. $\hat{\nu}_{\rm max}$ is taken from LEGACY or `Kages'). While not precise, as we did not mitigate any perturbations due to acoustic glitches, these rough results act as functional first guesses and prior mean values. The relation was fit to each star using PyMC3 \cite{salvatier+2016} using 5000 iterations on 4 chains.
+
+To obtain first guesses for the parameters used to set the GP prior on linewidth, we fit a GP constructed as in Equation \ref{eq:gammagp} to the linewidths of the $\ell = 0$ modes reported in LEGACY. Linewidths were not reported for the other angular degrees in LEGACY, but the estimates may be generalised to other $\ell$, as linewidth is a strong function of frequency.  The relation was fit to each star using PyMC3 using 2500 iterations on 4 chains.
+
+Fitting the LEGACY linewidths yielded rough estimates of $\hat{m}$, $\hat{c}$, $\hat{\rho}$ and $L$ for each star. As is noted in Equation \ref{eq:gammagp}, $L$ was fixed to this fit value when fitting our full model to our data. For stars in `Kages', for which no linewidths were reported, we instead fixed these prior values to $\hat{m} = 1$, $\hat{c} = 0.5$, $\hat{\rho} = 0.1$, and the length scale to $L = 0.3$. These values were chosen to reflect those found for the LEGACY stars.
+
+Finally, we obtained prior values for the Gaussian function describing the distribution of mode amplitudes around \numax (Eq. \ref{eq:amplitude}). The mode amplitude of the highest peak in the spectrum was used for $\hat{A}$, which was typically at or near \numax. For the width of the Gaussian we used the empirical function \cite{lund+2017}
+
+\begin{equation}
+	\hat{w} = 0.25 \times \hat{\nu}_{\rm max},\, .
+\end{equation}
+
+\noindent For the mode visibilities, we used $\hat{V}_1 = 1.2$ and $\hat{V}_2 = 0.7$, which reflect the results for these parameters reported in the LEGACY catalogue.
+
+\subsubsection{Priors on our Hyperparameters}
+Given our first guesses and measured prior values, we can define the prior probabilities of the hyperparameters on which our model depends. For the mode frequency hyperparameters (Eq. \ref{eq:asymptotic}), these are
+
+\begin{equation}
+	\begin{split}
+		\numax &\sim \mathcal{N}(\hat{\nu}_{\rm max}, 10)\, ,\\
+		\epsilon &\sim \mathcal{N}(\hat{\epsilon}, 1)\, ,\\
+		\alpha &\sim \ln\mathcal{N}(\ln(\hat{\alpha}), 0.01)\, ,\\
+		\delta\nu_{01} &\sim \ln\mathcal{N}(\ln(\widehat{\delta\nu}_{01}), 0.1)\, ,\\
+		\delta\nu_{02} &\sim \ln\mathcal{N}(\ln(\widehat{\delta\nu}_{02}), 0.1)\, ,\\
+		\sigma_{0,1,2} &\sim \mathcal{C}_{1/2}(\beta = 2)\, ,
+	\end{split}
+\end{equation}
+
+\noindent where $\ln\mathcal{N}$ represents a log-Normal distribution and $\mathcal{C}_{1/2}$ represents a half-Cauchy distribution. The half-Cauchy distribution ensures the standard deviations do not inflate to large numbers, and is generally well-behaved close to zero in the case of stars with little deviation from Eq. \ref{eq:asymptotic} \cite{gelman2006}. Other symbols are as described above. All three hyperparameters $\sigma_{0,1,2}$ describing the uncertainty on the latent parameters of different angular degree were subject to the same prior.
+
+For the mode linewidths (Eq. \ref{eq:gpkernel} and \ref{eq:gpmean}), our hyperparameter priors took the form
+
+\begin{equation}
+	\begin{split}
+		m &\sim \mathcal{N}(\hat{m}, 1)\, ,\\
+		c &\sim \mathcal{N}(\hat{c}, 1)\, ,\\
+		\rho &\sim \ln\mathcal{N}(\ln(\hat{\rho}), 0.1)\, ,\\
+	\end{split}
+\end{equation}
+
+\noindent where the conventions are the same as above. For our mode amplitudes (Eq. \ref{eq:amplitude} and \ref{eq:amplitwod}), they took the form
+
+\begin{equation}
+	\begin{split}
+		w &\sim \ln\mathcal{N}(\ln(\hat{w}), 10)\, ,\\
+		A &\sim \ln\mathcal{N}(\ln(\hat{A}), 1)\, ,\\
+		V_1 &\sim \ln\mathcal{N}(\ln(\hat{V}_1), 0.1)\, ,\\
+		V_2 &\sim \ln\mathcal{N}(\ln(\hat{V}_2), 0.1)\, ,\\
+		\sigma_A &\sim \mathcal{C}_{1/2}(\beta = 1)\, .
+	\end{split}
+\end{equation}
+
+As the convective background had already been fit to our data excluding the region where the modes are present, the results from that fit could be used as extremely informative priors on our fit to the region containing the modes, where there is little information present to constrain the background. To do so, we modeled the background parameters $\phi_B$ in our full model as being drawn from a multivariate normal distribution as
+
+\begin{equation}
+	\phi_{B}\sim\mathcal{N}(\hat{\phi}_{B},\underline{\Sigma}_{\hat{\phi}_{B}})\, ,
+\end{equation}
+
+\noindent where $\hat{\phi}_B$ are the median values of our posterior distributions from our prior background fit, and $\underline{\Sigma}_{\hat{\phi}_{B}}$ is the full covariance matrix of all the posterior distributions from our prior background fit, taking into account the correlations between the different Harvey components.
+
+Finally, we defined the priors on the rotational parameters: the mode splitting ($\nu_s$), and the inclination angle ($i$). In order to give these an appropriate treatment, we made two reparameterizations. First, we sampled the projected rotational splitting, $\nu_{\rm{s}}\sin(i)$, which is more efficiently sampled due to the strong correlations between $i$ and $\nu_{\rm s}$ \cite{ballot+2006,ballot+2008a}. A prior was applied over this as
+
+\begin{equation}
+	\nu_s\sin(i) \sim \ln\mathcal{N}(\ln(0.75), 0.75)\, ,
+\end{equation}
+
+\noindent where conventions are as above. This subjective prior was chosen to reflect that most stars will have a solar-like rotation, with a long tail to allow for the fastest rotators. Second, we sampled in $\cos(i)$, and gave this a prior of
+
+\begin{equation}
+	\begin{split}
+		\cos(i) &\sim \mathcal{U}(0, 1)\, ,
+	\end{split}
+\end{equation}
+which is equivalent to stating that probability to observe an inclination angle $i$ is equal to $\sin(i)$. Here, the $\mathcal{U}(0,1)$ indicates a uniform prior between 0 and 1. Using a uniform prior on $\cos(i)$ allowed us to account for the geometric effect that stars with a large inclination angle with respect to us are more common \cite{chaplin+basu2017}.
+
+\subsection{Fitting procedure}
+Using our prior information and model described above, we fit Equation \ref{eq:model} to our data $\mathcal{P}$, using the likelihood function described in Section \ref{sec:like}.
+
+In order to speed up the fitting process, we only applied our model to the region of the power spectrum that contains visible modes of oscillation. We created this subset by removing all frequencies outside a range $0.25 \times \Delta\nu$ below and above the minimum and maximum mode frequencies reported in LEGACY and Kages. This region overlaps minimally with the data used to fit for our prior information of the convective background (see Section \ref{sec:background}), so that both model fits are independent.
+
+To improve computational efficiency, we reduced the number of oscillation modes being fit in five targets. For 16 Cyg A \& B, KIC 7970740 and KIC 8478994, we excluded any modes with a Bayes Factor ($\ln(K)$) of less than 6, as reported in LEGACY \cite{davies+2016,lund+2017,kass+raftery1995}. For KIC 8478994, which is reported without a value for $\ln(K)$ in Kages, we only included modes of an overtone number that contained a detection for all of $\ell = (0, 1, 2)$, retaining 5 sets of higher signal-to-noise overtones. We do not expect this reduced scope to bias our results, although they may reduce the precision on our measured rotation rates.
+
+We fit our model to our power spectrum data with \texttt{PyMC3}, using 2500 iterations each on 4 chains. An example of our model fit to an asteroseismic power spectrum of 16 Cyg A is shown in Supplementary Figure \ref{fig:modelfit}.
+
+ \begin{figure*}
+	\centering
+	\includegraphics[width=.99\textwidth]{Images/modelfit.pdf}
+	\caption{A power spectrum constructed from four years of \kepler observations of 16 Cyg A (KIC 12069424). Plotted over the top is the model resulting from the fit to the data described in this work. The model implements both the mode frequencies, seen on the right hand side of the plot, and the convective background, the effects of which are seen on the left. Low frequencies have been cropped out for clarity. \textit{Inset}: A zoom in on a radial (right) and quadrupole (left) ($\ell = 0, 2$) pair of modes. The quadrupole mode is split into five components by the star's rotation. Due to the star's inclination angle with respect to us, two out of five peaks are more distinct. The height and spacing of the mode components is a function of the star's rotational splitting ($0.56\, \mu\rm{Hz}$, equivalent to $P = 20.5\, \rm{days}$) and angle of inclination ($45^\circ$).}
+	\label{fig:modelfit}
+\end{figure*}
+
+
+\section{Verifying asteroseismic results}
+\subsection{Priors on rotational parameters}
+In our Bayesian analysis, we have placed weakly informative priors on our sampled rotational parameters, $\nu_{\rm s}\sin(i)$ and $\cos(i)$. The prior is especially important for the angle of inclination, which is hardest to infer from the data. We are able to validate the robustness of our asteroseismic results by confirming that their posterior distributions are data-dominated, and not prior-dominated. We can do so by comparing the $68\%$ credible regions of the posterior estimates of $\nu_{\rm s}\sin(i)$ and $i$ against the $68\%$ credible regions of their priors.
+
+A comparison between prior and posterior is shown for 94 stars in $\nu_{\rm s}\sin(i)$, $i$ and $P$ in Supplementary Figure \ref{fig:priors}, arranged by age. In the Figure, results with means (symbols) and $68\%$ credible regions (error bars) that are close to those same values for the prior distribution (where the horizontal line is the mean, and the shaded area is the credible region) can be interpreted as prior-dominated (i.e. poorly informed by the data). Cases where the means differ or the credible regions are smaller than the prior distribution are data-dominated. The projected splitting, $\nu_{\rm s}\sin(i)$, is overall well constrained, with only one star being prior dominated. This is expected, as the projected splitting is what we observe on the star before decoupling inclination and rotation. The angle of inclination $i$, sampled as $\cos(i)$, more closely follows the prior distribution in most cases. Combining the two, the rotation period $P$ has no stars directly corresponding to the effective prior on period, and globally follows a trend with increasing age. The three outliers with fast rotation at late ages (KICs 6603624, 8760414 and 8938364) are discussed in more detail in below.
+
+The rotation rates as presented in this work are a product of our Bayesian sampling of both projected splitting and angle of inclination. As seen in the Figure there are instances where $i$ or $\nu_{\rm s}\sin(i)$ closely resemble the prior (and are therefore prior-dominated). There are no cases of this when looking at the resulting period measurements, as they will have been informed by at least one strongly data-driven parameter (commonly $\nu_{\rm s}\sin(i)$). From this, we concluded that our ensemble of asteroseismic rotation is not strongly dominated by the priors imposed on projected splitting and inclination in our Bayesian analysis.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{Images/priors.pdf}
+	\caption{\textbf{Comparisons between posterior estimates of rotational parameters (data points and error bars) and the priors on these parameters (shaded regions).} The data are sorted from young stars (left) to old (right). Shown are projected splitting ($\nu_{\rm s}\sin(i)$), inclination angle ($i$, sampled as $\cos(i)$) and rotation period ($P$). Both the prior and values for $P$ are a transformation of the upper two parameters (see text). In all cases, the extent of the error bars and shaded regions indicate the 68\% credible interval of the posterior and prior distributions respectively. The solid lines indicate the median of the prior distributions. In this figure, results with means and errorbars that closely resemble the prior distribution can be interpreted as prior-dominated (i.e. poorly informed by the data). All stars are sorted and coloured and sorted by age. In the case of inclination angle $i$ and rotation period $P$, the displayed priors are transformed from the priors imposed on the sampled parameters from which their posteriors were derived.}
+	\label{fig:priors}
+\end{figure}
+
+\subsection{Comparisons to previous studies}\label{ssec:litcomp}
+In order to validate our results, we compared our rotational parameters to those obtained in the literature, as well as those resulting from the work presented in LEGACY and `Kages', which were unreported and received through private communication by the authors of the catalogue papers.
+
+Comparisons with LEGACY and `Kages' are shown in Supplementary Figure \ref{fig:legacykages} for projected splitting, inclination angle, and rotation period. In all three cases we show the fractional difference between the values obtained in this work and those from LEGACY and `Kages'. On the right of the Figure, we show the distribution of the fractional differences for the three parameters.
+The projected splitting is in good agreement with both studies, however LEGACY finds slightly lower $\nu_{\rm s}\sin(i)$ for the faster rotators, deviating from our work by over $1\sigma$. Neither LEGACY nor `Kages' used a spatially isotropic prior for the inclination angle in their analyses, instead opting for a uniform prior. As posterior estimates of inclination angle are only loosely data-driven, the introduction of an isotropic prior should result in our analysis reporting globally higher inclination angles. This effect is seen in the comparisons of both inclination angles and rotation rates for the LEGACY stars, where we find overall lower rotation rates compared to LEGACY for stars at very similar $\nu_{\rm s}\sin(i)$.
+
+A number of stars are excluded from Supplementary Figure \ref{fig:legacykages} and compared individually as extreme outliers: KICs 5094751, 6196457, 8349582, 8494142, 8554498, 105114430 and 11133306 all have fast rotation rates ($<5\, \rm days$) in `Kages', but are found to have a broader spread of rotation rates in this work. At similar values for $\nu_{\rm s}\sin(i)$, `Kages' found much lower inclination angles with highly asymmetrical uncertainties. Based on a comparison between the summary statistics of these stars, we concluded that the results found in this work have better marginalised over inclination angle, improving our measure of rotation.
+
+Conversely, KICs 6603624, 8760414 and 8938364 have extremely slow rotation periods in LEGACY, but extremely \textit{fast} ($<3\, \rm {days}$) in this work. KICs 8760414 and 8938364 are excluded from the gyrochronology analysis below based on checks for $\hat{R}$ and the number of effective samples. Both stars have ages greater than $10\, \rm Gyr$, making their fast rotation rates highly unlikely under any model of rotational evolution. The posterior estimate of $P$ for KIC 6603624 is well-defined in our analysis, but with an age of $7.8\, \rm Gyr$, its measured rotation of $1.2\, \rm days$ is also highly unlikely under any model of rotational evolution. The LEGACY estimate of rotation is similarly extreme at $378\, \rm days$. These three stars have the lowest inclination angles in our sample ($< 10^\circ$), at which point the power in the split components of the seismic modes is so low that it becomes difficult to probe the measure of splitting. The split components for these stars will have a height roughly 3\% of the central mode. For comparison, for the next lowest inclined star at $17^\circ$, this rises to $10\%$. In cases such as these with lower signal-to-noise, spurious peaks may be interpreted as split components.\\
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{Images/litcomp_alt2.pdf}
+	\caption{\textbf{Comparisons between posterior estimates of rotational parameters from this work and the literature}. Literature values are taken from LEGACY and `Kages' \cite[private communication]{davies+2016, lund+2017}. Shown are projected splitting ($\nu_{\rm s}\sin(i)$), inclination angle ($i$, sampled as $\cos(i)$) and rotation period ($P$). Fractional differences are plotted against stellar rotation obtained in this work. The $\Delta$ indicates the fractional difference between this work and the literature (i.e. stars above the zero-line have higher values in this work). The right hand panels the distribution of the fractional differences around the zero line. The colour legend is consistent throughout all panels. The x-axis units on the right hand panels are equivalent to the y-axis of the left hand panels. 10 stars have been omitted from this plot and are discussed in more detail in the text: KICs 5094751, 6196457, 8349582, 8494142, 8554498, 105114430 and 11133306 all have extremely low rotation periods in Kages, with high uncertainties. Conversely, KICs 6603624, 8760414 and 8938364 have extremely high rotation periods in LEGACY with low uncertainties. Error bars represent the 68\% confidence intervals. In cases where stars had asymmetric error bars, the larger of the two was used when propagating uncertainty for the purposes of this figure.}
+	\label{fig:legacykages}
+\end{figure}
+
+We also compared our asteroseismic estimates of stellar rotation with similar studies in the literature, shown in Supplementary Figure \ref{fig:literaturecomp}. These included: a study of the binary solar analogues 16 Cyg A \& B \cite{davies+2015}, ; a study of surface and seismic rotation which our catalogue shares 5 stars with \cite{nielsen+2015}, ; and an asteroseismic study of differential rotation with which our catalogue shares 40 targets \cite{benomar+2018}. For the latter, we used their reported splitting value $a_1$, which is equivalent to $\nu_{\rm s}$. 
+
+Overall,  Supplementary Figure \ref{fig:literaturecomp} shows no strong disagreements between our asteroseismic measurements for stellar rotation and those from the literature. The scatter of the fractional differences lies cleanly around the zero line, with a mean and spread of $0.0_{-15.6}^{+16.4}\, \%$. The increase in uncertainty with period is due to more slowly rotating stars being more difficult to constrain using asteroseismology.
+
+It is of note that 16 Cyg A was found to be rotating slightly faster in our analysis compared to the literature \cite{davies+2015} (deviating within $2\sigma$), despite the fit being performed on the same data. We found an inclination angle that is slightly lower for 16 Cyg A but at a similar projected splitting, which would explain finding a lower value of rotation.
+
+There are three outliers at low period in  Supplementary Figure \ref{fig:literaturecomp}: KICs 6603624, 8760414 and 8938364. These are the same targets found to be outliers in a comparison to the LEGACY and `Kages' measurements (see above), with anomalously fast rotation rates and low inclination angles. As these stars represent the lowest inclination angles in our sample, and were found to disagree with two independent studies, we opted to exclude them from the gyrochronology analysis, and to flag the rotation measurements for these three stars presented in this work.
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Images/seis_comparison_rot_alt2.pdf}
+	\caption{\textbf{Fractional differences between posterior estimates of asteroseismic rotation period from this work.} Literature sources are: Davies et al. (2015) \cite{davies+2015} (16 Cyg A \& B), Nielsen et al. (2015) \cite{nielsen+2015} (5 stars) and Benomar et al. (2018) \cite{benomar+2018} (40 stars). We used the reported parameter $a_{1}$ from the latter, which represents the rotational splitting in the case of uniform latitudinal rotation in their model. The dashed line represents the median of the sample shown, with the dotted lines representing the $15.9^{\rm{th}}$ and $84.1^{\rm{st}}$ percentiles. Error bars represent the 68\% confidence intervals. In cases where stars had asymmetric error bars, the larger of the two was used when propagating uncertainty for the purposes of this figure.}
+	\label{fig:literaturecomp}
+\end{figure}
+
+\subsection{Seismic vs spectroscopic rotation}
+A distinct difference between rotation rates obtained through different techniques may hold information about differential rotation (both latitudinal and radial) of near-surface layers, such as those we observe in the Sun \cite{beck2000}.  A previous comparison of spectroscopic and seismic rotation rates, performed on a sample of 22 stars, found no significant radial differential rotation \cite{benomar+2018}. In this work they not only considered rotation rates from spots, but also spectroscopic measures of the projected surface rotation $\textrm{v}\sin(i)$, which they found to be more reliable.
+
+With our expanded sample of asteroseismic rotation we can perform a similar analysis, to both validate our sample and probe radial differential rotation.  Supplementary Figure \ref{fig:vsinilit} shows a comparison between spectroscopic $\textrm{v}\sin(i)$ measurements as listed in LEGACY and `Kages' (left) and Benomar et al. (2015) \cite{benomar+2015} (right). In these cases the asteroseismic $\textrm{v}\sin(i)$ has been calculated using our measure of asteroseismic $\nu_s\sin(i)$ and the known asteroseismic radii. Three stars (KICs 6603624, 8760414 and 8938364) have been excluded from this figure due to strong disagreements of measured rotation rates with the literature (see above).
+
+For the LEGACY and `Kages' sample, we find no strong deviation from the 1:1 line except at very low velocities, which is likely due to biases inherent to spectroscopic line broadening measurements \cite{doyle+2014, tayar+2015}. For the Benomar et al. (2015) sample stars lie a lot closer to the 1:1 line.
+
+Overall, there appears to be a global offset where spectroscopic measurements of projected rotation appear faster than asteroseismic measures. Based on the LEGACY and `Kages' $v\sin(i)$ values, this offset is roughly $18\%$ (i.e. spectroscopic projected rotation rates are faster than asteroseismic rates). This offset is much smaller ($\sim5\%$) for the \cite{benomar+2015} sample, albeit for far fewer stars. These offsets are within the typical disagreement between spectroscopic methods, based on comparisons of projected rotation measurements for red giant stars \cite[see Figure 2]{tayar+2015}, especially at $< 5\, \rm{km\,s^{-1}}$.
+
+It is worth addressing the impact this comparison would have on our conclusions for gyrochronology, were we to take the spectroscopic rotation rates as if they were the truth, even at velocities of $< 5\, \rm{km\,s^{-1}}$. For the majority of cases, the seismic velocities are slower than the spectroscopic velocities, which would bias our ensemble towards favouring a standard evolution over a weakened magnetic braking scenario (as stars would overall appear to be rotating slower at late ages). Based on the comparison to spot rotation presented in the main body of this paper, and given known issues comparing seismic and spectroscopic rotation at low velocities, we concluded that the divergence seen in  Supplementary Figure \ref{fig:vsinilit} does not undermine our results.
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{Images/vsini_comparison_new.pdf}
+	\caption{\textbf{Comparisons between asteroseismic and spectroscopic measures of projected surface rotation, $\textrm{v}\sin(i)$.} All asteroseismic (x-axis) values are from this work, all spectroscopic (y-axis) values are from the literature. \textit{Left}: comparisons to 81 stars values reported in LEGACY and Kages. \textit{Right}: comparisons to 16 stars observed by Benomar et al. (2015) \cite{benomar+2015}. Asteroseismic values are transformed from projected splitting ($\nu_s\sin(i)$) using the asteroseismic radius measurements presented in LEGACY and `Kages'. Horizontal error bars represent the 68\% confidence intervals. Vertical error bars represent the formal uncertainty on the published spectroscopic values. The solid lines indicate the 1:1 line, while the dash-dotted lines represent the 2:1 and 1:2 lines. The dashed lines indicate the location of $\textrm{v}\sin(i) = 5\, \rm{kms^{-1}}$, the point at which surface and seismic measures of projected rotation begin to differ strongly \cite{tayar+2015}.}
+	\label{fig:vsinilit}
+\end{figure}
+
+
+\subsection{Asteroseismic detection biases}
+
+Stars that are rotating very slowly will show small rotational splittings, which may be indistinguishable from a non-rotating case, wheras stars that are spinning very fast may find that their splitting is so wide that they cross over with split modes at different radial orders ($n$). Asteroseismic selection techniques may also introduce additional biases on a population level. We consider the limitations this places on our asteroseismic method.
+
+\begin{itemize}
+	\item \textit{Fast rotating stars:} In prinicple, a star could rotate fast enough that the highest-frequency peak in a split dipole ($\ell = 2$) mode would overlap with the radial ($\ell = 0$) mode. This would occur if $2\nu_{\rm s} > \delta\nu_{02}$, the small separation. For the star in our sample with the smallest $\delta\nu_{02}$ (so the highest risk of this happening), this would occur at a rotation of 8.8 days or faster. For the star with the largest $\delta\nu_{02}$, this limit was roughly 2 days.
+	
+	In practice, the model still properly fits a spectrum where this kind of mode-overlapping occurs, as the $\ell = 0$ modes don't split, meaning that there are no degenerate solutions in this regime, and further constraints can be obtained from the other modes and split components in the spectrum. A more serious issue may be when the $\ell = 1$ mode at lower frequencies overlaps with the $\ell = 2$ mode as well, which would only occur at a rotation rate of 2 days or faster for the star with the smallest $\delta\nu_{01}$.
+	
+	\item \textit{Slow rotating stars:} Except for the most rapidly rotating cases, asteroseismic mode splitting is detected by a change in the distribution of the power of mode frequencies as the split components begin to separate from the central mode. If there is to be hard limit at which this measurement is not possible, it should be in the case that $\nu_{\rm s} < 2/T$, where $T$ is the observation time, and $1/T$ is the frequency bin width. For the star in our sample with the shortest observing time, this limit would be $\sim 89$ days, which quickly rises for longer observing baselines. While this constitutes a hard limit, slower rotation rates will become harder and harder to constrain as the rate of splitting becomes smaller. A benefit of the Bayesian approach used in this paper is that it should accurately reflect the increased uncertainty associated with the small rotational splitting.
+\end{itemize}
+
+While these two limits cause concern when studying the most extreme rotators, the results presented in this work are driven by stars with rotation rates in the regime of 5 to 30 days. Above, we demonstrated that results on period for these stars were data-driven (i.e. do not reflect the priors), indicating that the splitting is well resolved in this regime, and so we do not expect these limits to bias our conclusions.
+
+Finally, we also consider bias in asteroseismic detections. The probability of an asteroseismic detection with \kepler scales with temperature and radius (i.e. scales inversely with \logg, and therefore main sequence age), and detections are unlikely below roughly $5200\, K$ \cite{chaplin+2011, schofield+2019}. Very young ($\lesssim 2\, \rm{Gyr}$), very magnetically active stars may also suppress their oscillation modes. \cite{mathur+2019}. Though these two effects impose a bias on asteroseismic populations, they do so outside the parameter range on which our comparison takes place. As it is older stars, undergoing magnetic braking, that are required to drive the distinction between stellar models, we conclude that our seismic sample can be assumed to be complete for the purposes of this work.
+
+\section{Verifying consequences for gyrochronology}
+\subsection{Limits of our stellar models}\label{ssec:limits}
+The rotational stellar models used in this work \cite{vansaders+2019} are constructed for metallicities of $-0.4 < \rm{[Fe/H]} < 0.4\, \rm{dex}$, in steps of $0.1\, \rm {dex}$. Our sample of 91 stars contained 4 stars with metallicities below $-0.4\, \rm{dex}$, which are shown as shaded symbols in Figure 3 in the main paper. Of these, 3 were included in our final sample of 73 stars used to evaluate our stellar models: KICs 7970740, 8684723 and KIC 9965715. All three are classed as MS stars, with metallicities of $-0.54 \pm 0.10$, $-0.42 \pm 0.10$ and $-0.44 \pm 0.18\, \rm {dex}$ respectively, placing them within $3\sigma$ of the metallicity limits of our stellar models. KICs 8684723 and 9965715 strongly agree with the WMB model, whereas KIC 7970740 weakly prefers the standard model. Excluding these stars was not found to significantly alter the joint posterior distribution shown in Figure 4 of the main paper.
+
+A recent study \cite{amard+matt2020} compared different rotational evolution models \cite[of which we use the former in this work]{vansaders+pinsonneault2013, matt+2015} while studying the effect metallicity has on rotation. They found that metal-rich stars spin down significantly more effectively than metal poor stars. The population of 73 stars used in our stellar model comparisons is roughly centered on a $\rm{[Fe/H]}$ of 0 $\rm dex$, with a spread of $~0.16\, \rm dex$, with no stars significantly above or below $\pm 0.4\, \rm dex$ (as discussed above). While differences in stellar rotational evolution as a function of metallicity in this region are still somewhat pronounced, they are much less so than for more metal-rich or poor stars \cite[see Figure 2]{amard+matt2020}. However, for stars with $\feh < 0$, the alternative model prescription \cite{matt+2015} sees stars spin down more slowly than the models used in this work (i.e. they will rotate faster at later ages). This work only explores the presence of weakened magnetic braking for a single braking law, and a comparison to alternative braking model will be explored in a future paper.
+
+When constructing KDEs from our stellar model samples, we selected fixed resolutions (or band-widths) for the KDEs. In mass, the band-width of $0.02\, M_\odot$, was larger than the uncertainties of 24 of 73 stars used to construct our joint posterior. For the stars with the smallest uncertainties, this significantly limits the size of the KDE being evaluated (as subsections of the full stellar models are used to evaluate individual stars, for computational efficiency). In order to confirm that these stars do not significantly affect the ensemble's preference towards the WMB model, we recalculated the joint posterior distribution for $Q_{\rm WMB}$, excluding stars with an uncertainty on mass smaller than the KDE band-width. While the 24 stars with small uncertainties do favour the WMB model, they do so very weakly, whereas the remaining 49 stars with larger uncertainties strongly favour the WMB model. Their removal from the total joint posterior probability does not significantly alter it from the distribution shown in Figure 4 of the main paper.
+
+\subsection{Systematic uncertainties from asteroseismology}
+In our model analysis, we used asteroseismic mass and age obtained using \texttt{BASTA}, as reported in LEGACY and Kages. Asteroseismic properties obtained through stellar models can be subject to systematic errors arising from differences in input physics and choice of stellar models not included in the reported statistical uncertainties. A quantification of these different systematic effects can be found in the `Kages' catalogue paper \cite{silvaaguirre+2015}. Combining their reported median systematic uncertainties due to input physics results in median uncertainties of $20\%$ (up from $14\%)$ on age and $5\%$ (up from $3\%$) on mass for the `Kages' sample. For LEGACY, the median uncertainties are $18\%$ (up from $10\%)$ and $5.6\%$ (up from $4\%$) for age and mass respectively.
+
+We re-ran our model analysis after inflating uncertainties on mass and age. We increased uncertainties by the fractional difference between the \texttt{BASTA} statistical uncertainties and the median full statistical and systematic uncertainties described above. For example, a LEGACY star with a mass of $2.0 \pm 0.5\, M_\odot$ would have its uncertainty inflated by $1.6\%$ of its mass, to $0.53\, M_\odot$. 
+
+To further test the limits of this analysis, we also reran our mixture model fit, this time only shifting the asteroseismic ages younger by the systematic uncertainty, and retaining the statistical uncertainty (i.e. the ages of LEGACY and `Kages' stars were reduced by $8\%$ and $6\%$ respectively). In this scenario where all asteroseismic ages are overestimated, `true' fast rotators at young ages would have been mistaken for fast rotators at old ages, suggesting the presence of weakened magnetic braking where none existed. 
+
+The results of these tests are discussed further in the main body of the paper.
+
+\subsection{Binaries and Planet Hosts}
+For stars to be good probes of existing gyrochronology relations, their rotational evolution must occur in isolation. If a star interacts with a close binary companion (through tides, or a merger) the natural angular momentum loss can be disturbed, causing gyrochronology to mispredict ages \cite{leiner+2019, fleming+2019}. Between LEGACY and Kages, we have 8 known binaries. 
+
+First, KIC 8379927, KIC 7510397, KIC 10454113 and KIC 9025370 are spectroscopic binaries. This does not affect the asteroseismic analysis, but may affect their rotational evolution. Of these, KICs 8379927, 7510397 and 9025370 were included in the gyrochronology analysis. None of them preferred one model strongly over the other, with all three finding flat posteriors for $Q_{\rm WMB}$.
+
+Second, the binary pairs of KIC 9139151 \& 9139163 and 16 Cyg A \& B are individually observed binary components with wide orbital separations, so we do not expect their binarity to have affected their rotational evolution \cite{halbwachs1986, white+2013}. 
+
+While we chose not to account for star-planet tidal interactions in this work, we note that this may disturb the natural stellar rotational evolution when tidal forces are at play \cite{maxted+2015, gallet+delorme2019, benbakoura+2019}, although this has been disputed by observations of asteroseismic planet hosts \cite{ceillier+2016}.\\
+
+
+
+\section{Supplementary Table}
+\input{tabulate.tex}
+
+\bibliographystyle{naturemag}
+\bibliography{library.bib} % if your bibtex file is called example.bib
+
+
+%\end{document}

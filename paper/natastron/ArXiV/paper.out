@@ -1,0 +1,29 @@
+\BOOKMARK [1][-]{section.1}{Asteroseismic Methods}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Asteroseismic Data}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Mode Frequency Fitting}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Seismic vs Surface rotation}{section.1}% 4
+\BOOKMARK [1][-]{section.2}{Gyrochronology Methods}{}% 5
+\BOOKMARK [2][-]{subsection.2.1}{Stellar Models}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.2}{Bayesian Mixture Model}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Asteroseismic Model}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{Convective Background \(B\(\)\)}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Modes of Oscillation \(O\(\)\)}{section.3}% 10
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Mode Frequencies and Rotational Splitting \(n,,m\)}{subsection.3.2}% 11
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Mode Linewidth \(n,\)}{subsection.3.2}% 12
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Mode Heights and Angle of Inclination \(Hn,,m\)}{subsection.3.2}% 13
+\BOOKMARK [2][-]{subsection.3.3}{Likelihood Function for M\(\)}{section.3}% 14
+\BOOKMARK [2][-]{subsection.3.4}{Model preparation and hyperparameter priors}{section.3}% 15
+\BOOKMARK [3][-]{subsubsection.3.4.1}{Fitting the convective background}{subsection.3.4}% 16
+\BOOKMARK [3][-]{subsubsection.3.4.2}{Obtaining First Guesses and Prior Values}{subsection.3.4}% 17
+\BOOKMARK [3][-]{subsubsection.3.4.3}{Priors on our Hyperparameters}{subsection.3.4}% 18
+\BOOKMARK [2][-]{subsection.3.5}{Fitting procedure}{section.3}% 19
+\BOOKMARK [1][-]{section.4}{Verifying asteroseismic results}{}% 20
+\BOOKMARK [2][-]{subsection.4.1}{Priors on rotational parameters}{section.4}% 21
+\BOOKMARK [2][-]{subsection.4.2}{Comparisons to previous studies}{section.4}% 22
+\BOOKMARK [2][-]{subsection.4.3}{Seismic vs spectroscopic rotation}{section.4}% 23
+\BOOKMARK [2][-]{subsection.4.4}{Asteroseismic detection biases}{section.4}% 24
+\BOOKMARK [1][-]{section.5}{Verifying consequences for gyrochronology}{}% 25
+\BOOKMARK [2][-]{subsection.5.1}{Limits of our stellar models}{section.5}% 26
+\BOOKMARK [2][-]{subsection.5.2}{Systematic uncertainties from asteroseismology}{section.5}% 27
+\BOOKMARK [2][-]{subsection.5.3}{Binaries and Planet Hosts}{section.5}% 28
+\BOOKMARK [1][-]{section.6}{Supplementary Table}{}% 29

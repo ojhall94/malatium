@@ -1,0 +1,29 @@
+\contentsline {section}{\numberline {1}Asteroseismic Methods}{16}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Asteroseismic Data}{16}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Mode Frequency Fitting}{16}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Seismic vs Surface rotation}{17}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Gyrochronology Methods}{18}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Stellar Models}{18}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Bayesian Mixture Model}{19}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Asteroseismic Model}{25}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Convective Background ($B(\nu )$)}{26}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Modes of Oscillation ($O(\nu )$)}{26}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Mode Frequencies and Rotational Splitting ($\nu _{n,\ell ,m}$)}{27}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Mode Linewidth ($\Gamma _{n,\ell }$)}{27}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Mode Heights and Angle of Inclination ($H_{n,\ell ,m}$)}{28}{subsubsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.3}Likelihood Function for $M(\nu )$}{29}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Model preparation and hyperparameter priors}{30}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Fitting the convective background}{30}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Obtaining First Guesses and Prior Values}{30}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Priors on our Hyperparameters}{31}{subsubsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.5}Fitting procedure}{32}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Verifying asteroseismic results}{33}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Priors on rotational parameters}{33}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Comparisons to previous studies}{36}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Seismic vs spectroscopic rotation}{37}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Asteroseismic detection biases}{38}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Verifying consequences for gyrochronology}{39}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Limits of our stellar models}{39}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Systematic uncertainties from asteroseismology}{40}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Binaries and Planet Hosts}{40}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Supplementary Table}{41}{section.6}%
