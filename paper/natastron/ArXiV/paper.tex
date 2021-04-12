@@ -19,7 +19,7 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage[ ]{hyperref}
-%\graphicspath{{Images/}}
+\graphicspath{{Images/}}
 %\usepackage[symbol]{footmisc}
 
 
@@ -89,7 +89,7 @@
 We obtained asteroseismic rotation rates of 91 main sequence stars showing high signal-to-noise modes of oscillation.
 Using these new rotation rates, along with effective temperatures, metallicities and seismic masses and ages, we built a hierarchical Bayesian mixture model to determine whether the ensemble more closely agreed with a standard rotational evolution scenario, or one where weakened magnetic braking takes place. The weakened magnetic braking scenario was found to be $98.4\%$ more likely for our stellar ensemble, adding to the growing body of evidence for this stage of stellar rotational evolution. This work represents the largest catalogue of seismic rotation on the main sequence to date, opening up possibilities for more detailed ensemble analysis of rotational evolution with \textit{Kepler}.}
 
-%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%
  %500 words
 Gyrochronology is the study of the relationship between a star's rotation period and its age. As a star grows older along the main sequence, magnetic winds will cause it to lose angular momentum, slowing its rotation. The loss rate is thought to depend on the depth of the convection zone, which is a strong function of mass and temperature, and so the rotation period of a young star will rapidly settle on to a plane in age-colour-rotation space \cite{barnes2007}. Knowing the rotation and colour of stars therefore provides an avenue to measure ages, to a precision of $\sim 10\%$ for stars most similar to the Sun \cite{meibom+2015}. Age can otherwise be difficult to infer, and so gyrochronology enables more in-depth studies of stellar populations and individual stars \cite{leiner+2019,claytor+2019}.
 
@@ -134,7 +134,7 @@ Figure \ref{fig:protlit} shows a comparison between 48 stars from our sample for
 
 Instead of comparing our rotation rates directly to models of individual stars, we instead compared them to \rtwo{the distribution of} synthetic TRILEGAL populations based on what the \textit{Kepler} field would look like under these two different braking laws \cite{vansaders+2019, girardi+2012}. These synthetic populations were then altered to match the distribution of existing catalogues of stars in the \kepler field in order to replicate the \kepler selection effects \cite{berger+2020}, and evolved following a standard or WMB braking law. For details on how these models were constructed, see \textbf{Methods}.
 
-In order to ensure our results were based on the most robust rotation measurements, we focused on the stars with the best convergence metrics in the mode frequency fitting, excluding those with a number of effective samples $n_{\rm eff} < 1000$ and a Gelman-Rubin metric of $\hat{R}<1.1$ \cite{gelman+rubin1992,salvatier+2016} (see  \textbf{Supplementary Information} Table 1). Two stars with low metallicities ($< -0.8\, \rm {dex}$) that fell outside the boundaries of our stellar models were also excluded. The remaining sample of 73 stars contained 4 potential sub-giants, 22 `hot' stars and 47 main sequence stars. Figure \ref{fig:fullsample} shows these stars plotted over the top of both the standard and WMB population models in rotation-temperature space, alongside the stars not used in the gyrochronology analysis (shown without uncertainties).
+In order to ensure our results were based on the most robust rotation measurements, we focused on the stars with the best convergence metrics in the mode frequency fitting, excluding those with a number of effective samples $n_{\rm eff} < 1000$ and a Gelman-Rubin metric of $\hat{R}<1.1$ \cite{gelman+rubin1992,salvatier+2016} (see  \textbf{Supplementary Table 1}). Two stars with low metallicities ($< -0.8\, \rm {dex}$) that fell outside the boundaries of our stellar models were also excluded. The remaining sample of 73 stars contained 4 potential sub-giants, 22 `hot' stars and 47 main sequence stars. Figure \ref{fig:fullsample} shows these stars plotted over the top of both the standard and WMB population models in rotation-temperature space, alongside the stars not used in the gyrochronology analysis (shown without uncertainties).
 
 \begin{figure*}
 	\centering
@@ -664,9 +664,9 @@ The first core improvement in this work is the use of hierarchical latent variab
 
 We separated our model fitting into two parts. First, we fit a model for the convective background and white noise only, to the region of the power spectra that did not contain modes of oscillation. This was done using \texttt{PyStan} \cite{vanhoey+2013, carpenter+2017}, for 10,000 iterations on each star. These \texttt{PyStan} runs were initiated with a random seed of 11, as were all other random processes in this work. Second, we fit our full model (including the convective background) to the region containing the modes of oscillation. The results of the first fit to the convective background were used as extremely informative priors on the background parameters in this second fit. This was done using \texttt{PyMC3} \cite{vanderwalt+2011, salvatier+2016, thetheanodevelopmentteam+2016} for 2500 iterations each on 4 chains.
 
-From this asteroseismic analysis, we report inclination angle ($i$), rotational splitting ($\nu_{\rm s}$), and rotation period ($P$) in \textbf{Supplementary Information} Table 1. The summary statistics on these parameters were taken as the median of the posterior distribution, with uncertainties being the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles. For inclination angle ($i = \arccos(\cos(i))$) and rotation ($P = 1/\nu_{\rm s}$), the full posterior samples were transformed before taking the summary statistics, as our model sampled in $\cos(i)$ and $\nu_{\rm s}$.
+From this asteroseismic analysis, we report inclination angle ($i$), rotational splitting ($\nu_{\rm s}$), and rotation period ($P$) in \textbf{Supplementary Table 1}. The summary statistics on these parameters were taken as the median of the posterior distribution, with uncertainties being the $15.9^{\rm th}$ and $84.1^{\rm st}$ percentiles. For inclination angle ($i = \arccos(\cos(i))$) and rotation ($P = 1/\nu_{\rm s}$), the full posterior samples were transformed before taking the summary statistics, as our model sampled in $\cos(i)$ and $\nu_{\rm s}$.
 
-We flagged any sub-optimal conditions of the final fit. We flagged 5 for which the Gelman-Rubin convergence metric, $\hat{R}$, was greater than 1.01 and 2 stars for which it was greater than 1.1 on inclination angle or rotation, where a $\hat{R} = 1$ indicates a converged result \cite{gelman+rubin1992}. We also performed visual checks of the sampled chains on all hyperparameters and of the best-fit model compared to both the raw and smoothed asteroseismic data. We found no issues in the visual investigation of 94 stars. KIC 8478994 is not reported due to both a poor unconverged fit as well as high $\hat{R}$ on rotational parameters. KICs 6603624, 8760414 and 8938364 are reported in  \textbf{Supplementary Information} Table 1, but were excluded from the gyrochronology analysis due to strong disagreement with multiple studies in the literature (see main body of paper). Finally, we flagged any stars with fewer than 1000 effective samples ($n_{\rm eff}$) of $\nu_s$.
+We flagged any sub-optimal conditions of the final fit. We flagged 5 for which the Gelman-Rubin convergence metric, $\hat{R}$, was greater than 1.01 and 2 stars for which it was greater than 1.1 on inclination angle or rotation, where a $\hat{R} = 1$ indicates a converged result \cite{gelman+rubin1992}. We also performed visual checks of the sampled chains on all hyperparameters and of the best-fit model compared to both the raw and smoothed asteroseismic data. We found no issues in the visual investigation of 94 stars. KIC 8478994 is not reported due to both a poor unconverged fit as well as high $\hat{R}$ on rotational parameters. KICs 6603624, 8760414 and 8938364 are reported in  \textbf{Supplementary Table 1}, but were excluded from the gyrochronology analysis due to strong disagreement with multiple studies in the literature (see main body of paper). Finally, we flagged any stars with fewer than 1000 effective samples ($n_{\rm eff}$) of $\nu_s$.
 
 \subsection{Seismic vs Surface rotation}
 As described in the main body of the paper, we compared a subsample of our asteroesismic rotation rates to surface rotation rates from spot rotation, where available. Both the surface ($P_{\rm surf}$) and seismic ($P_{\rm seis}$) rotation rates have associated uncertainties. Instead of fitting the slope between these two values directly, we instead fit the distribution
@@ -740,7 +740,7 @@ We fit our model Equation \ref{eq:modelll} using \texttt{emcee} \cite{foreman-ma
 
 After fitting, we took a normalised histogram of the posterior estimate of $Q_{\rm WMB}$ for each star, using 100 bins. In this histogram, each bin approximated the value of the posterior function for $Q_{\rm WMB}$. The array of 100 bins for all stars were multiplied, resulting in an approximation of the joint posterior probability function for $Q_{\rm WMB}$ given all stars in the ensemble.\\
 
-\textbf{Data availability statement:} The core input data and results are summarised in  \textbf{Supplementary Information} Table 1, which is published with this article, and is also available on Vizier. Larger data files, such as stellar model populations and individual posterior distribution chains from the asteroseismic and gyrochronology model fitting are fully available on request.
+\textbf{Data availability statement:} The core input data and results are summarised in  \textbf{Supplementary Table 1}, which is published with this article, and is also available on Vizier. Larger data files, such as stellar model populations and individual posterior distribution chains from the asteroseismic and gyrochronology model fitting are fully available on request.
 
 This work made use of publicly available data. \kepler power spectral densities were obtained from the \href{http://kasoc.phys.au.dk/}{KASOC} webpages for the majority of stars, and from the \href{https://archive.
 	stsci.edu/prepds/kepseismic/}{MAST} for 16 Cyg A and B. This work used asteroseismic data from Silva Aguirre et al. (2015, 2017), Davies et al. (2016) and Lund et al. (2017) \cite{silvaaguirre+2015, silvaaguirre+2017, davies+2016, lund+2017}. Parameter distributions of the \kepler field used to alter our stellar population models were taken from Berger et al. (2020) \cite{berger+2020}.\\
@@ -972,11 +972,13 @@ The code used to construct the stellar population models used in this work is av
 	\textbf{\bibinfo{volume}{1}} (\bibinfo{year}{2016}).
 \end{thebibliography}
 
+\renewcommand{\figurename}{Extended Data Figure}
+
 
 \setcounter{figure}{0}    
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.6 \textwidth]{Images/pgm_models.pdf}
+	\includegraphics[width=0.6 \textwidth]{pgm_models.pdf}
 	\caption{\textbf{A probabilistic graphical model (PGM) represented algebraically in Equation \ref{eq:modelll}.} The shaded circle indicates observed data, and solid black points represent other fixed information, such as the KDEs and observational uncertainties. The remaining circles represent parameters. The underline indicates that the symbol represents a set of parameters or data. Here, $\kappa_{\rm{s}}$ and $\kappa_{\rm WMB}$ represent the KDEs of standard and WMB model populations respectively. $Q_{\rm{WMB}}$ is the mixture model weighting factor. The latent parameters $\theta$, our observations $\mathcal{D}$ and their uncertainties $\sigma_{\mathcal{D}}$ include temperature (\teff), mass ($M$), log-age ($\ln(t)$), metallicity (\feh) and log-rotation ($\ln(P)$). This model is \textit{hierarchical}, as all the latent parameters are drawn from the common probability distribution set by $Q_{\rm{WMB}}$ and described in Equation \ref{eq:mixturell}.}
 	\label{fig:pgm}
 \end{figure}

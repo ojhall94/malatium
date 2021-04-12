@@ -17,13 +17,14 @@
 \contentsline {subsubsection}{\numberline {3.4.2}Obtaining First Guesses and Prior Values}{30}{subsubsection.3.4.2}%
 \contentsline {subsubsection}{\numberline {3.4.3}Priors on our Hyperparameters}{31}{subsubsection.3.4.3}%
 \contentsline {subsection}{\numberline {3.5}Fitting procedure}{32}{subsection.3.5}%
-\contentsline {section}{\numberline {4}Verifying asteroseismic results}{33}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Priors on rotational parameters}{33}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Comparisons to previous studies}{36}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Seismic vs spectroscopic rotation}{37}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Asteroseismic detection biases}{38}{subsection.4.4}%
-\contentsline {section}{\numberline {5}Verifying consequences for gyrochronology}{39}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Limits of our stellar models}{39}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Systematic uncertainties from asteroseismology}{40}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Binaries and Planet Hosts}{40}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Supplementary Table}{41}{section.6}%
+\contentsline {section}{\numberline {4}Verifying asteroseismic results}{34}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Priors on rotational parameters}{34}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Comparisons to previous studies}{34}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Seismic vs spectroscopic rotation}{38}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Asteroseismic detection biases}{39}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Verifying consequences for gyrochronology}{41}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Limits of our stellar models}{41}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Systematic uncertainties from asteroseismology}{42}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Binaries and Planet Hosts}{42}{subsection.5.3}%
+\contentsline {section}{References}{43}{subsection.5.3}%
+\contentsline {section}{Supplementary Table 1}{45}{section*.6}%
